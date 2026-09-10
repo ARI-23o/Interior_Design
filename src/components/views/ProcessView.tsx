@@ -26,21 +26,21 @@ export const ProcessView: React.FC<ProcessViewProps> = ({ onOpenLeadModal }) => 
         </div>
 
         {/* 5 Stages Detail */}
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           {processStepsData.map((step, idx) => (
             <div
               key={step.stepNumber}
-              className="bg-canvas-soft border border-border-luxury p-8 sm:p-10 transition-all hover:border-bronze"
+              className="bg-canvas-soft border border-border-luxury p-5 sm:p-10 transition-all hover:border-bronze"
             >
-              <div className="flex flex-col lg:flex-row justify-between items-start gap-8">
+              <div className="flex flex-col lg:flex-row justify-between items-start gap-6 sm:gap-8">
                 
                 <div className="space-y-4 max-w-2xl">
                   <div className="flex items-center gap-4">
-                    <span className="font-serif text-4xl sm:text-5xl text-bronze font-light">
+                    <span className="font-serif text-3xl sm:text-5xl text-bronze font-light shrink-0">
                       {step.stepNumber}
                     </span>
                     <div>
-                      <h2 className="font-serif text-2xl sm:text-3xl text-charcoal">
+                      <h2 className="font-serif text-xl sm:text-3xl text-charcoal">
                         {step.title}
                       </h2>
                       <p className="text-xs uppercase tracking-wider text-bronze font-semibold mt-0.5">
@@ -54,7 +54,7 @@ export const ProcessView: React.FC<ProcessViewProps> = ({ onOpenLeadModal }) => 
                   </p>
                 </div>
 
-                <div className="w-full lg:w-96 bg-canvas p-6 border border-border-luxury shrink-0">
+                <div className="w-full lg:w-96 bg-canvas p-5 sm:p-6 border border-border-luxury shrink-0">
                   <span className="text-xs uppercase tracking-widest text-bronze font-semibold block mb-3">
                     Stage {idx + 1} Deliverables:
                   </span>
@@ -74,8 +74,8 @@ export const ProcessView: React.FC<ProcessViewProps> = ({ onOpenLeadModal }) => 
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-16 p-12 bg-charcoal text-canvas text-center space-y-6">
-          <h3 className="font-serif text-3xl sm:text-4xl text-canvas">
+        <div className="mt-12 sm:mt-16 p-6 sm:p-12 bg-charcoal text-canvas text-center space-y-6">
+          <h3 className="font-serif text-2xl sm:text-4xl text-canvas">
             Ready to experience a seamless interior design journey?
           </h3>
           <p className="text-sm text-canvas/70 max-w-lg mx-auto font-light">
@@ -83,7 +83,7 @@ export const ProcessView: React.FC<ProcessViewProps> = ({ onOpenLeadModal }) => 
           </p>
           <button
             onClick={onOpenLeadModal}
-            className="bg-bronze hover:bg-bronze-light text-charcoal font-semibold text-xs uppercase tracking-widest px-8 py-4 inline-flex items-center gap-2 transition-all shadow-md"
+            className="w-full sm:w-auto bg-bronze hover:bg-bronze-light text-charcoal font-semibold text-xs uppercase tracking-widest px-8 py-4 inline-flex items-center justify-center gap-2 transition-all shadow-md"
           >
             <span>Start Your Consultation</span>
             <ArrowRight size={14} />

@@ -47,54 +47,54 @@ export const LeadQualifierSection: React.FC = () => {
   };
 
   return (
-    <section id="lead-qualifier" className="py-24 bg-canvas relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="lead-qualifier" className="py-14 sm:py-24 bg-canvas relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
         
-        <div className="bg-charcoal text-canvas p-8 sm:p-12 md:p-16 border border-charcoal-light shadow-luxury-lg relative">
+        <div className="bg-charcoal text-canvas p-5 sm:p-10 md:p-14 border border-charcoal-light shadow-luxury-lg relative">
           
           <div className="absolute top-0 right-0 w-96 h-96 bg-bronze/10 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start relative z-10">
             
             {/* Left Column: Why Inquire & WhatsApp Shortcut */}
-            <div className="lg:col-span-5 space-y-6">
+            <div className="lg:col-span-5 space-y-5 sm:space-y-6">
               <div className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-bronze font-semibold">
                 <Sparkles size={14} />
                 <span>Start Your Project</span>
               </div>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-canvas leading-tight">
+              <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl text-canvas leading-tight">
                 Tell Us About Your Project.
               </h2>
-              <p className="text-canvas/75 text-sm sm:text-base leading-relaxed font-light">
+              <p className="text-canvas/75 text-xs sm:text-base leading-relaxed font-light">
                 Whether you’re planning a new build, a turnkey renovation, or custom interiors, tell us about your requirements. We’ll review your brief and prepare an initial consultation with zero obligations.
               </p>
 
-              <div className="space-y-4 pt-4 border-t border-charcoal-light">
+              <div className="space-y-3.5 pt-3 sm:pt-4 border-t border-charcoal-light">
                 <div className="flex items-start gap-3">
-                  <ShieldCheck size={20} className="text-bronze shrink-0 mt-0.5" />
+                  <ShieldCheck size={18} className="text-bronze shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-sm font-semibold text-canvas">Transparent Fixed BOQ</h4>
-                    <p className="text-xs text-canvas/60">Detailed pricing with zero hidden surcharges or post-handover surprises.</p>
+                    <h4 className="text-xs sm:text-sm font-semibold text-canvas">Transparent Fixed BOQ</h4>
+                    <p className="text-[11px] sm:text-xs text-canvas/60">Detailed pricing with zero hidden surcharges.</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Star size={20} className="text-amber-500 fill-amber-500 shrink-0 mt-0.5" />
+                  <Star size={18} className="text-amber-500 fill-amber-500 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-sm font-semibold text-canvas">4.9★ Client Google Rating</h4>
-                    <p className="text-xs text-canvas/60">50+ families living happily in our designed residences.</p>
+                    <h4 className="text-xs sm:text-sm font-semibold text-canvas">4.9★ Client Google Rating</h4>
+                    <p className="text-[11px] sm:text-xs text-canvas/60">50+ families living happily in our designed residences.</p>
                   </div>
                 </div>
               </div>
 
               {/* Direct WhatsApp Callout */}
-              <div className="pt-4">
-                <div className="bg-charcoal-light/70 p-5 border border-border-dark space-y-2">
+              <div className="pt-2 sm:pt-4">
+                <div className="bg-charcoal-light/70 p-4 sm:p-5 border border-border-dark space-y-2">
                   <span className="text-[10px] uppercase tracking-wider text-bronze font-semibold block">Prefer Fast WhatsApp Discussion?</span>
                   <p className="text-xs text-canvas/70 font-light">Message our principal architects directly with your floor plan.</p>
                   <button
                     onClick={handleDirectWhatsApp}
-                    className="mt-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs uppercase tracking-wider px-5 py-3 flex items-center gap-2 transition-colors font-semibold"
+                    className="mt-2 w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white text-xs uppercase tracking-wider px-5 py-3 flex items-center justify-center gap-2 transition-colors font-semibold"
                   >
                     <MessageSquare size={15} />
                     <span>WhatsApp Us Directly →</span>
@@ -104,16 +104,16 @@ export const LeadQualifierSection: React.FC = () => {
             </div>
 
             {/* Right Column: Exact Form Fields */}
-            <div className="lg:col-span-7 bg-canvas text-charcoal p-6 sm:p-10 border border-border-luxury shadow-lg">
+            <div className="lg:col-span-7 bg-canvas text-charcoal p-5 sm:p-8 md:p-10 border border-border-luxury shadow-lg">
               {isSubmitted ? (
-                <div className="py-10 text-center space-y-6 animate-in fade-in zoom-in-95 duration-300">
-                  <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
-                    <CheckCircle2 size={36} />
+                <div className="py-8 sm:py-10 text-center space-y-5 animate-in fade-in zoom-in-95 duration-300">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
+                    <CheckCircle2 size={32} />
                   </div>
-                  <h3 className="font-serif text-3xl text-charcoal">
+                  <h3 className="font-serif text-2xl sm:text-3xl text-charcoal">
                     Thank You, {name}!
                   </h3>
-                  <p className="text-sm text-charcoal-muted max-w-md mx-auto leading-relaxed">
+                  <p className="text-xs sm:text-sm text-charcoal-muted max-w-md mx-auto leading-relaxed">
                     We have received your project details for your <strong>{designType}</strong> {location ? `in ${location}` : ''} (Budget: {budget}). Our senior design lead will review your brief and contact you within 24 hours.
                   </p>
                   <div className="pt-2 flex flex-col sm:flex-row justify-center gap-3">
@@ -140,11 +140,11 @@ export const LeadQualifierSection: React.FC = () => {
                   </div>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                   
                   {/* Name */}
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-charcoal-muted mb-1.5 font-semibold">
+                    <label className="block text-[11px] uppercase tracking-wider text-charcoal-muted mb-1 font-semibold">
                       Name *
                     </label>
                     <input
@@ -153,14 +153,14 @@ export const LeadQualifierSection: React.FC = () => {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Your full name"
-                      className="w-full bg-canvas-soft border border-border-luxury text-sm py-3 px-3.5 text-charcoal focus:outline-none focus:border-charcoal"
+                      className="w-full bg-canvas-soft border border-border-luxury text-sm py-2.5 sm:py-3 px-3.5 text-charcoal focus:outline-none focus:border-charcoal"
                     />
                   </div>
 
                   {/* WhatsApp / Phone & Location */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div>
-                      <label className="block text-xs uppercase tracking-wider text-charcoal-muted mb-1.5 font-semibold">
+                      <label className="block text-[11px] uppercase tracking-wider text-charcoal-muted mb-1 font-semibold">
                         WhatsApp / Phone *
                       </label>
                       <input
@@ -169,36 +169,36 @@ export const LeadQualifierSection: React.FC = () => {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="+91 98765 43210"
-                        className="w-full bg-canvas-soft border border-border-luxury text-sm py-3 px-3.5 text-charcoal focus:outline-none focus:border-charcoal"
+                        className="w-full bg-canvas-soft border border-border-luxury text-sm py-2.5 sm:py-3 px-3.5 text-charcoal focus:outline-none focus:border-charcoal"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs uppercase tracking-wider text-charcoal-muted mb-1.5 font-semibold">
+                      <label className="block text-[11px] uppercase tracking-wider text-charcoal-muted mb-1 font-semibold">
                         Project Location
                       </label>
                       <input
                         type="text"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
-                        placeholder="e.g. Nagpur, Chhindwara, Delhi NCR"
-                        className="w-full bg-canvas-soft border border-border-luxury text-sm py-3 px-3.5 text-charcoal focus:outline-none focus:border-charcoal"
+                        placeholder="e.g. Nagpur, Chhindwara, Delhi"
+                        className="w-full bg-canvas-soft border border-border-luxury text-sm py-2.5 sm:py-3 px-3.5 text-charcoal focus:outline-none focus:border-charcoal"
                       />
                     </div>
                   </div>
 
                   {/* Project Type */}
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-charcoal-muted mb-2 font-semibold">
+                    <label className="block text-[11px] uppercase tracking-wider text-charcoal-muted mb-1.5 font-semibold">
                       Project Type
                     </label>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2">
                       {designTypes.map((type) => (
                         <button
                           type="button"
                           key={type}
                           onClick={() => setDesignType(type)}
-                          className={`text-xs py-3 px-2 text-center border transition-all ${
+                          className={`text-xs py-2.5 sm:py-3 px-2 text-center border transition-all ${
                             designType === type
                               ? 'bg-charcoal text-canvas border-charcoal font-semibold shadow-sm'
                               : 'bg-canvas-soft text-charcoal-muted border-border-luxury hover:border-charcoal'
@@ -212,16 +212,16 @@ export const LeadQualifierSection: React.FC = () => {
 
                   {/* Approximate Budget */}
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-charcoal-muted mb-2 font-semibold">
+                    <label className="block text-[11px] uppercase tracking-wider text-charcoal-muted mb-1.5 font-semibold">
                       Approximate Budget
                     </label>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2">
                       {budgetTiers.map((tier) => (
                         <button
                           type="button"
                           key={tier}
                           onClick={() => setBudget(tier)}
-                          className={`text-xs font-medium py-3 px-2 text-center border transition-all ${
+                          className={`text-xs font-medium py-2.5 sm:py-3 px-2 text-center border transition-all ${
                             budget === tier
                               ? 'bg-bronze text-charcoal font-semibold border-bronze-dark shadow-sm'
                               : 'bg-canvas-soft text-charcoal-muted border-border-luxury hover:border-charcoal'
@@ -235,7 +235,7 @@ export const LeadQualifierSection: React.FC = () => {
 
                   {/* Tell us about your project */}
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-charcoal-muted mb-1.5 font-semibold">
+                    <label className="block text-[11px] uppercase tracking-wider text-charcoal-muted mb-1 font-semibold">
                       Tell us about your project
                     </label>
                     <textarea
@@ -251,13 +251,13 @@ export const LeadQualifierSection: React.FC = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-charcoal hover:bg-bronze hover:text-charcoal text-canvas py-4 text-xs uppercase tracking-[0.2em] font-semibold flex items-center justify-center gap-2 transition-all duration-300 shadow-md"
+                    className="w-full bg-charcoal hover:bg-bronze hover:text-charcoal text-canvas py-3.5 sm:py-4 text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] font-semibold flex items-center justify-center gap-2 transition-all duration-300 shadow-md min-h-[46px]"
                   >
                     <span>{loading ? 'Submitting Details...' : 'REQUEST A CONSULTATION →'}</span>
                   </button>
 
-                  <p className="text-[11px] text-center text-charcoal-subtle">
-                    🔒 We respect your privacy. No spam. Direct consultation with our senior designers.
+                  <p className="text-[10px] sm:text-[11px] text-center text-charcoal-subtle">
+                    🔒 100% Privacy. Direct consultation with our senior designers.
                   </p>
                 </form>
               )}

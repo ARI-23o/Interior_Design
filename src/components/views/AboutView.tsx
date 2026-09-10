@@ -26,7 +26,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ onOpenLeadModal }) => {
         </div>
 
         {/* Founder Story Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-canvas-soft border border-border-luxury p-8 sm:p-14">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-canvas-soft border border-border-luxury p-5 sm:p-14">
           <div className="lg:col-span-5">
             <div className="relative aspect-[4/5] overflow-hidden border border-border-luxury shadow-luxury">
               <img
@@ -42,7 +42,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ onOpenLeadModal }) => {
           </div>
 
           <div className="lg:col-span-7 space-y-6">
-            <h2 className="font-serif text-3xl sm:text-4xl text-charcoal leading-tight">
+            <h2 className="font-serif text-2xl sm:text-4xl text-charcoal leading-tight">
               "We design homes around the way you actually live, not just for photographs."
             </h2>
 
@@ -73,8 +73,8 @@ export const AboutView: React.FC<AboutViewProps> = ({ onOpenLeadModal }) => {
             Our Non-Negotiable Standards
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-canvas-soft border border-border-luxury p-8 space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            <div className="bg-canvas-soft border border-border-luxury p-6 sm:p-8 space-y-3">
               <span className="text-xs uppercase tracking-widest text-bronze font-semibold">Standard 01</span>
               <h3 className="font-serif text-2xl text-charcoal">Structural Integrity First</h3>
               <p className="text-xs sm:text-sm text-charcoal-muted font-light leading-relaxed">
@@ -82,7 +82,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ onOpenLeadModal }) => {
               </p>
             </div>
 
-            <div className="bg-canvas-soft border border-border-luxury p-8 space-y-3">
+            <div className="bg-canvas-soft border border-border-luxury p-6 sm:p-8 space-y-3">
               <span className="text-xs uppercase tracking-widest text-bronze font-semibold">Standard 02</span>
               <h3 className="font-serif text-2xl text-charcoal">Transparent Accounting</h3>
               <p className="text-xs sm:text-sm text-charcoal-muted font-light leading-relaxed">
@@ -90,7 +90,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ onOpenLeadModal }) => {
               </p>
             </div>
 
-            <div className="bg-canvas-soft border border-border-luxury p-8 space-y-3">
+            <div className="bg-canvas-soft border border-border-luxury p-6 sm:p-8 space-y-3">
               <span className="text-xs uppercase tracking-widest text-bronze font-semibold">Standard 03</span>
               <h3 className="font-serif text-2xl text-charcoal">Daily Site Stewardship</h3>
               <p className="text-xs sm:text-sm text-charcoal-muted font-light leading-relaxed">
@@ -101,7 +101,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ onOpenLeadModal }) => {
         </div>
 
         {/* Studio Locations */}
-        <div className="bg-charcoal text-canvas p-10 sm:p-14 border border-charcoal-light flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+        <div className="bg-charcoal text-canvas p-6 sm:p-14 border border-charcoal-light flex flex-col md:flex-row justify-between items-start md:items-center gap-6 sm:gap-8">
           <div className="space-y-2">
             <span className="text-xs uppercase tracking-widest text-bronze font-semibold">Our Studio Hubs</span>
             <h3 className="font-serif text-2xl sm:text-3xl text-canvas">Serving Nagpur & Chhindwara</h3>
@@ -111,7 +111,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ onOpenLeadModal }) => {
           </div>
           <button
             onClick={onOpenLeadModal}
-            className="bg-bronze hover:bg-bronze-light text-charcoal font-semibold text-xs uppercase tracking-widest px-7 py-4 transition-all shrink-0"
+            className="w-full sm:w-auto bg-bronze hover:bg-bronze-light text-charcoal font-semibold text-xs uppercase tracking-widest px-7 py-4 text-center transition-all shrink-0"
           >
             Schedule Studio Visit →
           </button>

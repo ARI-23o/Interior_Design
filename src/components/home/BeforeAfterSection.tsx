@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { ArrowRight, Sparkles, MoveHorizontal, CheckCircle2, HardHat, Eye, Home } from 'lucide-react';
+import { Sparkles, MoveHorizontal, CheckCircle2, HardHat, Eye, Home } from 'lucide-react';
 
 interface BeforeAfterSectionProps {
   onOpenLeadModal: () => void;
@@ -50,7 +50,9 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
   }, []);
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    handleMove(e.touches[0].clientX);
+    if (e.touches && e.touches[0]) {
+      handleMove(e.touches[0].clientX);
+    }
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -59,38 +61,38 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
   };
 
   return (
-    <section className="py-24 bg-canvas-soft border-y border-border-luxury relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <section className="py-14 sm:py-24 bg-canvas-soft border-y border-border-luxury relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-5 sm:gap-6">
           <div className="max-w-2xl">
-            <div className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-bronze font-semibold mb-3">
+            <div className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-bronze font-semibold mb-2">
               <Sparkles size={14} />
               <span>Proof of Execution Capacity</span>
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-charcoal leading-tight">
               From 3D Concept → Site Execution → Finished Home.
             </h2>
-            <p className="text-charcoal-muted text-sm sm:text-base mt-3 leading-relaxed">
-              We don't just deliver beautiful renders — we turn raw structural frames into impeccably crafted, ready-to-live-in spaces.
+            <p className="text-charcoal-muted text-xs sm:text-base mt-2 leading-relaxed">
+              We turn raw structural frames into impeccably crafted, ready-to-live-in spaces.
             </p>
           </div>
 
           {/* View toggle */}
-          <div className="flex items-center gap-2 bg-canvas p-1 border border-border-luxury">
+          <div className="flex items-center gap-1.5 sm:gap-2 bg-canvas p-1 border border-border-luxury self-start md:self-auto">
             <button
               onClick={() => setActiveTab('phases')}
-              className={`text-xs uppercase tracking-wider px-4 py-2 transition-all ${
-                activeTab === 'phases' ? 'bg-charcoal text-canvas font-semibold' : 'text-charcoal-muted hover:text-charcoal'
+              className={`text-xs uppercase tracking-wider px-3.5 sm:px-4 py-2 transition-all ${
+                activeTab === 'phases' ? 'bg-charcoal text-canvas font-semibold shadow-sm' : 'text-charcoal-muted hover:text-charcoal'
               }`}
             >
               3-Phase Journey
             </button>
             <button
               onClick={() => setActiveTab('slider')}
-              className={`text-xs uppercase tracking-wider px-4 py-2 transition-all ${
-                activeTab === 'slider' ? 'bg-charcoal text-canvas font-semibold' : 'text-charcoal-muted hover:text-charcoal'
+              className={`text-xs uppercase tracking-wider px-3.5 sm:px-4 py-2 transition-all ${
+                activeTab === 'slider' ? 'bg-charcoal text-canvas font-semibold shadow-sm' : 'text-charcoal-muted hover:text-charcoal'
               }`}
             >
               Before / After Slider
@@ -100,7 +102,7 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
 
         {/* Option 1: 3-Phase Journey Cards */}
         {activeTab === 'phases' && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 animate-in fade-in duration-300">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 animate-in fade-in duration-300">
             {executionStages.map((stage, i) => (
               <div
                 key={i}
@@ -110,14 +112,15 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
                   <img
                     src={stage.image}
                     alt={stage.title}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute top-4 left-4 bg-charcoal/85 backdrop-blur-md text-canvas text-[10px] uppercase tracking-widest px-3 py-1 font-medium border border-charcoal-light">
+                  <div className="absolute top-3 sm:top-4 left-3 sm:left-4 bg-charcoal/85 backdrop-blur-md text-canvas text-[9.5px] sm:text-[10px] uppercase tracking-widest px-2.5 sm:px-3 py-1 font-medium border border-charcoal-light">
                     {stage.phase} · {stage.badge}
                   </div>
                 </div>
 
-                <div className="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                <div className="p-5 sm:p-6 space-y-3 flex-grow flex flex-col justify-between">
                   <div>
                     <h3 className="font-serif text-xl sm:text-2xl text-charcoal">
                       {stage.title}
@@ -127,8 +130,8 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-border-luxury/60 flex items-center gap-2 text-[11px] text-bronze-dark font-medium">
-                    <CheckCircle2 size={13} className="text-bronze" />
+                  <div className="pt-3 sm:pt-4 border-t border-border-luxury/60 flex items-center gap-2 text-[11px] text-bronze-dark font-medium">
+                    <CheckCircle2 size={13} className="text-bronze shrink-0" />
                     <span>Quality-Checked Milestone</span>
                   </div>
                 </div>
@@ -139,11 +142,11 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
 
         {/* Option 2: Interactive Drag Slider */}
         {activeTab === 'slider' && (
-          <div className="space-y-4 animate-in fade-in duration-300">
-            <div className="flex justify-end gap-2 text-xs">
-              <button onClick={() => setSliderPosition(20)} className="px-3 py-1 bg-canvas border border-border-luxury hover:border-charcoal">Show Before</button>
-              <button onClick={() => setSliderPosition(50)} className="px-3 py-1 bg-canvas border border-border-luxury hover:border-charcoal">50/50</button>
-              <button onClick={() => setSliderPosition(80)} className="px-3 py-1 bg-canvas border border-border-luxury hover:border-charcoal">Show After</button>
+          <div className="space-y-3 sm:space-y-4 animate-in fade-in duration-300">
+            <div className="flex justify-end gap-1.5 sm:gap-2 text-[11px] sm:text-xs">
+              <button onClick={() => setSliderPosition(20)} className="px-2.5 sm:px-3 py-1 bg-canvas border border-border-luxury hover:border-charcoal">Before</button>
+              <button onClick={() => setSliderPosition(50)} className="px-2.5 sm:px-3 py-1 bg-canvas border border-border-luxury hover:border-charcoal">50/50</button>
+              <button onClick={() => setSliderPosition(80)} className="px-2.5 sm:px-3 py-1 bg-canvas border border-border-luxury hover:border-charcoal">After</button>
             </div>
 
             <div 
@@ -152,16 +155,18 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
               onMouseUp={() => setIsDragging(false)}
               onMouseLeave={() => setIsDragging(false)}
               onMouseMove={handleMouseMove}
+              onTouchStart={() => setIsDragging(true)}
+              onTouchEnd={() => setIsDragging(false)}
               onTouchMove={handleTouchMove}
-              className="relative w-full h-[380px] sm:h-[480px] md:h-[540px] select-none overflow-hidden cursor-ew-resize border border-border-luxury shadow-luxury group"
+              className="relative w-full h-[280px] xs:h-[340px] sm:h-[480px] md:h-[540px] select-none overflow-hidden cursor-ew-resize border border-border-luxury shadow-luxury group touch-pan-y"
             >
               <img 
                 src={afterImage} 
                 alt="Designed Finished Home" 
                 className="absolute inset-0 w-full h-full object-cover"
               />
-              <div className="absolute top-6 right-6 bg-charcoal/80 backdrop-blur-md text-canvas text-xs uppercase tracking-widest px-4 py-2 pointer-events-none z-10 border border-charcoal-light">
-                Finished Handover · Sowakaah
+              <div className="absolute top-3 sm:top-6 right-3 sm:right-6 bg-charcoal/80 backdrop-blur-md text-canvas text-[10px] sm:text-xs uppercase tracking-widest px-2.5 sm:px-4 py-1 sm:py-2 pointer-events-none z-10 border border-charcoal-light">
+                Finished Handover
               </div>
 
               <div 
@@ -174,8 +179,8 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
                   className="absolute inset-0 w-full h-full object-cover max-w-none"
                   style={{ width: containerRef.current ? `${containerRef.current.clientWidth}px` : '100vw' }}
                 />
-                <div className="absolute top-6 left-6 bg-charcoal/80 backdrop-blur-md text-canvas text-xs uppercase tracking-widest px-4 py-2 pointer-events-none z-10 border border-charcoal-light">
-                  Raw Site · Before
+                <div className="absolute top-3 sm:top-6 left-3 sm:left-6 bg-charcoal/80 backdrop-blur-md text-canvas text-[10px] sm:text-xs uppercase tracking-widest px-2.5 sm:px-4 py-1 sm:py-2 pointer-events-none z-10 border border-charcoal-light">
+                  Raw Site
                 </div>
               </div>
 
@@ -183,23 +188,26 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
                 className="absolute inset-y-0 w-1 bg-canvas cursor-ew-resize z-20 flex items-center justify-center shadow-2xl"
                 style={{ left: `${sliderPosition}%` }}
               >
-                <div className="w-10 h-10 -ml-4 rounded-full bg-canvas text-charcoal border-2 border-bronze flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
-                  <MoveHorizontal size={18} className="text-bronze-dark" />
+                <div className="w-8 h-8 sm:w-10 sm:h-10 -ml-3.5 sm:-ml-4 rounded-full bg-canvas text-charcoal border-2 border-bronze flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
+                  <MoveHorizontal size={16} className="text-bronze-dark" />
                 </div>
               </div>
             </div>
+            <p className="text-[11px] text-center text-charcoal-muted sm:hidden">
+              Swipe or tap the buttons above to compare Before & After
+            </p>
           </div>
         )}
 
         {/* Bottom Bar */}
-        <div className="p-6 bg-charcoal text-canvas flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border border-charcoal-light">
+        <div className="p-5 sm:p-6 bg-charcoal text-canvas flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border border-charcoal-light">
           <div>
             <span className="text-[10px] uppercase tracking-widest text-bronze font-semibold">Transform Your Site</span>
-            <p className="font-serif text-lg text-canvas">Have a raw flat or bungalow under construction?</p>
+            <p className="font-serif text-base sm:text-lg text-canvas">Have a raw flat or bungalow under construction?</p>
           </div>
           <button
             onClick={onOpenLeadModal}
-            className="bg-bronze hover:bg-bronze-light text-charcoal font-semibold text-xs uppercase tracking-widest px-6 py-3 flex items-center gap-2 transition-colors"
+            className="w-full sm:w-auto bg-bronze hover:bg-bronze-light text-charcoal font-semibold text-xs uppercase tracking-widest px-6 py-3.5 flex items-center justify-center gap-2 transition-colors min-h-[44px]"
           >
             <span>START YOUR TRANSFORMATION →</span>
           </button>

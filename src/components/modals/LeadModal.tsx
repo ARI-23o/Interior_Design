@@ -25,7 +25,13 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
       setName('');
       setPhone('');
       setMessage('');
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
     }
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -70,12 +76,12 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal/80 backdrop-blur-md flex justify-center p-3 sm:p-6 animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200">
       
-      <div className="relative bg-canvas w-full max-w-xl my-auto border border-border-luxury shadow-luxury-lg overflow-hidden animate-in zoom-in-95 duration-200">
+      <div className="relative bg-canvas w-full max-w-xl my-auto border border-border-luxury shadow-luxury-lg overflow-hidden animate-in zoom-in-95 duration-200 max-h-[92vh] flex flex-col">
         
         {/* Header */}
-        <div className="bg-canvas-soft border-b border-border-luxury px-6 py-4 flex items-center justify-between">
+        <div className="bg-canvas-soft border-b border-border-luxury px-5 sm:px-6 py-3.5 sm:py-4 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2">
             <Sparkles size={14} className="text-bronze" />
             <span className="text-xs uppercase tracking-widest font-semibold text-charcoal">
@@ -84,15 +90,15 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
           </div>
           <button
             onClick={handleClose}
-            className="p-1.5 text-charcoal hover:text-bronze rounded-full hover:bg-canvas transition-colors"
+            className="p-1.5 text-charcoal hover:text-bronze rounded-full hover:bg-canvas transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
             aria-label="Close modal"
           >
-            <X size={18} />
+            <X size={19} />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 sm:p-8">
+        <div className="p-5 sm:p-8 overflow-y-auto">
           {isSubmitted ? (
             <div className="py-6 text-center space-y-4 animate-in fade-in duration-200">
               <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
@@ -105,17 +111,17 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
                 Thank you, <strong>{name}</strong>. Our principal designer will review your brief for your <strong>{designType}</strong> in <strong>{location}</strong> and contact you on WhatsApp/call shortly.
               </p>
               
-              <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
+              <div className="pt-3 flex flex-col sm:flex-row gap-2.5 sm:gap-3 justify-center">
                 <button
                   onClick={handleWhatsApp}
-                  className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs uppercase tracking-wider py-3.5 px-6 flex items-center justify-center gap-2 font-semibold shadow-sm"
+                  className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs uppercase tracking-wider py-3.5 px-6 flex items-center justify-center gap-2 font-semibold shadow-sm min-h-[44px]"
                 >
                   <MessageSquare size={14} />
                   <span>WhatsApp us directly →</span>
                 </button>
                 <button
                   onClick={handleResetForm}
-                  className="border border-border-luxury text-charcoal hover:bg-canvas-soft text-xs uppercase tracking-wider py-3.5 px-5 flex items-center justify-center gap-1.5"
+                  className="border border-border-luxury text-charcoal hover:bg-canvas-soft text-xs uppercase tracking-wider py-3.5 px-5 flex items-center justify-center gap-1.5 min-h-[44px]"
                 >
                   <RotateCcw size={13} className="text-bronze" />
                   <span>Submit Another Enquiry</span>
@@ -125,7 +131,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
               <div className="pt-2">
                 <button
                   onClick={handleClose}
-                  className="text-xs text-charcoal-muted hover:text-charcoal underline"
+                  className="text-xs text-charcoal-muted hover:text-charcoal underline py-1"
                 >
                   Close Window
                 </button>
@@ -145,7 +151,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Full Name"
-                    className="w-full bg-canvas-soft border border-border-luxury text-xs py-2.5 px-2.5 text-charcoal focus:outline-none"
+                    className="w-full bg-canvas-soft border border-border-luxury text-xs py-2.5 px-3 text-charcoal focus:outline-none"
                   />
                 </div>
 
@@ -159,12 +165,12 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+91 Phone"
-                    className="w-full bg-canvas-soft border border-border-luxury text-xs py-2.5 px-2.5 text-charcoal focus:outline-none"
+                    className="w-full bg-canvas-soft border border-border-luxury text-xs py-2.5 px-3 text-charcoal focus:outline-none"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-[11px] uppercase tracking-wider text-charcoal-muted mb-1 font-semibold">
                     Project Location
@@ -205,7 +211,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
                 <label className="block text-[11px] uppercase tracking-wider text-charcoal-muted mb-1.5 font-semibold">
                   Approximate Budget
                 </label>
-                <div className="grid grid-cols-4 gap-1.5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
                   {['₹5–10L', '₹10–20L', '₹20–40L', '₹40L+'].map((t) => (
                     <button
                       type="button"
@@ -239,18 +245,18 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-charcoal hover:bg-bronze hover:text-charcoal text-canvas text-xs uppercase tracking-[0.2em] font-semibold py-3.5 transition-all duration-300 mt-2 shadow-sm"
+                className="w-full bg-charcoal hover:bg-bronze hover:text-charcoal text-canvas text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] font-semibold py-3.5 transition-all duration-300 mt-2 shadow-sm min-h-[46px]"
               >
                 {loading ? 'Submitting...' : 'REQUEST A CONSULTATION →'}
               </button>
 
-              <div className="pt-2 flex items-center justify-center gap-4 text-[11px] text-charcoal-subtle">
+              <div className="pt-1.5 flex items-center justify-center gap-3 sm:gap-4 text-[10px] sm:text-[11px] text-charcoal-subtle">
                 <span className="flex items-center gap-1">
                   <ShieldCheck size={13} className="text-bronze" />
                   100% Privacy
                 </span>
                 <span>·</span>
-                <span>Direct Principal Architect Review</span>
+                <span>Direct Architect Review</span>
               </div>
             </form>
           )}

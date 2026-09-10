@@ -4,7 +4,7 @@ export interface StoredLead extends LeadInquiry {
   id: string;
   submittedAt: string;
   status: 'New' | 'Contacted' | 'Meeting Scheduled' | 'Converted' | 'Closed';
-  source: 'Homepage Qualifier' | 'Navbar Let\'s Talk Modal' | 'Contact Page' | 'Case Study CTA';
+  source: 'Homepage Qualifier' | 'Navbar Let\'s Talk Modal' | 'Contact Page' | 'Case Study CTA' | 'Admin Manual Entry';
 }
 
 const STORAGE_KEY = 'sowakaah_studio_leads_v1';

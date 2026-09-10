@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, Phone, MessageSquare, Inbox } from 'lucide-react';
+import { Menu, X, ArrowRight, Phone, MessageSquare } from 'lucide-react';
 import { studioInfo } from '../../data/contentData';
 import { leadStorage } from '../../services/leadStorage';
 
@@ -10,10 +10,9 @@ interface NavbarProps {
   onOpenAdminModal?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLeadModal, onOpenAdminModal }) => {
+export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLeadModal }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [leadCount, setLeadCount] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,18 +20,22 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
     };
     window.addEventListener('scroll', handleScroll);
 
-    // Track lead count
-    const updateCount = () => {
-      setLeadCount(leadStorage.getLeads().length);
-    };
-    updateCount();
-    window.addEventListener('sowakaah_lead_added', updateCount);
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('sowakaah_lead_added', updateCount);
     };
   }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
 
   const navLinks = [
     { name: 'HOME', id: 'home' },
@@ -52,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
 
   return (
     <>
-      {/* Top micro-banner for trust, direct contact & admin leads portal */}
+      {/* Top micro-banner for desktop */}
       <div className="bg-charcoal text-canvas/80 text-xs py-1.5 px-4 hidden md:block border-b border-charcoal-light/50">
         <div className="max-w-7xl mx-auto flex justify-between items-center tracking-wider">
           <span className="flex items-center gap-2">
@@ -84,8 +87,8 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
       <header 
         className={`sticky top-0 z-40 transition-all duration-300 ${
           isScrolled 
-            ? 'bg-canvas/95 backdrop-blur-md shadow-sm border-b border-border-luxury py-3.5' 
-            : 'bg-canvas/80 backdrop-blur-sm border-b border-border-luxury/60 py-5'
+            ? 'bg-canvas/98 backdrop-blur-md shadow-sm border-b border-border-luxury py-3 sm:py-3.5' 
+            : 'bg-canvas/95 backdrop-blur-sm border-b border-border-luxury/60 py-3.5 sm:py-5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -95,15 +98,15 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
             onClick={() => handleLinkClick('home')}
             className="flex flex-col text-left group"
           >
-            <div className="flex items-center gap-2">
-              <span className="font-serif text-2xl sm:text-3xl tracking-[0.15em] font-medium text-charcoal group-hover:text-bronze transition-colors">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="font-serif text-xl sm:text-2xl lg:text-3xl tracking-[0.15em] font-medium text-charcoal group-hover:text-bronze transition-colors">
                 SOWAKAAH
               </span>
-              <span className="text-[10px] text-bronze font-serif font-bold uppercase tracking-widest align-super">
+              <span className="text-[9px] sm:text-[10px] text-bronze font-serif font-bold uppercase tracking-widest align-super">
                 ™
               </span>
             </div>
-            <span className="text-[10px] tracking-[0.25em] text-charcoal-muted uppercase font-light -mt-1 pl-0.5">
+            <span className="text-[8.5px] sm:text-[10px] tracking-[0.22em] text-charcoal-muted uppercase font-light -mt-1 pl-0.5">
               Interior Design Studio
             </span>
           </button>
@@ -128,81 +131,102 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
             ))}
           </nav>
 
-          {/* Right Action Button */}
+          {/* Right Action Button on Desktop / Tablet */}
           <div className="hidden sm:flex items-center gap-3">
             <button
               onClick={onOpenLeadModal}
-              className="inline-flex items-center gap-2 bg-charcoal text-canvas hover:bg-bronze hover:text-charcoal text-xs uppercase tracking-widest font-semibold px-5 py-2.5 rounded-none border border-charcoal transition-all duration-300 shadow-sm"
+              className="inline-flex items-center gap-2 bg-charcoal text-canvas hover:bg-bronze hover:text-charcoal text-xs uppercase tracking-widest font-semibold px-4 sm:px-5 py-2.5 rounded-none border border-charcoal transition-all duration-300 shadow-sm"
             >
               <span>LET'S TALK</span>
               <ArrowRight size={14} />
             </button>
           </div>
 
-          {/* Mobile Hamburger Button */}
-          <div className="flex items-center gap-3 sm:hidden">
+          {/* Mobile Actions: Fast WhatsApp + Estimate + Hamburger */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <a
+              href={`https://wa.me/${studioInfo.contact.phoneRaw}?text=${encodeURIComponent("Hi Sowakaah Designs, I'd like to inquire about an interior design project.")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 text-emerald-700 hover:bg-emerald-50 rounded-full transition-colors"
+              aria-label="WhatsApp Studio"
+            >
+              <MessageSquare size={19} />
+            </a>
+
             <button
               onClick={onOpenLeadModal}
-              className="bg-bronze text-charcoal text-[11px] font-semibold tracking-wider uppercase px-3 py-1.5"
+              className="bg-charcoal text-canvas text-[10px] sm:text-xs font-semibold tracking-wider uppercase px-2.5 sm:px-3 py-1.5 border border-charcoal"
             >
-              Estimate
+              Consult
             </button>
+
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-charcoal focus:outline-none"
-              aria-label="Toggle navigation menu"
+              className="p-2 text-charcoal focus:outline-none min-w-[40px] min-h-[40px] flex items-center justify-center rounded hover:bg-canvas-soft transition-colors"
+              aria-label={mobileMenuOpen ? "Close menu" : "Open navigation menu"}
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileMenuOpen ? <X size={23} /> : <Menu size={23} />}
             </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Fullscreen Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-[60px] z-50 bg-canvas/98 backdrop-blur-lg flex flex-col justify-between p-6 sm:hidden border-t border-border-luxury animate-in fade-in slide-in-from-top-4 duration-200">
-          <div className="space-y-4 pt-4">
-            <div className="text-[10px] tracking-widest text-bronze uppercase font-semibold">
-              Navigation
+        <div className="fixed inset-0 top-[57px] sm:top-[68px] z-50 bg-canvas/98 backdrop-blur-xl flex flex-col justify-between p-5 sm:p-8 lg:hidden overflow-y-auto border-t border-border-luxury animate-in fade-in duration-200">
+          <div className="space-y-2 pt-2">
+            <div className="text-[10px] tracking-[0.25em] text-bronze uppercase font-semibold pb-1 border-b border-border-luxury/40">
+              Menu Navigation
             </div>
             {navLinks.map((link) => (
               <button
                 key={link.id}
                 onClick={() => handleLinkClick(link.id)}
-                className={`block w-full text-left font-serif text-2xl py-2.5 border-b border-border-luxury/40 ${
-                  activeView === link.id ? 'text-bronze font-semibold' : 'text-charcoal'
+                className={`flex items-center justify-between w-full text-left font-serif text-2xl py-3 border-b border-border-luxury/30 transition-colors ${
+                  activeView === link.id ? 'text-bronze font-semibold' : 'text-charcoal hover:text-bronze'
                 }`}
               >
-                {link.name}
+                <span>{link.name}</span>
+                <ArrowRight size={16} className={activeView === link.id ? 'text-bronze' : 'text-charcoal-muted/40'} />
               </button>
             ))}
           </div>
 
-          <div className="space-y-4 pt-6 border-t border-border-luxury">
+          <div className="space-y-3 pt-6 pb-4 border-t border-border-luxury">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenLeadModal();
               }}
-              className="w-full flex items-center justify-center gap-2 bg-charcoal text-canvas py-3.5 text-xs uppercase tracking-widest font-semibold"
+              className="w-full flex items-center justify-center gap-2 bg-charcoal hover:bg-bronze hover:text-charcoal text-canvas py-4 text-xs uppercase tracking-widest font-semibold transition-colors shadow-md"
             >
-              <span>Start Your Project</span>
-              <ArrowRight size={16} />
+              <span>Start Your Project →</span>
             </button>
             
-            <a
-              href={`https://wa.me/${studioInfo.contact.phoneRaw}?text=${encodeURIComponent('Hi Sowakaah Studio, I would like to inquire about an interior design project.')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 bg-emerald-700 text-white py-3 text-xs uppercase tracking-widest font-semibold"
-            >
-              <MessageSquare size={16} />
-              <span>Chat on WhatsApp</span>
-            </a>
+            <div className="grid grid-cols-2 gap-2.5">
+              <a
+                href={`tel:${studioInfo.contact.phoneRaw}`}
+                className="flex items-center justify-center gap-2 bg-canvas-soft border border-border-luxury text-charcoal py-3 text-xs uppercase tracking-wider font-semibold"
+              >
+                <Phone size={14} className="text-bronze" />
+                <span>Call Studio</span>
+              </a>
 
-            <div className="text-center text-xs text-charcoal-muted pt-2">
-              <p>Chhindwara & Nagpur, Central India</p>
-              <p className="mt-1 font-medium">{studioInfo.contact.phone}</p>
+              <a
+                href={`https://wa.me/${studioInfo.contact.phoneRaw}?text=${encodeURIComponent('Hi Sowakaah Studio, I would like to inquire about an interior design project.')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 bg-emerald-700 text-white py-3 text-xs uppercase tracking-wider font-semibold"
+              >
+                <MessageSquare size={14} />
+                <span>WhatsApp</span>
+              </a>
+            </div>
+
+            <div className="text-center text-[11px] text-charcoal-muted pt-2 font-light">
+              <p>Chhindwara & Nagpur · Central India</p>
+              <p className="mt-0.5 font-medium text-charcoal">{studioInfo.contact.phone}</p>
             </div>
           </div>
         </div>

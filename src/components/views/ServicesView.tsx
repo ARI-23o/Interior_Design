@@ -26,11 +26,11 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ onOpenLeadModal }) =
         </div>
 
         {/* Deep Dive Services List */}
-        <div className="space-y-12">
+        <div className="space-y-8 sm:space-y-12">
           {servicesData.map((service, idx) => (
             <div
               key={service.id}
-              className="bg-canvas-soft border border-border-luxury p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center luxury-card-hover"
+              className="bg-canvas-soft border border-border-luxury p-5 sm:p-12 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 items-center luxury-card-hover"
             >
               <div className="lg:col-span-5 relative aspect-[4/3] overflow-hidden border border-border-luxury">
                 <img
@@ -43,13 +43,13 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ onOpenLeadModal }) =
                 </div>
               </div>
 
-              <div className="lg:col-span-7 space-y-6">
+              <div className="lg:col-span-7 space-y-5 sm:space-y-6">
                 <div>
                   <div className="flex items-center gap-2 text-xs text-bronze font-semibold uppercase tracking-widest mb-1">
                     <Clock size={13} />
                     <span>Estimated Completion: {service.timeline}</span>
                   </div>
-                  <h2 className="font-serif text-3xl sm:text-4xl text-charcoal">
+                  <h2 className="font-serif text-2xl sm:text-4xl text-charcoal">
                     {service.title}
                   </h2>
                 </div>
@@ -72,13 +72,13 @@ export const ServicesView: React.FC<ServicesViewProps> = ({ onOpenLeadModal }) =
                   </div>
                 </div>
 
-                <div className="pt-4 flex items-center justify-between">
+                <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <span className="text-xs text-charcoal-muted italic">
                     Ideal For: {service.idealFor}
                   </span>
                   <button
                     onClick={onOpenLeadModal}
-                    className="bg-charcoal hover:bg-bronze hover:text-charcoal text-canvas text-xs uppercase tracking-widest px-6 py-3 font-semibold flex items-center gap-2 transition-all"
+                    className="w-full sm:w-auto bg-charcoal hover:bg-bronze hover:text-charcoal text-canvas text-xs uppercase tracking-widest px-6 py-3.5 font-semibold flex items-center justify-center gap-2 transition-all"
                   >
                     <span>Inquire Now</span>
                     <ArrowRight size={14} />

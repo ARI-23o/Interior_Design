@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Sparkles, ArrowRight, CheckCircle2, ChevronLeft, ChevronRight, Pause, Play, RotateCcw } from 'lucide-react';
+import { Sparkles, CheckCircle2, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import { processStepsData } from '../../data/contentData';
 
 interface ProcessSectionProps {
@@ -44,8 +44,9 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ onOpenLeadModal 
   useEffect(() => {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
-    const cardWidth = container.firstElementChild?.clientWidth || 380;
-    const gap = 24;
+    const card = container.querySelector<HTMLElement>('.process-card');
+    const cardWidth = card ? card.offsetWidth : 300;
+    const gap = 16;
     const targetScroll = activeIndex * (cardWidth + gap);
 
     container.scrollTo({
@@ -82,7 +83,7 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ onOpenLeadModal 
   };
 
   return (
-    <section className="py-24 bg-canvas-soft border-t border-border-luxury overflow-hidden relative">
+    <section className="py-14 sm:py-24 bg-canvas-soft border-t border-border-luxury overflow-hidden relative">
       
       {/* Background ambient lighting */}
       <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-bronze/5 rounded-full blur-3xl pointer-events-none" />
@@ -90,13 +91,13 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ onOpenLeadModal 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header with Navigation & Loop Indicator */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
-          <div className="max-w-2xl space-y-3">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-5 sm:gap-6">
+          <div className="max-w-2xl space-y-2 sm:space-y-3">
             <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-bronze font-semibold">
               <Sparkles size={14} className={isLoopingFlip ? "animate-spin text-bronze-dark" : "text-bronze"} />
               <span>Structured Transparency</span>
               {isLoopingFlip && (
-                <span className="text-[10px] bg-bronze text-charcoal px-2 py-0.5 font-bold uppercase tracking-wider animate-bounce ml-2">
+                <span className="text-[9px] sm:text-[10px] bg-bronze text-charcoal px-2 py-0.5 font-bold uppercase tracking-wider animate-bounce ml-2">
                   Restarting from Stage 01
                 </span>
               )}
@@ -104,35 +105,35 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ onOpenLeadModal 
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-charcoal leading-tight">
               How We Bring Your Vision to Life.
             </h2>
-            <p className="text-charcoal-muted text-sm sm:text-base font-light">
-              A continuous step-by-step roadmap from your first consultation to the moment you step into your fully finished, ready-to-live home.
+            <p className="text-charcoal-muted text-xs sm:text-base font-light">
+              A continuous step-by-step roadmap from your first consultation to your fully finished home.
             </p>
           </div>
 
           {/* Carousel Controls with Auto-scroll Indicator */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3 self-start md:self-auto">
             <button
               onClick={() => setIsPaused(!isPaused)}
-              className="p-2 border border-border-luxury bg-canvas text-charcoal hover:border-charcoal transition-colors text-xs flex items-center gap-1.5 px-3.5 shadow-sm"
+              className="p-2 border border-border-luxury bg-canvas text-charcoal hover:border-charcoal transition-colors text-xs flex items-center gap-1.5 px-3 shadow-sm"
               title={isPaused ? "Resume continuous auto-scroll" : "Pause auto-scroll"}
             >
-              {isPaused ? <Play size={13} className="text-emerald-700" /> : <Pause size={13} className="text-bronze" />}
-              <span className="text-[11px] uppercase tracking-wider font-semibold">
-                {isPaused ? 'Resume Auto' : 'Auto Playing'}
+              {isPaused ? <Play size={12} className="text-emerald-700" /> : <Pause size={12} className="text-bronze" />}
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-wider font-semibold">
+                {isPaused ? 'Resume' : 'Auto'}
               </span>
             </button>
 
             <div className="flex items-center gap-1.5">
               <button
                 onClick={handlePrev}
-                className="w-10 h-10 border border-border-luxury bg-canvas text-charcoal hover:bg-charcoal hover:text-canvas hover:border-charcoal flex items-center justify-center transition-colors shadow-sm"
+                className="w-9 h-9 sm:w-10 sm:h-10 border border-border-luxury bg-canvas text-charcoal hover:bg-charcoal hover:text-canvas hover:border-charcoal flex items-center justify-center transition-colors shadow-sm"
                 aria-label="Previous step"
               >
                 <ChevronLeft size={18} />
               </button>
               <button
                 onClick={handleNext}
-                className="w-10 h-10 border border-border-luxury bg-canvas text-charcoal hover:bg-charcoal hover:text-canvas hover:border-charcoal flex items-center justify-center transition-colors shadow-sm"
+                className="w-9 h-9 sm:w-10 sm:h-10 border border-border-luxury bg-canvas text-charcoal hover:bg-charcoal hover:text-canvas hover:border-charcoal flex items-center justify-center transition-colors shadow-sm"
                 aria-label="Next step"
               >
                 <ChevronRight size={18} />
@@ -142,7 +143,7 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ onOpenLeadModal 
         </div>
 
         {/* Live Auto-Scroll Progress Timer Bar */}
-        <div className="w-full bg-border-luxury/50 h-1 mb-8 overflow-hidden">
+        <div className="w-full bg-border-luxury/50 h-1 mb-6 sm:mb-8 overflow-hidden">
           <div
             key={progressKey}
             className={`h-full bg-bronze transition-all ${
@@ -161,10 +162,10 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ onOpenLeadModal 
           onMouseLeave={() => setIsPaused(false)}
           onTouchStart={() => setIsPaused(true)}
           onTouchEnd={() => setIsPaused(false)}
-          className={`flex gap-6 overflow-x-auto pb-8 pt-2 scrollbar-none snap-x snap-mandatory cursor-grab active:cursor-grabbing transition-transform duration-700 ${
+          className={`flex gap-4 sm:gap-6 overflow-x-auto pb-6 sm:pb-8 pt-1 no-scrollbar snap-x snap-mandatory cursor-grab active:cursor-grabbing transition-transform duration-700 -mx-4 px-4 sm:mx-0 sm:px-0 ${
             isLoopingFlip ? 'scale-[0.98]' : 'scale-100'
           }`}
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', perspective: '1200px' }}
+          style={{ perspective: '1200px' }}
         >
           {processStepsData.map((step, idx) => {
             const isActive = activeIndex === idx;
@@ -174,7 +175,7 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ onOpenLeadModal 
               <div
                 key={step.stepNumber}
                 onClick={() => handleJumpToStep(idx)}
-                className={`w-[320px] sm:w-[380px] md:w-[420px] shrink-0 snap-start bg-canvas border p-7 sm:p-8 flex flex-col justify-between transition-all duration-700 group shadow-sm relative overflow-hidden ${
+                className={`process-card w-[84vw] xs:w-[320px] sm:w-[380px] md:w-[420px] shrink-0 snap-center sm:snap-start bg-canvas border p-5 sm:p-8 flex flex-col justify-between transition-all duration-700 group shadow-sm relative overflow-hidden ${
                   isActive
                     ? 'border-bronze shadow-luxury ring-1 ring-bronze/60 scale-[1.01]'
                     : 'border-border-luxury opacity-80 hover:opacity-100 hover:border-charcoal'
@@ -192,14 +193,14 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ onOpenLeadModal 
                 )}
 
                 {/* Card Header */}
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   <div className="flex justify-between items-start">
-                    <span className={`font-serif text-4xl sm:text-5xl font-light transition-all duration-500 ${
-                      isActive ? 'text-bronze scale-110' : 'text-bronze/70'
+                    <span className={`font-serif text-3xl sm:text-5xl font-light transition-all duration-500 ${
+                      isActive ? 'text-bronze scale-105 sm:scale-110' : 'text-bronze/70'
                     }`}>
                       {step.stepNumber}
                     </span>
-                    <span className={`text-[10px] uppercase tracking-widest px-2.5 py-1 font-semibold border transition-colors ${
+                    <span className={`text-[9.5px] sm:text-[10px] uppercase tracking-widest px-2.5 py-1 font-semibold border transition-colors ${
                       isActive ? 'bg-charcoal text-canvas border-charcoal' : 'bg-canvas-soft text-charcoal-muted border-border-luxury'
                     }`}>
                       Stage {idx + 1} of {totalSteps}
@@ -207,10 +208,10 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ onOpenLeadModal 
                   </div>
 
                   <div>
-                    <h3 className="font-serif text-2xl sm:text-3xl text-charcoal group-hover:text-bronze-dark transition-colors leading-snug">
+                    <h3 className="font-serif text-xl sm:text-2xl md:text-3xl text-charcoal group-hover:text-bronze-dark transition-colors leading-snug">
                       {step.title}
                     </h3>
-                    <p className="text-xs uppercase tracking-wider text-bronze font-semibold mt-1">
+                    <p className="text-xs uppercase tracking-wider text-bronze font-semibold mt-0.5 sm:mt-1">
                       {step.tagline}
                     </p>
                   </div>
@@ -220,8 +221,8 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ onOpenLeadModal 
                   </p>
 
                   {/* Deliverables Checklist */}
-                  <div className="bg-canvas-soft p-4 border border-border-luxury/70 space-y-2">
-                    <span className="text-[10px] uppercase tracking-widest text-bronze font-semibold block">
+                  <div className="bg-canvas-soft p-3.5 sm:p-4 border border-border-luxury/70 space-y-2">
+                    <span className="text-[9.5px] sm:text-[10px] uppercase tracking-widest text-bronze font-semibold block">
                       What You Receive:
                     </span>
                     <div className="space-y-1.5">
@@ -236,8 +237,8 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ onOpenLeadModal 
                 </div>
 
                 {/* What Happens Next Footer in Card */}
-                <div className="pt-4 mt-6 border-t border-border-luxury/70 flex flex-col justify-between">
-                  <span className="text-[10px] uppercase tracking-widest text-charcoal-subtle font-semibold block mb-1">
+                <div className="pt-3 sm:pt-4 mt-4 sm:mt-6 border-t border-border-luxury/70 flex flex-col justify-between">
+                  <span className="text-[9.5px] sm:text-[10px] uppercase tracking-widest text-charcoal-subtle font-semibold block mb-1">
                     What Happens Next:
                   </span>
                   <p className="text-[11px] text-charcoal font-light italic leading-relaxed">
@@ -251,23 +252,23 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ onOpenLeadModal 
         </div>
 
         {/* Progress Navigation Dots & Active Stage Indicator */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4 border-t border-border-luxury/60">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4 pt-3 sm:pt-4 border-t border-border-luxury/60">
           <div className="flex items-center gap-2">
             {processStepsData.map((_, i) => (
               <button
                 key={i}
                 onClick={() => handleJumpToStep(i)}
-                className={`h-2.5 transition-all rounded-full ${
+                className={`h-2 sm:h-2.5 transition-all rounded-full ${
                   activeIndex === i 
-                    ? 'w-10 bg-bronze shadow-sm ring-2 ring-bronze/30' 
-                    : 'w-2.5 bg-border-luxury hover:bg-charcoal'
+                    ? 'w-8 sm:w-10 bg-bronze shadow-sm ring-2 ring-bronze/30' 
+                    : 'w-2 sm:w-2.5 bg-border-luxury hover:bg-charcoal'
                 }`}
                 aria-label={`Jump to Stage ${i + 1}`}
               />
             ))}
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-charcoal-muted uppercase tracking-wider font-light">
+          <div className="flex items-center gap-2 text-[11px] sm:text-xs text-charcoal-muted uppercase tracking-wider font-light">
             <span>Active Stage:</span>
             <strong className="text-charcoal font-semibold bg-canvas px-2.5 py-1 border border-border-luxury">
               {processStepsData[activeIndex].stepNumber} · {processStepsData[activeIndex].title}
@@ -276,15 +277,15 @@ export const ProcessSection: React.FC<ProcessSectionProps> = ({ onOpenLeadModal 
         </div>
 
         {/* Bottom Process CTA Banner */}
-        <div className="mt-14 p-8 bg-charcoal text-canvas flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 border border-charcoal-light shadow-md">
+        <div className="mt-10 sm:mt-14 p-6 sm:p-8 bg-charcoal text-canvas flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 sm:gap-6 border border-charcoal-light shadow-md">
           <div className="space-y-1">
             <span className="text-[10px] uppercase tracking-widest text-bronze font-semibold">Ready to Begin?</span>
-            <h4 className="font-serif text-2xl text-canvas">Start with Stage 01 · Lifestyle & Blueprint Consultation</h4>
-            <p className="text-xs text-canvas/70 font-light">We’ll review your architectural floor plans and answer any design questions with zero obligations.</p>
+            <h4 className="font-serif text-xl sm:text-2xl text-canvas">Start with Stage 01 · Blueprint Consultation</h4>
+            <p className="text-xs text-canvas/70 font-light">We’ll review your architectural floor plans and answer questions with zero obligations.</p>
           </div>
           <button
             onClick={onOpenLeadModal}
-            className="bg-bronze hover:bg-bronze-light text-charcoal font-semibold text-xs uppercase tracking-widest px-7 py-4 flex items-center justify-center gap-2 transition-colors shrink-0 shadow-sm"
+            className="w-full sm:w-auto bg-bronze hover:bg-bronze-light text-charcoal font-semibold text-xs uppercase tracking-widest px-6 sm:px-7 py-3.5 sm:py-4 flex items-center justify-center gap-2 transition-colors shrink-0 shadow-sm min-h-[44px]"
           >
             <span>START YOUR CONSULTATION →</span>
           </button>

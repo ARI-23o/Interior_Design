@@ -73,11 +73,11 @@ export const ContactView: React.FC = () => {
         </div>
 
         {/* Contact Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           
           {/* Left: Studio details & direct contact */}
-          <div className="lg:col-span-5 space-y-8">
-            <div className="bg-canvas-soft border border-border-luxury p-8 space-y-6">
+          <div className="lg:col-span-5 space-y-6 sm:space-y-8">
+            <div className="bg-canvas-soft border border-border-luxury p-5 sm:p-8 space-y-6">
               <h3 className="font-serif text-2xl text-charcoal">
                 Direct Channels
               </h3>
@@ -163,7 +163,7 @@ export const ContactView: React.FC = () => {
           </div>
 
           {/* Right: Consultation Form */}
-          <div className="lg:col-span-7 bg-canvas-soft border border-border-luxury p-8 sm:p-12 shadow-sm">
+          <div className="lg:col-span-7 bg-canvas-soft border border-border-luxury p-5 sm:p-12 shadow-sm">
             {submitted ? (
               <div className="py-12 text-center space-y-4">
                 <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
