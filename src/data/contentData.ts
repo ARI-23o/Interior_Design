@@ -1,4 +1,5 @@
 import { Service, ProcessStep, Testimonial, Article } from '../types';
+import designerPhoto from '../assets/designer.jpg';
 
 export const studioInfo = {
   name: 'SOWAKAAH™',
@@ -6,11 +7,11 @@ export const studioInfo = {
   headline: 'Your Dream Home, Thoughtfully Designed.',
   subheadline: 'From the first idea to final execution, we create bespoke interiors tailored for the way you live across Chhindwara, Nagpur, and Central India.',
   founder: {
-    name: 'Ar. Ananya Deshmukh',
-    role: 'Principal Architect & Creative Director',
+    name: 'Lead Designer & Founder',
+    role: 'Principal Interior Architect & Creative Director',
     experienceYears: '8+',
     bio: 'I believe a truly luxurious home should feel deeply personal, effortlessly functional, and emotionally calming. Over the past 8+ years, our studio has crafted spaces that balance clean architectural lines with warm natural materials, giving each client a sanctuary they love waking up in every day.',
-    photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80'
+    photo: designerPhoto
   },
   contact: {
     phone: '+91 74898 08876',
