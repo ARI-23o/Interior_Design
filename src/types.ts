@@ -1,3 +1,10 @@
+export interface ExecutionStage {
+  phase: string;
+  title: string;
+  description: string;
+  image: string;
+}
+
 export interface Project {
   id: string;
   slug: string;
@@ -9,6 +16,9 @@ export interface Project {
   year: number;
   completionTime: string;
   clientBrief: string;
+  clientRequirements: string[];
+  designConcept: string;
+  layoutPlanning: string;
   designApproach: string[];
   materials: string[];
   palette: { name: string; hex: string }[];
@@ -16,6 +26,7 @@ export interface Project {
   galleryImages: string[];
   beforeImage?: string;
   afterImage?: string;
+  executionStages?: ExecutionStage[];
   featured?: boolean;
 }
 
@@ -47,6 +58,7 @@ export interface ProcessStep {
   tagline: string;
   description: string;
   deliverables: string[];
+  whatHappensNext: string;
 }
 
 export interface Article {
@@ -70,12 +82,10 @@ export interface Article {
 }
 
 export interface LeadInquiry {
-  projectType: string;
-  location: string;
-  budgetRange: string;
-  possession: string;
   name: string;
   phone: string;
-  email: string;
+  location: string;
+  designType: string;
+  budget: string;
   message: string;
 }

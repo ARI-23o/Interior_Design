@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, MapPin, Clock, Maximize2, ArrowRight, MessageSquare, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, MapPin, Clock, Maximize2, ArrowRight, MessageSquare, CheckCircle2, ChevronLeft, ChevronRight, Layers, Compass, Sparkles } from 'lucide-react';
 import { Project } from '../../types';
 import { studioInfo } from '../../data/contentData';
 
@@ -19,12 +19,12 @@ export const ProjectCaseStudyModal: React.FC<ProjectCaseStudyModalProps> = ({
   if (!project) return null;
 
   const handleWhatsAppCaseStudy = () => {
-    const message = `Hi Sowakaah Studio, I just reviewed your case study for "${project.title}" (${project.location}, ${project.areaSqFt} sq.ft.) and I'd like to discuss a similar design for my space.`;
+    const message = `Hi Sowakaah Designs, I loved your "${project.title}" case study (${project.location}, ${project.areaSqFt} sq.ft.) and would like to discuss a similar design for my space.`;
     window.open(`https://wa.me/${studioInfo.contact.phoneRaw}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal/80 backdrop-blur-md flex justify-center p-2 sm:p-4 md:p-6 animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal/85 backdrop-blur-md flex justify-center p-2 sm:p-4 md:p-6 animate-in fade-in duration-200">
       
       <div className="relative bg-canvas w-full max-w-5xl my-auto border border-border-luxury shadow-luxury-lg overflow-hidden animate-in zoom-in-95 duration-200">
         
@@ -32,10 +32,10 @@ export const ProjectCaseStudyModal: React.FC<ProjectCaseStudyModalProps> = ({
         <div className="sticky top-0 z-20 bg-canvas/95 backdrop-blur-md border-b border-border-luxury px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="text-[10px] uppercase tracking-widest bg-bronze/10 text-bronze-dark px-2.5 py-1 font-semibold">
-              Case Study
+              Project Case Study
             </span>
             <span className="text-xs text-charcoal-muted hidden sm:inline">
-              {project.category} · {project.location}
+              {project.category} · {project.location} · {project.areaSqFt} sq.ft.
             </span>
           </div>
 
@@ -63,7 +63,7 @@ export const ProjectCaseStudyModal: React.FC<ProjectCaseStudyModalProps> = ({
               <span>·</span>
               <span className="flex items-center gap-1">
                 <Clock size={13} className="text-bronze" />
-                {project.completionTime} Handover
+                {project.completionTime} Duration
               </span>
             </div>
 
@@ -76,7 +76,7 @@ export const ProjectCaseStudyModal: React.FC<ProjectCaseStudyModalProps> = ({
             </p>
           </div>
 
-          {/* Main Gallery Lightbox Carousel */}
+          {/* Main Gallery Carousel */}
           <div className="space-y-4">
             <div className="relative aspect-[16/10] overflow-hidden bg-charcoal border border-border-luxury">
               <img
@@ -124,29 +124,29 @@ export const ProjectCaseStudyModal: React.FC<ProjectCaseStudyModalProps> = ({
             </div>
           </div>
 
-          {/* Section: The Brief & The Approach */}
+          {/* Section: The Brief & Client Requirements */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-border-luxury">
             
             {/* The Brief */}
             <div className="space-y-3">
               <h3 className="text-xs uppercase tracking-[0.2em] font-semibold text-bronze">
-                The Client Brief
+                Project Brief
               </h3>
               <p className="text-sm text-charcoal leading-relaxed font-light bg-canvas-soft p-5 border border-border-luxury">
                 "{project.clientBrief}"
               </p>
             </div>
 
-            {/* Design Approach */}
+            {/* Client Requirements */}
             <div className="space-y-3">
               <h3 className="text-xs uppercase tracking-[0.2em] font-semibold text-bronze">
-                Design & Architectural Approach
+                Client Requirements
               </h3>
-              <div className="space-y-2">
-                {project.designApproach.map((item, idx) => (
+              <div className="space-y-2 bg-canvas-soft p-5 border border-border-luxury">
+                {project.clientRequirements?.map((req, idx) => (
                   <div key={idx} className="flex items-start gap-2.5 text-xs text-charcoal font-light">
                     <CheckCircle2 size={14} className="text-bronze shrink-0 mt-0.5" />
-                    <span>{item}</span>
+                    <span>{req}</span>
                   </div>
                 ))}
               </div>
@@ -154,9 +154,54 @@ export const ProjectCaseStudyModal: React.FC<ProjectCaseStudyModalProps> = ({
 
           </div>
 
-          {/* Materiality & Color Palette */}
+          {/* Design Concept & Spatial Layout Planning */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-border-luxury">
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-bronze">
+                <Compass size={14} />
+                <span>Design Concept</span>
+              </div>
+              <p className="text-sm text-charcoal leading-relaxed font-light">
+                {project.designConcept}
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-bronze">
+                <Layers size={14} />
+                <span>Floor & Spatial Layout Strategy</span>
+              </div>
+              <p className="text-sm text-charcoal-muted leading-relaxed font-light">
+                {project.layoutPlanning}
+              </p>
+            </div>
+          </div>
+
+          {/* 3-Phase Execution Proof */}
+          {project.executionStages && (
+            <div className="pt-6 border-t border-border-luxury space-y-4">
+              <h3 className="text-xs uppercase tracking-[0.2em] font-semibold text-bronze">
+                Execution Stages: 3D Concept → Site → Finished Space
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {project.executionStages.map((stg, i) => (
+                  <div key={i} className="border border-border-luxury bg-canvas-soft overflow-hidden">
+                    <div className="aspect-[16/10] overflow-hidden">
+                      <img src={stg.image} alt={stg.title} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="p-4 space-y-1">
+                      <span className="text-[10px] uppercase tracking-wider text-bronze font-semibold block">{stg.phase}</span>
+                      <h4 className="font-serif text-base text-charcoal">{stg.title}</h4>
+                      <p className="text-xs text-charcoal-muted font-light leading-relaxed">{stg.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Materiality & Color Story */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-6 border-t border-border-luxury">
-            
             <div>
               <h3 className="text-xs uppercase tracking-[0.2em] font-semibold text-bronze mb-3">
                 Curated Materials
@@ -172,7 +217,7 @@ export const ProjectCaseStudyModal: React.FC<ProjectCaseStudyModalProps> = ({
 
             <div>
               <h3 className="text-xs uppercase tracking-[0.2em] font-semibold text-bronze mb-3">
-                Color Story
+                Color Palette
               </h3>
               <div className="flex flex-wrap gap-3">
                 {project.palette.map((p, i) => (
@@ -183,17 +228,16 @@ export const ProjectCaseStudyModal: React.FC<ProjectCaseStudyModalProps> = ({
                 ))}
               </div>
             </div>
-
           </div>
 
-          {/* Bottom Conversion Box (Sales tool turning readers into leads) */}
+          {/* Bottom Conversion Box: Exact User Requested Phrasing */}
           <div className="bg-charcoal text-canvas p-8 sm:p-10 border border-charcoal-light flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
               <span className="text-[10px] uppercase tracking-widest text-bronze font-semibold block mb-1">
-                Inspired by this aesthetic?
+                Customized for Your Living Requirements
               </span>
               <h4 className="font-serif text-2xl sm:text-3xl text-canvas">
-                Let's discuss something similar for your space.
+                Love this style? Let's create something similar for you.
               </h4>
             </div>
 
@@ -203,16 +247,16 @@ export const ProjectCaseStudyModal: React.FC<ProjectCaseStudyModalProps> = ({
                   onClose();
                   onOpenLeadModal();
                 }}
-                className="bg-bronze hover:bg-bronze-light text-charcoal font-semibold text-xs uppercase tracking-widest px-6 py-3.5 transition-colors"
+                className="bg-bronze hover:bg-bronze-light text-charcoal font-semibold text-xs uppercase tracking-widest px-7 py-3.5 transition-colors shadow-md"
               >
-                Start Your Project →
+                START YOUR PROJECT →
               </button>
               <button
                 onClick={handleWhatsAppCaseStudy}
                 className="border border-canvas/30 hover:border-canvas text-canvas text-xs uppercase tracking-widest px-5 py-3.5 flex items-center gap-2 transition-colors"
               >
                 <MessageSquare size={14} className="text-emerald-400" />
-                <span>WhatsApp Brief</span>
+                <span>WhatsApp This Case Study</span>
               </button>
             </div>
           </div>

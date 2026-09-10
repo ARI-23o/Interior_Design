@@ -4,14 +4,22 @@ import designerPhoto from '../assets/designer.jpg';
 export const studioInfo = {
   name: 'SOWAKAAH™',
   tagline: 'Interior Design Studio',
-  headline: 'Your Dream Home, Thoughtfully Designed.',
-  subheadline: 'From the first idea to final execution, we create bespoke interiors tailored for the way you live across Chhindwara, Nagpur, and Central India.',
+  headline: 'Timeless Interiors, Designed Around You.',
+  subheadline: 'Bespoke residential interiors crafted around your lifestyle, taste and way of living across Chhindwara, Nagpur, and Central India.',
   founder: {
-    name: 'Lead Designer & Founder',
+    name: 'Founder & Principal Designer',
+    studioBrand: 'Sowakaah Designs',
     role: 'Principal Interior Architect & Creative Director',
     experienceYears: '8+',
-    bio: 'I believe a truly luxurious home should feel deeply personal, effortlessly functional, and emotionally calming. Over the past 8+ years, our studio has crafted spaces that balance clean architectural lines with warm natural materials, giving each client a sanctuary they love waking up in every day.',
-    photo: designerPhoto
+    quote: "I'm the founder of Sowakaah Designs. I believe great interiors should not only look beautiful, but also feel effortless to live in.",
+    bio: "I founded Sowakaah Designs with a simple philosophy: a great home shouldn't just be an aesthetic showpiece for guests — it must feel intuitive, calm, and deeply personal to the family living in it. Over the last 8+ years, our studio has delivered over 50 completed residences by balancing architectural rigor with disciplined on-site craftsmanship.",
+    photo: designerPhoto,
+    credentials: [
+      { label: 'Experience', val: '8+ Years' },
+      { label: 'Completed Residencies', val: '50+ Spaces' },
+      { label: 'Google Rating', val: '4.9 ★ (48 Reviews)' },
+      { label: 'Execution', val: '100% Turnkey' }
+    ]
   },
   contact: {
     phone: '+91 74898 08876',
@@ -26,7 +34,17 @@ export const studioInfo = {
     { value: '50+', label: 'Projects Completed' },
     { value: '8+', label: 'Years of Experience' },
     { value: '2', label: 'Prime Studio Hubs (Chhindwara & Nagpur)' },
-    { value: '98%', label: 'On-Time Handover Rate' }
+    { value: '4.9★', label: 'Client Google Rating' }
+  ],
+  materialPartners: [
+    { name: 'Blum Austria', category: 'Precision Hardware' },
+    { name: 'Hettich Germany', category: 'Cabinetry Systems' },
+    { name: 'Saint-Gobain', category: 'Acoustic & Fluted Glass' },
+    { name: 'Asian Paints Royale', category: 'Low-VOC Coatings' },
+    { name: 'Hafele', category: 'Architectural Fittings' },
+    { name: 'Greenlam', category: 'Engineered Veneers' },
+    { name: 'Botticino Marble', category: 'Imported Natural Stone' },
+    { name: 'Kajaria Eternity', category: 'Large Format Slabs' }
   ]
 };
 
@@ -43,12 +61,12 @@ export const whyChooseUsData = [
   },
   {
     number: '03',
-    title: 'Transparent Pricing & Timelines',
-    description: 'Itemized BOQ with zero hidden surcharges. Real-time weekly WhatsApp site reports and locked-in handover milestone commitments.'
+    title: 'Transparent Process & Fixed BOQ',
+    description: 'Itemized Bill of Quantities with zero hidden surcharges. Real-time weekly WhatsApp site reports and locked-in handover milestone commitments.'
   },
   {
     number: '04',
-    title: 'Uncompromising Material Quality',
+    title: 'Attention to Detail & Material Craft',
     description: 'Direct sourcing of marine-grade plywood (BWP 710), genuine Italian stone, German Blum hardware, and low-VOC bespoke coatings.'
   }
 ];
@@ -109,38 +127,43 @@ export const servicesData: Service[] = [
 export const processStepsData: ProcessStep[] = [
   {
     stepNumber: '01',
-    title: 'Initial Consultation & Site Audit',
-    tagline: 'Understanding your lifestyle, expectations, and budget.',
-    description: 'We meet in person or virtually to analyze your floor plans, understand your daily family habits, assess natural light, and align on a realistic investment budget.',
-    deliverables: ['Detailed lifestyle brief', 'Preliminary budget range', 'Scope of work alignment']
+    title: 'Consultation & Lifestyle Discovery',
+    tagline: 'Understanding your lifestyle, daily routines, and realistic budget.',
+    description: 'We meet in person or via discovery call to analyze your architectural floor plan, discuss your family habits (entertaining, cooking, storage pain-points), and lock in an investment bracket.',
+    deliverables: ['Detailed lifestyle & functional brief', 'Realistic budget tier roadmap', 'Scope of work alignment'],
+    whatHappensNext: 'We assign a dedicated senior design lead and schedule precise on-site laser measurements.'
   },
   {
     stepNumber: '02',
     title: 'Concept & Spatial Layouts',
-    tagline: 'Translating your vision into 2D plans and mood boards.',
-    description: 'We develop optimized 2D furniture layouts with spatial ergonomics, alongside curated aesthetic mood boards defining colors, lighting mood, and textures.',
-    deliverables: ['2D Furniture layout options', 'Material mood boards', 'Color palette curation']
+    tagline: 'Translating your vision into 2D space planning and moodboards.',
+    description: 'We develop ergonomic 2D floor plans with spatial circulation pathways, paired with physical and digital material moodboards defining tones, textures, and lighting ambiance.',
+    deliverables: ['2D Furniture layout options', 'Material moodboards (Stone, Wood, Fabrics)', 'Color palette curation'],
+    whatHappensNext: 'Once you select your favorite layout, our 3D visualization studio begins photorealistic rendering.'
   },
   {
     stepNumber: '03',
-    title: '3D Visualization & Detail Design',
-    tagline: 'Experience your future home before construction begins.',
-    description: 'We create photorealistic 3D renders of every room and compile technical working drawings for electrical, plumbing, ceiling, and bespoke millwork.',
-    deliverables: ['Photorealistic 3D views', 'Complete working drawings & MEP plans', 'Detailed Itemized BOQ']
+    title: '3D Photorealism & Design Development',
+    tagline: 'Walk through your future home before construction starts.',
+    description: 'We create photorealistic 3D renders of every room and compile technical engineering drawings for electrical MEP, plumbing, false ceiling, and bespoke millwork.',
+    deliverables: ['Photorealistic 3D walkthrough views', 'Complete working drawings & electrical layouts', 'Locked itemized Bill of Quantities (BOQ)'],
+    whatHappensNext: 'With approved drawings and signed BOQ, procurement starts and site work commences.'
   },
   {
     stepNumber: '04',
-    title: 'Turnkey Execution & Sourcing',
-    tagline: 'Rigorous on-site project management & artisan craftsmanship.',
-    description: 'Our experienced project managers oversee daily on-site carpentry, civil finishes, and procurement of authentic materials with strict milestone checklists.',
-    deliverables: ['Weekly WhatsApp photo updates', 'Milestone quality checks', 'Factory-finished cabinetry']
+    title: 'Turnkey Execution & Site Supervision',
+    tagline: 'Rigorous on-site craftsmanship with weekly photo updates.',
+    description: 'Our dedicated site engineers oversee carpentry, civil alterations, ceiling framing, and electrical installations with strict quality-assurance checklists.',
+    deliverables: ['Weekly WhatsApp photo & video site logs', 'Milestone quality sign-offs', 'Factory-pressed modular cabinetry assembly'],
+    whatHappensNext: 'After major carpentry and painting are completed, we initiate the final deep-cleaning and styling.'
   },
   {
     stepNumber: '05',
-    title: 'Final Styling & Key Handover',
-    tagline: 'Step into your finished dream home, fully styled and immaculate.',
-    description: 'Deep site cleaning, final art and decor styling, quality snag-list clearance, and key handover with complete maintenance manuals and warranty docs.',
-    deliverables: ['Deep cleaned, ready-to-live home', 'Hardware & polish warranty certificates', 'Care & maintenance handbook']
+    title: 'Styling, Snag Clearance & Key Handover',
+    tagline: 'Step into your finished dream home, fully styled and pristine.',
+    description: 'We conduct full snag-list clearance, install bespoke loose furniture, rugs, art, and lighting fixtures, finishing with deep industrial cleaning and official key handover.',
+    deliverables: ['Deep cleaned, ready-to-live home', '10-Year ply and hardware warranty certificates', 'Care & maintenance handbook'],
+    whatHappensNext: 'Enjoy your bespoke home backed by our 1-year complimentary after-handover maintenance checkups.'
   }
 ];
 
@@ -148,32 +171,32 @@ export const testimonialsData: Testimonial[] = [
   {
     id: 't1',
     clientName: 'Dr. Nikhil & Radhika Verma',
-    location: 'Nagpur · Ramdaspeth',
+    location: 'Nagpur · Ramdaspeth Residence',
     projectType: '3 BHK Turnkey Luxury Residence',
-    review: 'Working with Sowakaah was the best decision we made for our new home. Being doctors with hectic schedules, their turnkey service gave us total peace of mind. The finished apartment looks exactly like the 3D renders!',
+    review: 'They understood our requirements from the beginning and handled the entire project beautifully. Being doctors with hectic schedules, their turnkey service gave us total peace of mind. The finished apartment looks exactly like the 3D renders!',
     rating: 5,
     avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
-    projectTitle: 'The Alabaster Haven'
+    projectTitle: 'The Alabaster Haven (2,450 sq.ft.)'
   },
   {
     id: 't2',
     clientName: 'Rajesh & Meenal Agrawal',
-    location: 'Chhindwara · VIP Road',
+    location: 'Chhindwara · VIP Road Villa',
     projectType: '4 BHK Duplex Bungalow',
-    review: 'The attention to detail in our villa is incredible. The double-height walnut panelling and modular kitchen are conversation starters whenever guests visit. Transparent billing and strictly on-time delivery.',
+    review: 'From the initial space planning to the double-height walnut panelling and modular kitchen, the execution was flawless. They kept us updated on WhatsApp every Friday with site photos, and delivered strictly on the promised date.',
     rating: 5,
     avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
-    projectTitle: 'Villa Tranquille'
+    projectTitle: 'Villa Tranquille (4,200 sq.ft.)'
   },
   {
     id: 't3',
     clientName: 'Prateek & Sunaina Sharma',
-    location: 'Nagpur · Civil Lines',
+    location: 'Nagpur · Civil Lines Penthouse',
     projectType: 'Penthouse Apartment',
-    review: 'From lighting design to custom furniture, Sowakaah transformed our space into a warm, modern sanctuary. Their team is extremely polite, professional, and responsive on WhatsApp throughout the 90 days.',
+    review: 'Sowakaah transformed our raw flat into a warm, modern sanctuary. Their attention to lighting, concealed storage, and clean marble joints is exceptional. Transparent billing and zero hidden surprises throughout the 90 days.',
     rating: 5,
     avatarUrl: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80',
-    projectTitle: 'The Earth & Oak Flat'
+    projectTitle: 'The Earth & Oak Flat (1,850 sq.ft.)'
   }
 ];
 

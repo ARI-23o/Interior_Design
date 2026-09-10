@@ -4,12 +4,12 @@ import { Footer } from './components/layout/Footer';
 import { HeroSection } from './components/home/HeroSection';
 import { TrustStatsSection } from './components/home/TrustStatsSection';
 import { FeaturedProjects } from './components/home/FeaturedProjects';
-import { MeetDesignerSection } from './components/home/MeetDesignerSection';
-import { ServicesSection } from './components/home/ServicesSection';
 import { WhyChooseUs } from './components/home/WhyChooseUs';
 import { BeforeAfterSection } from './components/home/BeforeAfterSection';
 import { ProcessSection } from './components/home/ProcessSection';
 import { TestimonialsSection } from './components/home/TestimonialsSection';
+import { MeetDesignerSection } from './components/home/MeetDesignerSection';
+import { ServicesSection } from './components/home/ServicesSection';
 import { InstagramSection } from './components/home/InstagramSection';
 import { LeadQualifierSection } from './components/home/LeadQualifierSection';
 import { ProjectCaseStudyModal } from './components/modals/ProjectCaseStudyModal';
@@ -70,55 +70,55 @@ export function App() {
       <main className="flex-grow">
         {activeView === 'home' && (
           <>
-            {/* 01. Hero Section (Option B conversion headline + dual CTAs) */}
+            {/* 01. Hero Section (Timeless Interiors, Designed Around You) */}
             <HeroSection
               onExploreProjects={handleExploreProjects}
               onOpenLeadModal={() => setLeadModalOpen(true)}
             />
 
-            {/* 02. Trust / Stats */}
+            {/* 02. Trust / Stats & Material Partners Strip */}
             <TrustStatsSection />
 
-            {/* 03. Featured Projects Portfolio (Clickable Case Studies) */}
+            {/* 03. Featured Projects (The Star of the Website with Rich Case Studies) */}
             <FeaturedProjects
               onSelectProject={handleSelectProject}
               onViewAllProjects={() => setActiveView('projects')}
             />
 
-            {/* 04. Meet the Designer & Studio Story */}
-            <MeetDesignerSection
-              onLearnMore={() => setActiveView('about')}
-              onOpenLeadModal={() => setLeadModalOpen(true)}
-            />
-
-            {/* 05. Core Services */}
+            {/* 04. Core Services Breakdown */}
             <ServicesSection
               onSelectService={handleSelectService}
               onOpenLeadModal={() => setLeadModalOpen(true)}
             />
 
-            {/* 06. Why Clients Choose Us */}
+            {/* 05. Why Clients Choose Us */}
             <WhyChooseUs
               onOpenLeadModal={() => setLeadModalOpen(true)}
             />
 
-            {/* 07. Interactive Before -> After Transformation Slider */}
+            {/* 06. 3-Phase Execution Proof & Before/After Slider */}
             <BeforeAfterSection
               onOpenLeadModal={() => setLeadModalOpen(true)}
             />
 
-            {/* 08. 5-Step Execution Roadmap */}
+            {/* 07. 5-Step Transparent Execution Roadmap */}
             <ProcessSection
               onOpenLeadModal={() => setLeadModalOpen(true)}
             />
 
-            {/* 09. Verified Testimonials */}
+            {/* 08. Verified Testimonials (Positioned after Projects & Process) */}
             <TestimonialsSection />
+
+            {/* 09. Meet the Designer & Studio Lead */}
+            <MeetDesignerSection
+              onLearnMore={() => setActiveView('about')}
+              onOpenLeadModal={() => setLeadModalOpen(true)}
+            />
 
             {/* 10. Instagram Social Proof */}
             <InstagramSection />
 
-            {/* 11. Multi-Step Interactive Budget Qualification Engine */}
+            {/* 11. Serious Enquiry Qualification & Lead Engine */}
             <LeadQualifierSection />
           </>
         )}
