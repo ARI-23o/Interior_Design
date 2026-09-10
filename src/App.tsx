@@ -14,6 +14,7 @@ import { InstagramSection } from './components/home/InstagramSection';
 import { LeadQualifierSection } from './components/home/LeadQualifierSection';
 import { ProjectCaseStudyModal } from './components/modals/ProjectCaseStudyModal';
 import { LeadModal } from './components/modals/LeadModal';
+import { AdminDashboardModal } from './components/admin/AdminDashboardModal';
 import { WhatsAppWidget } from './components/common/WhatsAppWidget';
 
 // Subviews
@@ -30,6 +31,7 @@ export function App() {
   const [activeView, setActiveView] = useState<string>('home');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [leadModalOpen, setLeadModalOpen] = useState<boolean>(false);
+  const [adminModalOpen, setAdminModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -64,6 +66,7 @@ export function App() {
         activeView={activeView}
         onNavigate={handleNavigate}
         onOpenLeadModal={() => setLeadModalOpen(true)}
+        onOpenAdminModal={() => setAdminModalOpen(true)}
       />
 
       {/* Main Content Areas */}
@@ -163,6 +166,7 @@ export function App() {
       <Footer
         onNavigate={handleNavigate}
         onOpenLeadModal={() => setLeadModalOpen(true)}
+        onOpenAdminModal={() => setAdminModalOpen(true)}
       />
 
       {/* Case Study Detail Modal */}
@@ -176,6 +180,12 @@ export function App() {
       <LeadModal
         isOpen={leadModalOpen}
         onClose={() => setLeadModalOpen(false)}
+      />
+
+      {/* Studio Enquiries Admin Dashboard Modal */}
+      <AdminDashboardModal
+        isOpen={adminModalOpen}
+        onClose={() => setAdminModalOpen(false)}
       />
 
       {/* Smart Floating WhatsApp Action */}

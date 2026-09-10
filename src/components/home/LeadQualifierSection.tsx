@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CheckCircle2, ArrowRight, ShieldCheck, Sparkles, MessageSquare, PhoneCall, Star } from 'lucide-react';
 import { studioInfo } from '../../data/contentData';
+import { leadStorage } from '../../services/leadStorage';
 
 export const LeadQualifierSection: React.FC = () => {
   const [name, setName] = useState('');
@@ -32,10 +33,22 @@ export const LeadQualifierSection: React.FC = () => {
     if (!name || !phone) return;
 
     setLoading(true);
+
+    // Save lead to persistent storage immediately
+    leadStorage.saveLead({
+      name,
+      phone,
+      location,
+      designType,
+      budget,
+      message,
+      source: 'Homepage Qualifier'
+    });
+
     setTimeout(() => {
       setLoading(false);
       setIsSubmitted(true);
-    }, 600);
+    }, 400);
   };
 
   const handleDirectWhatsApp = () => {

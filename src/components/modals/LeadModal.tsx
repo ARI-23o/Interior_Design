@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, CheckCircle2, ShieldCheck, Sparkles, MessageSquare } from 'lucide-react';
 import { studioInfo } from '../../data/contentData';
+import { leadStorage } from '../../services/leadStorage';
 
 interface LeadModalProps {
   isOpen: boolean;
@@ -24,10 +25,21 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
     if (!name || !phone) return;
 
     setLoading(true);
+
+    leadStorage.saveLead({
+      name,
+      phone,
+      location,
+      designType,
+      budget,
+      message,
+      source: 'Navbar Let\'s Talk Modal'
+    });
+
     setTimeout(() => {
       setLoading(false);
       setIsSubmitted(true);
-    }, 600);
+    }, 400);
   };
 
   const handleWhatsApp = () => {

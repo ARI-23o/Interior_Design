@@ -1,23 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, Phone, MessageSquare } from 'lucide-react';
+import { Menu, X, ArrowRight, Phone, MessageSquare, Inbox } from 'lucide-react';
 import { studioInfo } from '../../data/contentData';
+import { leadStorage } from '../../services/leadStorage';
 
 interface NavbarProps {
   activeView: string;
   onNavigate: (view: string) => void;
   onOpenLeadModal: () => void;
+  onOpenAdminModal?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLeadModal }) => {
+export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLeadModal, onOpenAdminModal }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [leadCount, setLeadCount] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // Track lead count
+    const updateCount = () => {
+      setLeadCount(leadStorage.getLeads().length);
+    };
+    updateCount();
+    window.addEventListener('sowakaah_lead_added', updateCount);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('sowakaah_lead_added', updateCount);
+    };
   }, []);
 
   const navLinks = [
@@ -38,7 +52,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
 
   return (
     <>
-      {/* Top micro-banner for trust & direct contact */}
+      {/* Top micro-banner for trust, direct contact & admin leads portal */}
       <div className="bg-charcoal text-canvas/80 text-xs py-1.5 px-4 hidden md:block border-b border-charcoal-light/50">
         <div className="max-w-7xl mx-auto flex justify-between items-center tracking-wider">
           <span className="flex items-center gap-2">
@@ -46,6 +60,16 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
             Bespoke Residential & Turnkey Interiors across Chhindwara & Nagpur
           </span>
           <div className="flex items-center gap-6">
+            {onOpenAdminModal && (
+              <button
+                onClick={onOpenAdminModal}
+                className="flex items-center gap-1.5 text-bronze-light hover:text-canvas transition-colors bg-charcoal-light px-2.5 py-0.5 border border-border-dark font-mono text-[11px]"
+                title="Open Studio Client Enquiries Dashboard"
+              >
+                <Inbox size={12} className="text-bronze" />
+                <span>Enquiries ({leadCount})</span>
+              </button>
+            )}
             <a 
               href={`tel:${studioInfo.contact.phoneRaw}`} 
               className="flex items-center gap-1.5 hover:text-bronze-light transition-colors"
@@ -54,7 +78,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
               <span>{studioInfo.contact.phone}</span>
             </a>
             <a 
-              href={`https://wa.me/${studioInfo.contact.phoneRaw}?text=${encodeURIComponent('Hi Sowakaah Studio, I would like to inquire about an interior design project.')}`}
+              href={`https://wa.me/${studioInfo.contact.phoneRaw}?text=${encodeURIComponent("Hi Sowakaah Designs, I'm interested in discussing an interior design project. I'd like to know more about your services.")}`}
               target="_blank"
               rel="noopener noreferrer" 
               className="flex items-center gap-1 hover:text-emerald-400 text-canvas transition-colors"

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, MessageSquare, Sparkles, CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
 import { studioInfo } from '../../data/contentData';
+import { leadStorage } from '../../services/leadStorage';
 
 export const ContactView: React.FC = () => {
   const [propertyType, setPropertyType] = useState('3 BHK');
@@ -15,6 +16,17 @@ export const ContactView: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !phone) return;
+
+    leadStorage.saveLead({
+      name,
+      phone,
+      location: city,
+      designType: propertyType,
+      budget: budgetRange,
+      message,
+      source: 'Contact Page'
+    });
+
     setSubmitted(true);
   };
 
