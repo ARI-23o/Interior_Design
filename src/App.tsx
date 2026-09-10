@@ -104,49 +104,49 @@ export function App() {
               onOpenLeadModal={() => setLeadModalOpen(true)}
             />
 
-            {/* 02. Trust / Stats & Material Partners Strip */}
-            <TrustStatsSection />
-
-            {/* 03. Featured Projects (The Star of the Website with Rich Case Studies) */}
+            {/* 02. Featured Projects (The Star of the Website - Large Photography) */}
             <FeaturedProjects
               onSelectProject={handleSelectProject}
               onViewAllProjects={() => setActiveView('projects')}
             />
 
-            {/* 04. Core Services Breakdown */}
+            {/* 03. Real Client Proof & Testimonials (Directly After Projects) */}
+            <TestimonialsSection />
+
+            {/* 04. Meet the Designer & Studio Story */}
+            <MeetDesignerSection
+              onLearnMore={() => setActiveView('about')}
+              onOpenLeadModal={() => setLeadModalOpen(true)}
+            />
+
+            {/* 05. Core Services Breakdown */}
             <ServicesSection
               onSelectService={handleSelectService}
               onOpenLeadModal={() => setLeadModalOpen(true)}
             />
 
-            {/* 05. Why Clients Choose Us */}
+            {/* 06. Trust / Stats & Material Partners Strip */}
+            <TrustStatsSection />
+
+            {/* 07. Why Clients Choose Us */}
             <WhyChooseUs
               onOpenLeadModal={() => setLeadModalOpen(true)}
             />
 
-            {/* 06. 3-Phase Execution Proof & Before/After Slider */}
+            {/* 08. 3-Phase Execution Proof & Before/After Slider */}
             <BeforeAfterSection
               onOpenLeadModal={() => setLeadModalOpen(true)}
             />
 
-            {/* 07. 5-Step Transparent Execution Roadmap */}
+            {/* 09. 5-Step Transparent Execution Roadmap (Auto-Scrollable with Flip) */}
             <ProcessSection
-              onOpenLeadModal={() => setLeadModalOpen(true)}
-            />
-
-            {/* 08. Verified Testimonials (Positioned after Projects & Process) */}
-            <TestimonialsSection />
-
-            {/* 09. Meet the Designer & Studio Lead */}
-            <MeetDesignerSection
-              onLearnMore={() => setActiveView('about')}
               onOpenLeadModal={() => setLeadModalOpen(true)}
             />
 
             {/* 10. Instagram Social Proof */}
             <InstagramSection />
 
-            {/* 11. Serious Enquiry Qualification & Lead Engine */}
+            {/* 11. Project Enquiry Form (Tell Us About Your Project) */}
             <LeadQualifierSection />
           </>
         )}

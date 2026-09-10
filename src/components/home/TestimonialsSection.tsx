@@ -1,24 +1,31 @@
 import React from 'react';
-import { Sparkles, Star, Quote, MapPin } from 'lucide-react';
+import { Sparkles, Star, Quote, MapPin, CheckCircle2 } from 'lucide-react';
 import { testimonialsData } from '../../data/contentData';
 
 export const TestimonialsSection: React.FC = () => {
   return (
-    <section className="py-24 bg-canvas border-t border-border-luxury">
+    <section className="py-24 bg-canvas-soft border-b border-border-luxury">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
           <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-bronze font-semibold">
             <Sparkles size={14} />
-            <span>Verified Client Stories</span>
+            <span>Verified Social Proof</span>
           </div>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-charcoal leading-tight">
-            What Our Homeowners Say.
+            Trusted by Homeowners Who Value Thoughtful Design.
           </h2>
-          <p className="text-charcoal-muted text-sm sm:text-base font-light">
-            Real stories from families and professionals who entrusted us with their living environments.
-          </p>
+          <div className="flex items-center justify-center gap-2 text-xs text-charcoal-muted pt-1">
+            <div className="flex items-center text-amber-500">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={15} fill="currentColor" />
+              ))}
+            </div>
+            <span className="font-semibold text-charcoal">4.9 / 5.0 Rating</span>
+            <span>·</span>
+            <span>Based on 48+ verified client reviews across Central India</span>
+          </div>
         </div>
 
         {/* Testimonials Grid */}
@@ -26,11 +33,11 @@ export const TestimonialsSection: React.FC = () => {
           {testimonialsData.map((item) => (
             <div
               key={item.id}
-              className="bg-canvas-soft border border-border-luxury p-8 flex flex-col justify-between transition-all hover:border-bronze hover:shadow-luxury group"
+              className="bg-canvas border border-border-luxury p-8 flex flex-col justify-between transition-all hover:border-bronze hover:shadow-luxury group"
             >
               <div>
                 {/* 5-star rating */}
-                <div className="flex items-center gap-1 text-amber-500 mb-6">
+                <div className="flex items-center gap-1 text-amber-500 mb-5">
                   {[...Array(item.rating)].map((_, i) => (
                     <Star key={i} size={15} fill="currentColor" />
                   ))}
@@ -43,7 +50,7 @@ export const TestimonialsSection: React.FC = () => {
                 </p>
               </div>
 
-              {/* Client meta & Avatar */}
+              {/* Client metadata */}
               <div className="pt-6 border-t border-border-luxury/60 flex items-center gap-3">
                 <img
                   src={item.avatarUrl}
