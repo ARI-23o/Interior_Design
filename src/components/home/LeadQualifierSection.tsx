@@ -134,10 +134,15 @@ export const LeadQualifierSection: React.FC = () => {
                       <span>WhatsApp us directly →</span>
                     </button>
                     <button
-                      onClick={() => setIsSubmitted(false)}
-                      className="border border-border-luxury text-charcoal-muted hover:text-charcoal text-xs uppercase tracking-wider px-5 py-3.5"
+                      onClick={() => {
+                        setName('');
+                        setPhone('');
+                        setMessage('');
+                        setIsSubmitted(false);
+                      }}
+                      className="border border-border-luxury text-charcoal hover:bg-canvas-soft text-xs uppercase tracking-wider px-5 py-3.5"
                     >
-                      Edit Submission
+                      Submit Another Enquiry
                     </button>
                   </div>
                 </div>

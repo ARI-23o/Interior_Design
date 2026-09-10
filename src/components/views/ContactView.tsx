@@ -175,12 +175,23 @@ export const ContactView: React.FC = () => {
                 <p className="text-sm text-charcoal-muted max-w-md mx-auto">
                   Thank you, <strong>{name}</strong>. Our senior designer will examine your requirements for your <strong>{propertyType}</strong> in <strong>{city}</strong> and get in touch within 24 hours.
                 </p>
-                <div className="pt-4">
+                <div className="pt-4 flex flex-col sm:flex-row justify-center gap-3">
                   <button
                     onClick={handleWhatsApp}
-                    className="bg-emerald-700 text-white text-xs uppercase tracking-wider px-6 py-3"
+                    className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs uppercase tracking-wider px-6 py-3 font-semibold"
                   >
                     Ping Us on WhatsApp
+                  </button>
+                  <button
+                    onClick={() => {
+                      setName('');
+                      setPhone('');
+                      setMessage('');
+                      setSubmitted(false);
+                    }}
+                    className="border border-border-luxury text-charcoal hover:bg-canvas text-xs uppercase tracking-wider px-5 py-3"
+                  >
+                    Submit Another Inquiry
                   </button>
                 </div>
               </div>

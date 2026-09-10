@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, CheckCircle2, ShieldCheck, Sparkles, MessageSquare } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, CheckCircle2, ShieldCheck, Sparkles, MessageSquare, RotateCcw } from 'lucide-react';
 import { studioInfo } from '../../data/contentData';
 import { leadStorage } from '../../services/leadStorage';
 
@@ -18,7 +18,29 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // Reset submission state whenever modal is opened
+  useEffect(() => {
+    if (isOpen) {
+      setIsSubmitted(false);
+      setName('');
+      setPhone('');
+      setMessage('');
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
+
+  const handleResetForm = () => {
+    setIsSubmitted(false);
+    setName('');
+    setPhone('');
+    setMessage('');
+  };
+
+  const handleClose = () => {
+    handleResetForm();
+    onClose();
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,8 +83,9 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
             </span>
           </div>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="p-1.5 text-charcoal hover:text-bronze rounded-full hover:bg-canvas transition-colors"
+            aria-label="Close modal"
           >
             <X size={18} />
           </button>
@@ -71,27 +94,38 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
         {/* Content */}
         <div className="p-6 sm:p-8">
           {isSubmitted ? (
-            <div className="py-8 text-center space-y-4 animate-in fade-in duration-200">
+            <div className="py-6 text-center space-y-4 animate-in fade-in duration-200">
               <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
                 <CheckCircle2 size={32} />
               </div>
-              <h3 className="font-serif text-2xl text-charcoal">
+              <h3 className="font-serif text-2xl sm:text-3xl text-charcoal">
                 Consultation Request Received
               </h3>
-              <p className="text-xs sm:text-sm text-charcoal-muted leading-relaxed">
+              <p className="text-xs sm:text-sm text-charcoal-muted leading-relaxed max-w-md mx-auto">
                 Thank you, <strong>{name}</strong>. Our principal designer will review your brief for your <strong>{designType}</strong> in <strong>{location}</strong> and contact you on WhatsApp/call shortly.
               </p>
-              <div className="pt-4 flex flex-col gap-2">
+              
+              <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
                 <button
                   onClick={handleWhatsApp}
-                  className="w-full bg-emerald-700 hover:bg-emerald-800 text-white text-xs uppercase tracking-wider py-3.5 flex items-center justify-center gap-2 font-semibold shadow-sm"
+                  className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs uppercase tracking-wider py-3.5 px-6 flex items-center justify-center gap-2 font-semibold shadow-sm"
                 >
                   <MessageSquare size={14} />
                   <span>WhatsApp us directly →</span>
                 </button>
                 <button
-                  onClick={onClose}
-                  className="w-full border border-border-luxury text-charcoal-muted text-xs uppercase tracking-wider py-2.5 hover:text-charcoal"
+                  onClick={handleResetForm}
+                  className="border border-border-luxury text-charcoal hover:bg-canvas-soft text-xs uppercase tracking-wider py-3.5 px-5 flex items-center justify-center gap-1.5"
+                >
+                  <RotateCcw size={13} className="text-bronze" />
+                  <span>Submit Another Enquiry</span>
+                </button>
+              </div>
+
+              <div className="pt-2">
+                <button
+                  onClick={handleClose}
+                  className="text-xs text-charcoal-muted hover:text-charcoal underline"
                 >
                   Close Window
                 </button>
