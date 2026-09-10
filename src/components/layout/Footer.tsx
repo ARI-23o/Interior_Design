@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, Mail, MapPin, Instagram, ArrowUpRight, MessageSquare } from 'lucide-react';
+import { Phone, Mail, MapPin, Instagram, ArrowUpRight, MessageSquare, Lock } from 'lucide-react';
 import { studioInfo, servicesData } from '../../data/contentData';
 
 interface FooterProps {
@@ -176,18 +176,22 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenLeadModal, onO
           Interior Designer in Chhindwara · Luxury Interior Designer Nagpur · Turnkey Interiors Civil Lines Nagpur · 3 BHK Interior Design Ramdaspeth · Modular Kitchen Chhindwara · Duplex Villa Architects Wardha Road · Bespoke Furniture Design Madhya Pradesh & Maharashtra.
         </div>
 
-        {/* Bottom Copyright & Admin Portal */}
+        {/* Bottom Copyright & Discreet Admin Access */}
         <div className="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-canvas/50">
-          <p>© {currentYear} SOWAKAAH™ Interior Design Studio. All rights reserved.</p>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2">
+            <p>© {currentYear} SOWAKAAH™ Interior Design Studio. All rights reserved.</p>
             {onOpenAdminModal && (
               <button
                 onClick={onOpenAdminModal}
-                className="text-bronze hover:text-bronze-light underline uppercase tracking-wider text-[11px] font-medium transition-colors"
+                className="text-canvas/20 hover:text-bronze transition-colors p-1"
+                title="Studio Access"
+                aria-label="Studio Admin"
               >
-                Studio Enquiries Portal (Admin)
+                <Lock size={11} />
               </button>
             )}
+          </div>
+          <div className="flex items-center gap-6">
             <span>Privacy Policy</span>
             <span>Terms of Engagement</span>
             <span>BOQ Guarantee</span>

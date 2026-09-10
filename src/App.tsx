@@ -37,6 +37,31 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [activeView]);
 
+  // Secret admin trigger via Ctrl+Shift+A or #admin in URL
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+        e.preventDefault();
+        setAdminModalOpen((prev) => !prev);
+      }
+    };
+
+    const checkHash = () => {
+      if (window.location.hash === '#admin' || window.location.search.includes('admin=true')) {
+        setAdminModalOpen(true);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('hashchange', checkHash);
+    checkHash();
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('hashchange', checkHash);
+    };
+  }, []);
+
   const handleNavigate = (view: string) => {
     setActiveView(view);
   };

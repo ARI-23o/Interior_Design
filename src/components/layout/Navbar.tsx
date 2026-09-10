@@ -60,16 +60,6 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
             Bespoke Residential & Turnkey Interiors across Chhindwara & Nagpur
           </span>
           <div className="flex items-center gap-6">
-            {onOpenAdminModal && (
-              <button
-                onClick={onOpenAdminModal}
-                className="flex items-center gap-1.5 text-bronze-light hover:text-canvas transition-colors bg-charcoal-light px-2.5 py-0.5 border border-border-dark font-mono text-[11px]"
-                title="Open Studio Client Enquiries Dashboard"
-              >
-                <Inbox size={12} className="text-bronze" />
-                <span>Enquiries ({leadCount})</span>
-              </button>
-            )}
             <a 
               href={`tel:${studioInfo.contact.phoneRaw}`} 
               className="flex items-center gap-1.5 hover:text-bronze-light transition-colors"
