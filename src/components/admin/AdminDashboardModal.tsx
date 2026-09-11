@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { leadStorage, StoredLead } from '../../services/leadStorage';
 import { studioInfo } from '../../data/contentData';
+import faviconImg from '../../assets/favicon.png';
 
 interface AdminDashboardModalProps {
   isOpen: boolean;
@@ -254,9 +255,11 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
           {/* Top Header */}
           <div className="bg-charcoal text-canvas px-3.5 sm:px-6 py-3 sm:py-4 flex items-center justify-between border-b border-charcoal-light shrink-0">
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-bronze text-charcoal flex items-center justify-center font-bold text-xs shrink-0">
-                S
-              </div>
+              <img
+                src={faviconImg}
+                alt="Sowakaah"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover shrink-0 border border-bronze/40 bg-[#18110F]"
+              />
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <h3 className="font-serif text-sm sm:text-lg text-canvas truncate">SOWAKAAH™ Portal</h3>
