@@ -27,8 +27,8 @@ export const studioInfo = {
     email: 'sowakaahdesigns@gmail.com',
     locations: ['Chhindwara, MP', 'Nagpur, MH'],
     address: 'Studio Sowakaah, Khajri Chowk, Chhindwara & Ramdaspeth, Nagpur',
-    instagram: '@sowakaah_designs',
-    instagramUrl: 'https://www.instagram.com/sowakaah_designs/',
+    instagram: '@sowakaahdesigns',
+    instagramUrl: 'https://www.instagram.com/sowakaahdesigns?stkn=MWlkODVsNzRoazVyNQ==',
     workingHours: 'Mon – Sat: 10:00 AM – 7:30 PM'
   },
   stats: [
