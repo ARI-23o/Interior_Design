@@ -2,6 +2,7 @@ import React from 'react';
 import { Phone, Mail, MapPin, Instagram, ArrowUpRight, MessageSquare, Lock } from 'lucide-react';
 import { studioInfo, servicesData } from '../../data/contentData';
 import logoImg from '../../assets/logo.png';
+import swanEmblem from '../../assets/swan-emblem.png';
 
 interface FooterProps {
   onNavigate: (view: string) => void;
@@ -14,11 +15,23 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenLeadModal, onO
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#3A1E0F] text-[#FBF8F4] pt-14 sm:pt-20 pb-10 sm:pb-12 border-t border-[#4D2813]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="relative overflow-hidden bg-[#3A1E0F] text-[#FBF8F4] pt-14 sm:pt-20 pb-10 sm:pb-12 border-t border-[#4D2813]">
+      {/* Subtle Swan Monogram Background Watermark */}
+      <div 
+        className="absolute inset-0 pointer-events-none select-none flex items-center justify-center overflow-hidden z-0"
+        aria-hidden="true"
+      >
+        <img 
+          src={swanEmblem} 
+          alt="" 
+          className="w-[500px] sm:w-[750px] md:w-[950px] max-w-none object-contain opacity-[0.06] transform translate-y-6 filter brightness-125" 
+        />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top conversion banner inside footer */}
-        <div className="bg-[#28140A] border border-[#522B15] p-6 sm:p-10 md:p-12 mb-12 sm:mb-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 sm:gap-8 shadow-md">
+        <div className="bg-[#28140A]/95 border border-[#522B15] p-6 sm:p-10 md:p-12 mb-12 sm:mb-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 sm:gap-8 shadow-xl backdrop-blur-sm">
           <div>
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#D4AA7D] font-semibold block mb-1.5 sm:mb-2">
               Ready to Transform Your Living Space?
