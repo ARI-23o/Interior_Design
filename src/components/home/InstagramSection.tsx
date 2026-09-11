@@ -18,7 +18,7 @@ export const InstagramSection: React.FC = () => {
             </h2>
           </div>
           <a
-            href="https://instagram.com"
+            href={studioInfo.contact.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-charcoal hover:text-bronze font-semibold border border-border-luxury bg-canvas px-4 py-2.5 hover:border-charcoal transition-colors self-start sm:self-auto"
@@ -34,7 +34,7 @@ export const InstagramSection: React.FC = () => {
           {instagramPosts.map((post) => (
             <a
               key={post.id}
-              href="https://instagram.com"
+              href={studioInfo.contact.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative aspect-square overflow-hidden bg-canvas border border-border-luxury block"

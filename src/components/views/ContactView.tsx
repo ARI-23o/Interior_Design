@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, MessageSquare, Sparkles, CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Phone, Mail, MapPin, MessageSquare, Sparkles, CheckCircle2, ChevronDown, ChevronUp, Instagram, ArrowUpRight } from 'lucide-react';
 import { studioInfo } from '../../data/contentData';
 import { leadStorage } from '../../services/leadStorage';
 
@@ -106,6 +106,24 @@ export const ContactView: React.FC = () => {
                   <div>
                     <span className="text-[11px] uppercase tracking-wider text-charcoal-muted block">Email Inquiries</span>
                     <span className="font-medium break-all">{studioInfo.contact.email}</span>
+                  </div>
+                </a>
+
+                <a 
+                  href={studioInfo.contact.instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-4 text-charcoal hover:text-bronze transition-colors group"
+                >
+                  <div className="w-10 h-10 rounded-none bg-canvas border border-border-luxury flex items-center justify-center shrink-0 group-hover:border-bronze">
+                    <Instagram size={16} className="text-bronze" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] uppercase tracking-wider text-charcoal-muted block">Instagram Profile</span>
+                    <span className="font-medium flex items-center gap-1">
+                      {studioInfo.contact.instagram}
+                      <ArrowUpRight size={13} className="text-charcoal-muted group-hover:text-bronze" />
+                    </span>
                   </div>
                 </a>
 

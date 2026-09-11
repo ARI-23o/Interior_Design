@@ -63,10 +63,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenLeadModal, onO
             </p>
             <div className="pt-1">
               <a
-                href="https://instagram.com"
+                href={studioInfo.contact.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs text-bronze hover:text-bronze-light uppercase tracking-wider"
+                className="inline-flex items-center gap-2 text-xs text-bronze hover:text-bronze-light uppercase tracking-wider transition-colors"
               >
                 <Instagram size={14} />
                 <span>{studioInfo.contact.instagram}</span>
