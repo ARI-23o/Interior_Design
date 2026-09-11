@@ -83,54 +83,57 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
         </div>
       </div>
 
-      {/* Main Navigation with Exact Brand #3A1E0F Dark Brown Theme */}
+      {/* Main Navigation with Exact Brand Brown Theme: Dark Brown at top, Slightly Lighter Brown on Scroll */}
       <header 
         className={`sticky top-0 z-40 transition-all duration-300 ${
           isScrolled 
-            ? 'bg-[#3A1E0F]/98 backdrop-blur-md shadow-xl border-b border-[#4D2813] py-2 sm:py-2.5' 
-            : 'bg-[#3A1E0F] border-b border-[#4D2813] py-2.5 sm:py-3.5 shadow-md'
+            ? 'bg-[#4A2714] bg-opacity-98 backdrop-blur-md shadow-2xl border-b border-[#5E331A] py-2 sm:py-2.5' 
+            : 'bg-[#3A1E0F] border-b border-[#4D2813] py-2 sm:py-3 shadow-lg'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           
-          {/* Brand Logo with Official Image */}
+          {/* Brand Logo - Enlarged for clear text visibility */}
           <button 
             onClick={() => handleLinkClick('home')}
-            className="flex items-center text-left group py-0.5"
+            className="flex items-center text-left group py-0.5 focus:outline-none"
             aria-label="Sowakaah™ Interior Design Studio Home"
           >
             <img 
               src={logoImg} 
               alt="SOWAKAAH™ Interior Design Studio" 
-              className="h-10 sm:h-12 md:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02] filter drop-shadow-sm"
+              className="h-14 sm:h-16 md:h-20 max-h-[82px] w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03] filter drop-shadow-md"
             />
           </button>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center space-x-7">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => handleLinkClick(link.id)}
-                className={`text-xs font-medium tracking-[0.18em] transition-all relative py-1 ${
-                  activeView === link.id
-                    ? 'text-[#D4AA7D] font-bold'
-                    : 'text-[#EADBCC]/90 hover:text-[#D4AA7D]'
-                }`}
-              >
-                {link.name}
-                {activeView === link.id && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-[#D4AA7D]" />
-                )}
-              </button>
-            ))}
+          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+            {navLinks.map((link) => {
+              const isActive = activeView === link.id;
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => handleLinkClick(link.id)}
+                  className={`text-[11.5px] xl:text-xs font-semibold tracking-[0.2em] transition-all duration-200 relative py-2.5 ${
+                    isActive
+                      ? 'text-[#F3D5A5] font-bold'
+                      : 'text-[#FAF4EB] hover:text-[#F3D5A5] active:text-[#F3D5A5] focus:text-[#F3D5A5]'
+                  }`}
+                >
+                  {link.name}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#E2BA8C] shadow-sm" />
+                  )}
+                </button>
+              );
+            })}
           </nav>
 
           {/* Right Action Button on Desktop / Tablet */}
           <div className="hidden sm:flex items-center gap-3">
             <button
               onClick={onOpenLeadModal}
-              className="inline-flex items-center gap-2 bg-[#B88654] hover:bg-[#C99865] text-[#28140A] text-xs uppercase tracking-widest font-bold px-4 sm:px-5 py-2.5 rounded-none transition-all duration-300 shadow-md"
+              className="inline-flex items-center gap-2 bg-[#B88654] hover:bg-[#C99865] active:bg-[#9E7142] text-[#28140A] text-xs uppercase tracking-widest font-bold px-4 sm:px-5 py-2.5 sm:py-3 rounded-none transition-all duration-300 shadow-md hover:shadow-lg"
             >
               <span>LET'S TALK</span>
               <ArrowRight size={14} />

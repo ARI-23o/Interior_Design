@@ -68,7 +68,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenLeadModal, onO
               <img 
                 src={logoImg} 
                 alt="SOWAKAAH™ Interior Design Studio" 
-                className="h-12 sm:h-14 w-auto object-contain self-start -ml-1 filter drop-shadow-sm"
+                className="h-16 sm:h-20 md:h-24 max-h-[96px] w-auto object-contain self-start -ml-1 filter drop-shadow-md"
               />
             </div>
             <p className="text-xs sm:text-sm text-[#EADBCC]/80 font-light leading-relaxed pt-1">
