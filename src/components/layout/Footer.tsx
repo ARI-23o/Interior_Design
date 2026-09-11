@@ -1,6 +1,7 @@
 import React from 'react';
 import { Phone, Mail, MapPin, Instagram, ArrowUpRight, MessageSquare, Lock } from 'lucide-react';
 import { studioInfo, servicesData } from '../../data/contentData';
+import logoImg from '../../assets/logo.png';
 
 interface FooterProps {
   onNavigate: (view: string) => void;
@@ -51,12 +52,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenLeadModal, onO
           {/* Column 1: Brand & Philosophy */}
           <div className="space-y-3 sm:space-y-4">
             <div className="flex flex-col">
-              <span className="font-serif text-2xl sm:text-3xl tracking-[0.15em] font-medium text-canvas">
-                SOWAKAAH<span className="text-bronze text-sm">™</span>
-              </span>
-              <span className="text-[9px] sm:text-[10px] tracking-[0.25em] text-canvas/60 uppercase font-light -mt-1">
-                Interior Design Studio
-              </span>
+              <img 
+                src={logoImg} 
+                alt="SOWAKAAH™ Interior Design Studio" 
+                className="h-12 sm:h-14 w-auto object-contain self-start -ml-1 filter drop-shadow-sm"
+              />
             </div>
             <p className="text-xs sm:text-sm text-canvas/70 font-light leading-relaxed pt-1">
               Bespoke residential architecture, luxury turnkey interiors, and custom furniture. Crafted with intention, architectural precision, and timeless material elegance.
