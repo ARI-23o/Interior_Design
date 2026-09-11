@@ -56,25 +56,25 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
   return (
     <>
       {/* Top micro-banner for desktop */}
-      <div className="bg-[#18110F] text-canvas/75 text-xs py-1.5 px-4 hidden md:block border-b border-[#2C1F1B]">
+      <div className="bg-[#28140A] text-[#EADBCC]/85 text-xs py-1.5 px-4 hidden md:block border-b border-[#4D2813]">
         <div className="max-w-7xl mx-auto flex justify-between items-center tracking-wider">
           <span className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-bronze animate-pulse"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#B88654] animate-pulse"></span>
             Bespoke Residential & Turnkey Interiors across Chhindwara & Nagpur
           </span>
           <div className="flex items-center gap-6">
             <a 
               href={`tel:${studioInfo.contact.phoneRaw}`} 
-              className="flex items-center gap-1.5 hover:text-bronze-light transition-colors text-canvas/90"
+              className="flex items-center gap-1.5 hover:text-[#D4AA7D] transition-colors text-[#EADBCC]"
             >
-              <Phone size={12} className="text-bronze" />
+              <Phone size={12} className="text-[#D4AA7D]" />
               <span>{studioInfo.contact.phone}</span>
             </a>
             <a 
               href={`https://wa.me/${studioInfo.contact.phoneRaw}?text=${encodeURIComponent("Hi Sowakaah Designs, I'm interested in discussing an interior design project. I'd like to know more about your services.")}`}
               target="_blank"
               rel="noopener noreferrer" 
-              className="flex items-center gap-1 hover:text-emerald-300 text-canvas/90 transition-colors"
+              className="flex items-center gap-1 hover:text-emerald-300 text-[#EADBCC] transition-colors"
             >
               <MessageSquare size={12} className="text-emerald-400" />
               <span>Chat on WhatsApp</span>
@@ -83,12 +83,12 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
         </div>
       </div>
 
-      {/* Main Navigation with Dark Brown Luxury Theme */}
+      {/* Main Navigation with Exact Brand #3A1E0F Dark Brown Theme */}
       <header 
         className={`sticky top-0 z-40 transition-all duration-300 ${
           isScrolled 
-            ? 'bg-[#1E1513]/98 backdrop-blur-md shadow-lg border-b border-[#352520] py-2 sm:py-2.5' 
-            : 'bg-[#241916]/98 backdrop-blur-md border-b border-[#3A2A24] py-2.5 sm:py-3.5'
+            ? 'bg-[#3A1E0F]/98 backdrop-blur-md shadow-xl border-b border-[#4D2813] py-2 sm:py-2.5' 
+            : 'bg-[#3A1E0F] border-b border-[#4D2813] py-2.5 sm:py-3.5 shadow-md'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -114,13 +114,13 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
                 onClick={() => handleLinkClick(link.id)}
                 className={`text-xs font-medium tracking-[0.18em] transition-all relative py-1 ${
                   activeView === link.id
-                    ? 'text-bronze-light font-semibold'
-                    : 'text-canvas/80 hover:text-bronze-light'
+                    ? 'text-[#D4AA7D] font-bold'
+                    : 'text-[#EADBCC]/90 hover:text-[#D4AA7D]'
                 }`}
               >
                 {link.name}
                 {activeView === link.id && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-bronze" />
+                  <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-[#D4AA7D]" />
                 )}
               </button>
             ))}
@@ -130,7 +130,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
           <div className="hidden sm:flex items-center gap-3">
             <button
               onClick={onOpenLeadModal}
-              className="inline-flex items-center gap-2 bg-bronze hover:bg-bronze-light text-[#1B1311] text-xs uppercase tracking-widest font-bold px-4 sm:px-5 py-2.5 rounded-none transition-all duration-300 shadow-md"
+              className="inline-flex items-center gap-2 bg-[#B88654] hover:bg-[#C99865] text-[#28140A] text-xs uppercase tracking-widest font-bold px-4 sm:px-5 py-2.5 rounded-none transition-all duration-300 shadow-md"
             >
               <span>LET'S TALK</span>
               <ArrowRight size={14} />
@@ -151,14 +151,14 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
 
             <button
               onClick={onOpenLeadModal}
-              className="bg-bronze hover:bg-bronze-light text-[#1B1311] text-[10px] sm:text-xs font-bold tracking-wider uppercase px-2.5 sm:px-3 py-1.5 transition-colors shadow-sm"
+              className="bg-[#B88654] hover:bg-[#C99865] text-[#28140A] text-[10px] sm:text-xs font-bold tracking-wider uppercase px-2.5 sm:px-3 py-1.5 transition-colors shadow-sm"
             >
               Consult
             </button>
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-canvas hover:text-bronze focus:outline-none min-w-[40px] min-h-[40px] flex items-center justify-center rounded hover:bg-[#2F201C] transition-colors"
+              className="p-2 text-[#EADBCC] hover:text-[#D4AA7D] focus:outline-none min-w-[40px] min-h-[40px] flex items-center justify-center rounded hover:bg-[#4D2813] transition-colors"
               aria-label={mobileMenuOpen ? "Close menu" : "Open navigation menu"}
             >
               {mobileMenuOpen ? <X size={23} /> : <Menu size={23} />}
@@ -169,32 +169,32 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
 
       {/* Mobile Fullscreen Drawer Menu with Dark Brown Theme */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-[52px] sm:top-[64px] z-50 bg-[#221714]/98 backdrop-blur-xl flex flex-col justify-between p-5 sm:p-8 lg:hidden overflow-y-auto border-t border-[#3A2A24] animate-in fade-in duration-200 text-canvas">
+        <div className="fixed inset-0 top-[52px] sm:top-[64px] z-50 bg-[#3A1E0F] flex flex-col justify-between p-5 sm:p-8 lg:hidden overflow-y-auto border-t border-[#4D2813] animate-in fade-in duration-200 text-[#FBF8F4]">
           <div className="space-y-2 pt-2">
-            <div className="text-[10px] tracking-[0.25em] text-bronze uppercase font-semibold pb-1 border-b border-[#3A2A24]/60">
+            <div className="text-[10px] tracking-[0.25em] text-[#D4AA7D] uppercase font-semibold pb-1 border-b border-[#4D2813]">
               Menu Navigation
             </div>
             {navLinks.map((link) => (
               <button
                 key={link.id}
                 onClick={() => handleLinkClick(link.id)}
-                className={`flex items-center justify-between w-full text-left font-serif text-2xl py-3 border-b border-[#3A2A24]/40 transition-colors ${
-                  activeView === link.id ? 'text-bronze-light font-semibold' : 'text-canvas/90 hover:text-bronze-light'
+                className={`flex items-center justify-between w-full text-left font-serif text-2xl py-3 border-b border-[#4D2813]/60 transition-colors ${
+                  activeView === link.id ? 'text-[#D4AA7D] font-semibold' : 'text-[#EADBCC] hover:text-[#D4AA7D]'
                 }`}
               >
                 <span>{link.name}</span>
-                <ArrowRight size={16} className={activeView === link.id ? 'text-bronze' : 'text-canvas/40'} />
+                <ArrowRight size={16} className={activeView === link.id ? 'text-[#D4AA7D]' : 'text-[#EADBCC]/40'} />
               </button>
             ))}
           </div>
 
-          <div className="space-y-3 pt-6 pb-4 border-t border-[#3A2A24]">
+          <div className="space-y-3 pt-6 pb-4 border-t border-[#4D2813]">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenLeadModal();
               }}
-              className="w-full flex items-center justify-center gap-2 bg-bronze hover:bg-bronze-light text-[#1B1311] py-4 text-xs uppercase tracking-widest font-bold transition-colors shadow-md"
+              className="w-full flex items-center justify-center gap-2 bg-[#B88654] hover:bg-[#C99865] text-[#28140A] py-4 text-xs uppercase tracking-widest font-bold transition-colors shadow-md"
             >
               <span>Start Your Project →</span>
             </button>
@@ -202,9 +202,9 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
             <div className="grid grid-cols-2 gap-2.5">
               <a
                 href={`tel:${studioInfo.contact.phoneRaw}`}
-                className="flex items-center justify-center gap-2 bg-[#2E201B] border border-[#3E2B25] text-canvas py-3 text-xs uppercase tracking-wider font-semibold hover:border-bronze transition-colors"
+                className="flex items-center justify-center gap-2 bg-[#28140A] border border-[#4D2813] text-[#EADBCC] py-3 text-xs uppercase tracking-wider font-semibold hover:border-[#D4AA7D] transition-colors"
               >
-                <Phone size={14} className="text-bronze" />
+                <Phone size={14} className="text-[#D4AA7D]" />
                 <span>Call Studio</span>
               </a>
 
@@ -219,9 +219,9 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
               </a>
             </div>
 
-            <div className="text-center text-[11px] text-canvas/60 pt-2 font-light">
+            <div className="text-center text-[11px] text-[#EADBCC]/70 pt-2 font-light">
               <p>Chhindwara & Nagpur · Central India</p>
-              <p className="mt-0.5 font-medium text-bronze-light">{studioInfo.contact.phone}</p>
+              <p className="mt-0.5 font-medium text-[#D4AA7D]">{studioInfo.contact.phone}</p>
             </div>
           </div>
         </div>

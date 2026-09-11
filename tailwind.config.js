@@ -18,6 +18,13 @@ export default {
           muted: '#57514A',
           subtle: '#787067',
         },
+        brown: {
+          DEFAULT: '#3A1E0F',
+          dark: '#2A1408',
+          light: '#4C2814',
+          deep: '#1F0E05',
+          border: '#562F19',
+        },
         bronze: {
           DEFAULT: '#B88654',
           light: '#D4AA7D',
