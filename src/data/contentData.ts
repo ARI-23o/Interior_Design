@@ -7,11 +7,12 @@ export const studioInfo = {
   headline: 'Timeless Interiors, Designed Around You.',
   subheadline: 'Bespoke residential interiors crafted around your lifestyle, taste and way of living across Chhindwara, Nagpur, and Central India.',
   founder: {
-    name: 'Founder & Principal Designer',
+    name: 'Ar. Khushi Gupta',
+    fullName: 'Khushi Gupta',
     studioBrand: 'Sowakaah Designs',
-    role: 'Principal Interior Architect & Creative Director',
+    role: 'Lead Interior Architect & Creative Director',
     experienceYears: '8+',
-    quote: "I'm the founder of Sowakaah Designs. I believe great interiors should not only look beautiful, but also feel effortless to live in.",
+    quote: "I'm Khushi Gupta, founder of Sowakaah Designs. I believe great interiors should not only look beautiful, but also feel effortless to live in.",
     bio: "I founded Sowakaah Designs with a simple philosophy: a great home shouldn't just be an aesthetic showpiece for guests — it must feel intuitive, calm, and deeply personal to the family living in it. Over the last 8+ years, our studio has delivered over 50 completed residences by balancing architectural rigor with disciplined on-site craftsmanship.",
     photo: designerPhoto,
     credentials: [

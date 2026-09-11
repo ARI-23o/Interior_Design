@@ -119,7 +119,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
   };
 
   const handleWhatsAppReply = (lead: StoredLead) => {
-    const replyText = `Hi ${lead.name}, this is Ar. Ananya from Sowakaah Interior Design Studio. We received your project inquiry for your ${lead.designType} in ${lead.location}. I'd love to schedule a quick 15-minute discovery call to review your layout and share preliminary ideas.`;
+    const replyText = `Hi ${lead.name}, this is Ar. Khushi Gupta from Sowakaah Interior Design Studio. We received your project inquiry for your ${lead.designType} in ${lead.location}. I'd love to schedule a quick 15-minute discovery call to review your layout and share preliminary ideas.`;
     const cleanPhone = lead.phone.replace(/[^0-9]/g, '');
     window.open(`https://wa.me/${cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone}?text=${encodeURIComponent(replyText)}`, '_blank');
   };

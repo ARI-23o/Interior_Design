@@ -31,7 +31,7 @@ export const MeetDesignerSection: React.FC<MeetDesignerSectionProps> = ({ onLear
                 <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-transparent to-transparent" />
                 
                 <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 text-canvas">
-                  <p className="font-serif text-xl sm:text-2xl text-canvas">Ar. Ananya</p>
+                  <p className="font-serif text-xl sm:text-2xl text-canvas">{studioInfo.founder.name}</p>
                   <p className="text-[11px] sm:text-xs text-bronze uppercase tracking-widest font-light mt-0.5">
                     Lead Interior Architect · Sowakaah
                   </p>
