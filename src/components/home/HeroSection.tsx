@@ -37,9 +37,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreProjects, onO
               <span>Interior Design Studio · Central India</span>
             </span>
             <span className="text-charcoal-muted">·</span>
-            <span className="flex items-center gap-1 text-amber-600">
-              <Star size={11} fill="currentColor" />
-              <span>4.9★ Rated</span>
+            <span className="flex items-center gap-1 text-bronze font-semibold">
+              <Sparkles size={11} />
+              <span>100% Turnkey Delivery</span>
             </span>
           </div>
 

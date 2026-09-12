@@ -18,7 +18,7 @@ export const studioInfo = {
     credentials: [
       { label: 'Experience', val: '8+ Years' },
       { label: 'Completed Residencies', val: '50+ Spaces' },
-      { label: 'Google Rating', val: '4.9 ★ (48 Reviews)' },
+      { label: 'Material Assurance', val: 'BWP 710 Marine' },
       { label: 'Execution', val: '100% Turnkey' }
     ]
   },
@@ -36,7 +36,7 @@ export const studioInfo = {
     { value: '50+', label: 'Projects Completed' },
     { value: '8+', label: 'Years of Experience' },
     { value: '2', label: 'Prime Studio Hubs (Chhindwara & Nagpur)' },
-    { value: '4.9★', label: 'Client Google Rating' }
+    { value: '100%', label: 'Turnkey Delivery & Fixed BOQ' }
   ],
   materialPartners: [
     { name: 'Blum Austria', category: 'Precision Hardware' },

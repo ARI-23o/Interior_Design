@@ -1,5 +1,4 @@
 import React from 'react';
-import { Star } from 'lucide-react';
 import { studioInfo } from '../../data/contentData';
 
 export const TrustStatsSection: React.FC = () => {
@@ -16,9 +15,6 @@ export const TrustStatsSection: React.FC = () => {
             >
               <div className="font-serif text-2xl sm:text-4xl lg:text-5xl text-charcoal font-medium group-hover:text-bronze-dark transition-colors flex items-center justify-center sm:justify-start gap-1">
                 <span>{stat.value}</span>
-                {stat.value.includes('4.9') && (
-                  <Star size={20} className="text-amber-500 fill-amber-500 inline" />
-                )}
               </div>
               <div className="h-0.5 w-6 sm:w-8 bg-bronze/40 my-2 sm:my-3 mx-auto sm:mx-0 group-hover:w-12 transition-all duration-300" />
               <p className="text-[10px] sm:text-xs md:text-sm text-charcoal-muted uppercase tracking-wider font-light">

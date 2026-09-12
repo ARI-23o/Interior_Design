@@ -79,10 +79,10 @@ export const LeadQualifierSection: React.FC = () => {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Star size={18} className="text-amber-500 fill-amber-500 shrink-0 mt-0.5" />
+                  <CheckCircle2 size={18} className="text-bronze shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-xs sm:text-sm font-semibold text-canvas">4.9★ Client Google Rating</h4>
-                    <p className="text-[11px] sm:text-xs text-canvas/60">50+ families living happily in our designed residences.</p>
+                    <h4 className="text-xs sm:text-sm font-semibold text-canvas">100% Turnkey Delivery</h4>
+                    <p className="text-[11px] sm:text-xs text-canvas/60">50+ completed residences across Central India.</p>
                   </div>
                 </div>
               </div>
