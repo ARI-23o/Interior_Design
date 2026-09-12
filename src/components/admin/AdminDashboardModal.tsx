@@ -36,6 +36,7 @@ import {
   isLeadYesterday, 
   isLeadThisWeek 
 } from '../../services/leadStorage';
+import { securityService } from '../../services/securityService';
 import { studioInfo } from '../../data/contentData';
 import faviconImg from '../../assets/favicon.png';
 
@@ -44,14 +45,13 @@ interface AdminDashboardModalProps {
   onClose: () => void;
 }
 
-const PIN_STORAGE_KEY = 'sowakaah_master_pin_v1';
-const AUTH_SESSION_KEY = 'sowakaah_admin_session_v1';
-const DEFAULT_PIN = 'sowakaah2026';
-
 export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen, onClose }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [pinInput, setPinInput] = useState('');
   const [pinError, setPinError] = useState(false);
+  const [authErrorMsg, setAuthErrorMsg] = useState('');
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [lockoutSec, setLockoutSec] = useState<number>(0);
   const [showPin, setShowPin] = useState(false);
   
   // Settings for PIN change
@@ -84,11 +84,35 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
   const [manualBudget, setManualBudget] = useState('₹15–25L');
   const [manualNotes, setManualNotes] = useState('');
 
-  // Check existing session on open
+  // Lockout countdown timer
+  useEffect(() => {
+    if (lockoutSec <= 0) return;
+    const timer = setInterval(() => {
+      setLockoutSec((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          setAuthErrorMsg('');
+          setPinError(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [lockoutSec]);
+
+  // Check existing session and lockout on modal open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      const isAuth = sessionStorage.getItem(AUTH_SESSION_KEY) === 'true';
+      const remaining = securityService.getLockoutRemainingSeconds();
+      setLockoutSec(remaining);
+      if (remaining > 0) {
+        setAuthErrorMsg(`Security Lockout Active: Please wait ${remaining}s before retrying.`);
+        setPinError(true);
+      }
+
+      const isAuth = securityService.isSessionValid();
       setIsAuthenticated(isAuth);
       if (isAuth) {
         setLeads(leadStorage.getLeads());
@@ -114,31 +138,58 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
 
   if (!isOpen) return null;
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const storedPin = localStorage.getItem(PIN_STORAGE_KEY) || DEFAULT_PIN;
-    if (pinInput.trim() === storedPin || pinInput.trim() === 'admin123') {
-      sessionStorage.setItem(AUTH_SESSION_KEY, 'true');
-      setIsAuthenticated(true);
-      setPinError(false);
-      setPinInput('');
-      setLeads(leadStorage.getLeads());
-      setGoogleSheetUrl(leadStorage.getGoogleSheetWebhookUrl());
-    } else {
+    if (!pinInput.trim()) return;
+
+    const remaining = securityService.getLockoutRemainingSeconds();
+    if (remaining > 0) {
+      setLockoutSec(remaining);
+      setAuthErrorMsg(`Too many failed attempts. Security Lockout active for ${remaining}s.`);
       setPinError(true);
+      return;
+    }
+
+    setIsVerifying(true);
+    setAuthErrorMsg('');
+    setPinError(false);
+
+    try {
+      const isValid = await securityService.verifyPassword(pinInput);
+      if (isValid) {
+        setIsAuthenticated(true);
+        setPinError(false);
+        setAuthErrorMsg('');
+        setPinInput('');
+        setLeads(leadStorage.getLeads());
+        setGoogleSheetUrl(leadStorage.getGoogleSheetWebhookUrl());
+      } else {
+        const lockout = securityService.getLockoutRemainingSeconds();
+        if (lockout > 0) {
+          setLockoutSec(lockout);
+          setAuthErrorMsg(`Access Restricted: Locked out for ${lockout}s due to repeated incorrect passcodes.`);
+        } else {
+          setAuthErrorMsg('Access Denied: Incorrect Master Passcode.');
+        }
+        setPinError(true);
+      }
+    } finally {
+      setIsVerifying(false);
     }
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem(AUTH_SESSION_KEY);
+    securityService.destroySession();
     setIsAuthenticated(false);
     setPinInput('');
+    setAuthErrorMsg('');
+    setPinError(false);
   };
 
-  const handleChangePin = (e: React.FormEvent) => {
+  const handleChangePin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (newPin.trim().length >= 4) {
-      localStorage.setItem(PIN_STORAGE_KEY, newPin.trim());
+    if (newPin.trim().length >= 6) {
+      await securityService.updateMasterPassword(newPin.trim());
       setPinChangeSuccess(true);
       setTimeout(() => {
         setPinChangeSuccess(false);
@@ -331,42 +382,59 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
                     type={showPin ? 'text' : 'password'}
                     required
                     autoFocus
+                    disabled={isVerifying || lockoutSec > 0}
                     value={pinInput}
                     onChange={(e) => {
                       setPinInput(e.target.value);
                       setPinError(false);
+                      setAuthErrorMsg('');
                     }}
-                    placeholder="Enter admin passcode"
-                    className={`w-full bg-canvas-soft border text-base sm:text-sm py-3 pl-3.5 pr-10 text-charcoal focus:outline-none rounded-none ${
+                    placeholder={lockoutSec > 0 ? `Locked (${lockoutSec}s)` : "Enter Master Passcode"}
+                    className={`w-full bg-canvas-soft border text-base sm:text-sm py-3 pl-3.5 pr-10 text-charcoal focus:outline-none rounded-none disabled:opacity-50 ${
                       pinError ? 'border-red-500 bg-red-50/20' : 'border-border-luxury focus:border-charcoal'
                     }`}
                   />
                   <button
                     type="button"
+                    disabled={isVerifying || lockoutSec > 0}
                     onClick={() => setShowPin(!showPin)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-charcoal-muted hover:text-charcoal p-1.5 min-w-[32px] min-h-[32px] flex items-center justify-center"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-charcoal-muted hover:text-charcoal p-1.5 min-w-[32px] min-h-[32px] flex items-center justify-center disabled:opacity-50"
                     aria-label={showPin ? "Hide passcode" : "Show passcode"}
                   >
                     {showPin ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 </div>
-                {pinError && (
-                  <p className="text-[11px] text-red-600 mt-1.5 font-medium">
-                    Incorrect Passcode. Please try again.
-                  </p>
+                {authErrorMsg && (
+                  <div className="p-2 bg-red-50 border border-red-200 text-[11px] text-red-700 mt-2 font-medium flex items-center gap-1.5">
+                    <AlertTriangle size={13} className="shrink-0 text-red-600" />
+                    <span>{authErrorMsg}</span>
+                  </div>
                 )}
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-charcoal hover:bg-bronze hover:text-charcoal text-canvas py-3.5 text-xs uppercase tracking-widest font-semibold transition-all duration-300 shadow-sm min-h-[46px] flex items-center justify-center"
+                disabled={isVerifying || lockoutSec > 0 || !pinInput.trim()}
+                className="w-full bg-charcoal hover:bg-bronze hover:text-charcoal disabled:opacity-50 text-canvas py-3.5 text-xs uppercase tracking-widest font-semibold transition-all duration-300 shadow-sm min-h-[46px] flex items-center justify-center gap-2"
               >
-                Unlock Enquiries Portal →
+                {isVerifying ? (
+                  <>
+                    <RefreshCw size={14} className="animate-spin text-bronze" />
+                    <span>Verifying Credentials...</span>
+                  </>
+                ) : lockoutSec > 0 ? (
+                  <span>Locked Out ({lockoutSec}s)</span>
+                ) : (
+                  <span>Unlock Enquiries Portal →</span>
+                )}
               </button>
 
-              <div className="pt-2 text-center">
-                <span className="text-[10px] text-charcoal-subtle">
-                  🔒 Protected Studio Access
+              <div className="pt-2 text-center space-y-1">
+                <span className="text-[10px] text-charcoal-subtle block font-mono">
+                  🔒 Salted SHA-256 Cryptographic Protection
+                </span>
+                <span className="text-[9.5px] text-charcoal-muted block">
+                  Anti-Brute Force · Encrypted Session Token
                 </span>
               </div>
             </form>
