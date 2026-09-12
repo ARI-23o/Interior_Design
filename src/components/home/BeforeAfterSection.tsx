@@ -11,8 +11,8 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
   const [activeTab, setActiveTab] = useState<'slider' | 'phases'>('phases');
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const beforeImage = 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=80';
-  const afterImage = 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=80';
+  const beforeImage = '/images/projects/turnkey-spaces/site-01.jpg';
+  const afterImage = '/images/projects/turnkey-spaces/space-01.jpg';
 
   const executionStages = [
     {
@@ -20,24 +20,24 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
       title: '3D Architectural Concept',
       badge: 'Design & Render',
       icon: Eye,
-      image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80',
-      description: 'Photorealistic lighting studies, microcement wall texturing, and custom curved fluted millwork visualization.'
+      image: '/images/projects/modern-penthouse/penthouse-02.jpg',
+      description: 'Photorealistic 3D visualization mapping out layout flow, false ceiling lighting coves, and bespoke material pairings.'
     },
     {
       phase: 'Stage 02',
       title: 'On-Site Execution',
-      badge: 'Under Construction',
+      badge: 'Carpentry & Framing',
       icon: HardHat,
-      image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80',
-      description: 'Precision civil framing, electrical conduit layout, BWP 710 carcass joinery, and ceiling profile casting.'
+      image: '/images/projects/turnkey-spaces/site-01.jpg',
+      description: 'Precision on-site carcass framing, BWP 710 marine ply joinery, electrical conduit routing, and false ceiling coffer grid.'
     },
     {
       phase: 'Stage 03',
       title: 'Finished Living Residence',
-      badge: '100% Handover',
+      badge: '100% Turnkey Handover',
       icon: Home,
-      image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80',
-      description: 'Pristine finished space with travertine stone, warm cove lighting, curated loose furniture, and zero snags.'
+      image: '/images/projects/turnkey-spaces/space-01.jpg',
+      description: 'Pristine finished space with marble entertainment wall, bespoke Mandir pooja unit, styled furnishings, and defect-free handover.'
     }
   ];
 

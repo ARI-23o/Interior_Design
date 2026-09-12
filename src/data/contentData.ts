@@ -1,23 +1,27 @@
-import { Service, ProcessStep, Testimonial, Article } from '../types';
+import { Service, ProcessStep, Article } from '../types';
 import designerPhoto from '../assets/designer.jpg';
 
 export const studioInfo = {
-  name: 'SOWAKAAH™',
-  tagline: 'Interior Design Studio',
-  headline: 'Timeless Interiors, Designed Around You.',
-  subheadline: 'Bespoke residential interiors crafted around your lifestyle, taste and way of living across Chhindwara, Nagpur, and Central India.',
+  name: 'Sowakaah Designs',
+  tagline: 'Where Thoughtful Design Meets Timeless Elegance',
+  headline: 'Thoughtfully Planned. Carefully Detailed. Made For You.',
+  subheadline: 'An interior design studio creating spaces that are thoughtful, functional and timeless across residential, commercial and hospitality spaces in Nagpur & Chhindwara.',
+  establishedYear: 2022,
   founder: {
-    name: 'Ar. Khushi Gupta',
+    name: 'Khushi Gupta',
     fullName: 'Khushi Gupta',
     studioBrand: 'Sowakaah Designs',
-    role: 'Lead Interior Architect & Creative Director',
-    experienceYears: '8+',
-    quote: "I'm Khushi Gupta, founder of Sowakaah Designs. I believe great interiors should not only look beautiful, but also feel effortless to live in.",
-    bio: "I founded Sowakaah Designs with a simple philosophy: a great home shouldn't just be an aesthetic showpiece for guests — it must feel intuitive, calm, and deeply personal to the family living in it. Over the last 8+ years, our studio has delivered over 50 completed residences by balancing architectural rigor with disciplined on-site craftsmanship.",
+    role: 'Principal Interior Designer',
+    experienceYears: 'Established 2022',
+    quote: "We believe beautiful spaces should also work beautifully. Our designs balance aesthetics, functionality, comfort and individuality, creating interiors that feel natural to the people who live and work within them.",
+    bio: "Sowakaah Designs is a studio led by Principal Interior Designer Khushi Gupta, creating thoughtful, functional, and timeless spaces. With a focus on refined detailing, practical planning, and personalized design, the studio works across residential, commercial, and hospitality interiors. Each project is approached with an understanding of the client’s needs and lifestyle, bringing together aesthetics, comfort, materials, and functionality to create spaces that feel distinctive, balanced, and truly personal.",
+    vision: "To create meaningful spaces that remain beautiful, functional and relevant with time.",
+    mission: "To make good design approachable through thoughtful planning, honest communication, careful detailing and well-coordinated execution.",
+    philosophy: "We believe beautiful spaces should also work beautifully. Our designs balance aesthetics, functionality, comfort and individuality, creating interiors that feel natural to the people who live and work within them.",
     photo: designerPhoto,
     credentials: [
-      { label: 'Experience', val: '8+ Years' },
-      { label: 'Completed Residencies', val: '50+ Spaces' },
+      { label: 'Studio Established', val: '2022' },
+      { label: 'Completed Residencies', val: 'Turnkey Spaces' },
       { label: 'Material Assurance', val: 'BWP 710 Marine' },
       { label: 'Execution', val: '100% Turnkey' }
     ]
@@ -26,17 +30,18 @@ export const studioInfo = {
     phone: '+91 74898 08876',
     phoneRaw: '917489808876',
     email: 'sowakaahdesigns@gmail.com',
-    locations: ['Chhindwara, MP', 'Nagpur, MH'],
-    address: 'Studio Sowakaah, Khajri Chowk, Chhindwara & Ramdaspeth, Nagpur',
+    website: 'sowakaahdesigns.com',
+    locations: ['Nagpur, Maharashtra', 'Chhindwara, Madhya Pradesh'],
+    address: 'Studio Sowakaah: Nagpur & Chhindwara',
     instagram: '@sowakaahdesigns',
     instagramUrl: 'https://www.instagram.com/sowakaahdesigns?stkn=MWlkODVsNzRoazVyNQ==',
     workingHours: 'Mon – Sat: 10:00 AM – 7:30 PM'
   },
   stats: [
-    { value: '50+', label: 'Projects Completed' },
-    { value: '8+', label: 'Years of Experience' },
-    { value: '2', label: 'Prime Studio Hubs (Chhindwara & Nagpur)' },
-    { value: '100%', label: 'Turnkey Delivery & Fixed BOQ' }
+    { value: '2022', label: 'Established Studio' },
+    { value: '2', label: 'Prime Hubs (Nagpur & Chhindwara)' },
+    { value: '100%', label: 'Turnkey Solutions & Fixed BOQ' },
+    { value: '4+', label: 'Flagship Portfolio Showcases' }
   ],
   materialPartners: [
     { name: 'Blum Austria', category: 'Precision Hardware' },
@@ -53,23 +58,33 @@ export const studioInfo = {
 export const whyChooseUsData = [
   {
     number: '01',
-    title: 'Personalized Lifestyle Design',
-    description: 'Every layout, storage nook, and finish is custom-engineered around how your family cooks, works, hosts, and unwinds. We never use repetitive templates.'
+    title: 'Thoughtful Design',
+    description: 'Every decision begins with understanding the space and the people using it.'
   },
   {
     number: '02',
-    title: 'Complete Turnkey Execution',
-    description: 'From 3D photorealistic visualization to on-site civil work, carpentry, MEP, and furniture styling, we manage everything under one accountable roof.'
+    title: 'Personal Approach',
+    description: 'No two clients are the same, and neither should their spaces be.'
   },
   {
     number: '03',
-    title: 'Transparent Process & Fixed BOQ',
-    description: 'Itemized Bill of Quantities with zero hidden surcharges. Real-time weekly WhatsApp site reports and locked-in handover milestone commitments.'
+    title: 'Attention to Detail',
+    description: 'From layouts to finishes, smaller details are considered as carefully as the larger design.'
   },
   {
     number: '04',
-    title: 'Attention to Detail & Material Craft',
-    description: 'Direct sourcing of marine-grade plywood (BWP 710), genuine Italian stone, German Blum hardware, and low-VOC bespoke coatings.'
+    title: 'Function + Aesthetics',
+    description: 'We create spaces that are visually refined while remaining comfortable and practical.'
+  },
+  {
+    number: '05',
+    title: 'Clear Communication',
+    description: 'A collaborative process keeps clients informed throughout the design journey.'
+  },
+  {
+    number: '06',
+    title: 'Design to Execution',
+    description: 'Design thinking continues beyond drawings through detailing and site coordination.'
   }
 ];
 
@@ -77,128 +92,121 @@ export const servicesData: Service[] = [
   {
     id: 'turnkey',
     title: 'Turnkey Interior Solutions',
-    subtitle: 'End-to-End Stress-Free Execution',
-    description: 'Our signature full-service solution: we take bare brick walls and deliver a fully furnished, styled, ready-to-live-in sanctuary with zero contractor headaches.',
+    subtitle: 'Coordinated Design & Execution',
+    description: 'Complete interior design solutions from concept development and space planning to material selection and detailing. Coordinated design and execution for a smoother journey from concept to completion.',
     features: ['Civil alterations & space planning', 'Custom carpentry & modular systems', 'Electrical, plumbing & HVAC coordination', 'Complete material procurement & quality supervision'],
     timeline: '60 – 120 Days',
-    idealFor: 'Busy homeowners wanting premium single-point accountability',
-    image: '/images/projects/luxury-residence/residence-01.jpg'
+    idealFor: 'Homeowners & businesses wanting single-point turnkey accountability',
+    image: '/images/projects/turnkey-spaces/space-01.jpg'
   },
   {
     id: 'residential',
-    title: 'Bespoke Residential Design',
-    subtitle: 'Apartments, Penthouses & Villas',
-    description: 'Tailored interior architecture that balances elegance, comfort, and timeless beauty for 2 BHK, 3 BHK, 4 BHK apartments and luxury bungalows.',
+    title: 'Residential Interiors',
+    subtitle: 'Lifestyle, Comfort & Individuality',
+    description: 'Thoughtfully designed homes shaped around lifestyle, comfort and individuality for apartments, duplexes, and luxury residences.',
     features: ['3D photorealistic walkthroughs', 'False ceiling & architectural lighting design', 'Custom master bedroom suites & walk-in wardrobes', 'Curated loose furniture & soft furnishings'],
     timeline: '45 – 90 Days',
     idealFor: 'Homeowners building their long-term dream residence',
-    image: '/images/projects/duplex-villa/villa-01.jpg'
-  },
-  {
-    id: 'kitchens',
-    title: 'Luxury Modular Kitchens',
-    subtitle: 'Ergonomic & High-Durability',
-    description: 'Precision-engineered German and Austrian hardware kitchens with quartz/Dekton countertops, anti-scratch finishes, and intelligent pantry pull-outs.',
-    features: ['BWP 710 Boiling Waterproof Birch/Ply base', 'Blum soft-close tandem boxes & lift-ups', 'Custom appliance integration (oven, hob, chimney)', 'Ergonomic triangle workflow optimization'],
-    timeline: '30 – 45 Days',
-    idealFor: 'Culinary enthusiasts prioritizing ergonomics and easy maintenance',
-    image: '/images/projects/luxury-residence/residence-10.jpg'
+    image: '/images/projects/luxury-residence/residence-01.jpg'
   },
   {
     id: 'commercial',
-    title: 'Commercial & Executive Spaces',
-    subtitle: 'Offices, Boutiques & Hospitality',
-    description: 'High-impact branded workspaces, executive cabins, boutique retail studios, and clinics engineered for productivity and memorable client impressions.',
-    features: ['Acoustic zoning & sound dampening', 'Executive conference & VIP lounges', 'Ergonomic lighting & airflow planning', 'Brand identity integrated into spatial architecture'],
-    timeline: '40 – 75 Days',
-    idealFor: 'Corporates, professionals, and boutique business owners',
+    title: 'Commercial & Office Interiors',
+    subtitle: 'Productivity, Comfort & Professional Identity',
+    description: 'Functional and visually engaging spaces designed around business requirements, user experience, and efficient workplaces that balance productivity with corporate character.',
+    features: ['Director suites & executive workstations', 'Acoustic fluted panelling & ambient coves', 'Concealed storage & functional credenzas', 'Integrated sacred prayer altars'],
+    timeline: '30 – 60 Days',
+    idealFor: 'Corporates, director offices, and commercial workspaces',
+    image: '/images/projects/duplex-villa/villa-01.jpg'
+  },
+  {
+    id: 'hospitality',
+    title: 'Hospitality & Canteen Interiors',
+    subtitle: 'Welcoming Cafes, Canteens & Dining Spaces',
+    description: 'Welcoming interiors for cafés, restaurants, institutional canteens, and hospitality environments with bold geometric detailing and high-traffic spatial planning.',
+    features: ['Sculptural timber ceiling canopy installations', 'High-traffic geometric tile floor layouts', 'Custom neon graphics & typography branding', 'Durable food-service billing counters'],
+    timeline: '30 – 60 Days',
+    idealFor: 'Cafés, college canteens, restaurants, and eateries',
     image: '/images/projects/modern-penthouse/penthouse-01.jpg'
   },
   {
     id: 'furniture',
-    title: 'Custom Furniture & Styling',
-    subtitle: 'Artisanal Furnishings & Decor',
-    description: 'Individually commissioned sofas, dining tables, accent chairs, custom lighting pendants, wall art curation, and imported rugs.',
-    features: ['Custom upholstery in bouclé, velvet & leather', 'Solid teak, oak, and marble dining sets', 'Bespoke statement chandeliers & sconces', 'Fine art styling and plantscape integration'],
-    timeline: '20 – 40 Days',
-    idealFor: 'Clients looking to elevate their existing spaces with designer pieces',
-    image: '/images/projects/luxury-residence/residence-04.jpg'
+    title: 'Custom Furniture & Detailing',
+    subtitle: 'Artisanal Joinery & Unique Millwork',
+    description: 'Furniture and interior elements developed specifically for the requirements and character of each project, from white carved Mandir temples to geometric sliding wardrobes.',
+    features: ['Custom white carved pooja mandirs', 'Multi-panel acrylic sliding wardrobes', 'Integrated vanity dressing units & study desks', 'Hydraulic storage beds & window lounges'],
+    timeline: '20 – 45 Days',
+    idealFor: 'Spaces requiring tailored, non-standard storage and artisanal joinery',
+    image: '/images/projects/turnkey-spaces/space-38.jpg'
+  },
+  {
+    id: 'visualization',
+    title: 'Design & 3D Visualization',
+    subtitle: 'Clear Planning Before Execution',
+    description: 'Space planning, furniture layouts, detailed working drawings, and 3D visualization to clearly communicate the design before on-site execution.',
+    features: ['2D Furniture layouts & space circulation', 'Photorealistic 3D room renders', 'Detailed false ceiling & electrical MEP drawings', 'Material & lighting coordination'],
+    timeline: '15 – 30 Days',
+    idealFor: 'Clients seeking complete clarity and visual confidence prior to site work',
+    image: '/images/projects/luxury-residence/residence-03.jpg'
   }
 ];
 
 export const processStepsData: ProcessStep[] = [
   {
     stepNumber: '01',
-    title: 'Consultation & Lifestyle Discovery',
-    tagline: 'Understanding your lifestyle, daily routines, and realistic budget.',
-    description: 'We meet in person or via discovery call to analyze your architectural floor plan, discuss your family habits (entertaining, cooking, storage pain-points), and lock in an investment bracket.',
-    deliverables: ['Detailed lifestyle & functional brief', 'Realistic budget tier roadmap', 'Scope of work alignment'],
-    whatHappensNext: 'We assign a dedicated senior design lead and schedule precise on-site laser measurements.'
+    title: 'Understand',
+    tagline: 'Client discussion, requirements, lifestyle, site and budget.',
+    description: 'Every project begins with understanding the people who will use the space. We assess the site, explore lifestyle habits, and align on budget and requirements.',
+    deliverables: ['Lifestyle & functional brief', 'Initial scope alignment', 'Laser site measurements'],
+    whatHappensNext: 'Our design team prepares conceptual space planning and moodboard direction.'
   },
   {
     stepNumber: '02',
-    title: 'Concept & Spatial Layouts',
-    tagline: 'Translating your vision into 2D space planning and moodboards.',
-    description: 'We develop ergonomic 2D floor plans with spatial circulation pathways, paired with physical and digital material moodboards defining tones, textures, and lighting ambiance.',
-    deliverables: ['2D Furniture layout options', 'Material moodboards (Stone, Wood, Fabrics)', 'Color palette curation'],
-    whatHappensNext: 'Once you select your favorite layout, our 3D visualization studio begins photorealistic rendering.'
+    title: 'Explore',
+    tagline: 'Ideas, references, mood boards and initial design direction.',
+    description: 'We explore creative ideas, reference imagery, material swatches, and color palettes to establish a cohesive visual language tailored to your taste.',
+    deliverables: ['Material & texture moodboards', 'Color scheme curation', 'Design style alignment'],
+    whatHappensNext: 'We move into detailed 2D space planning and functional furniture layouts.'
   },
   {
     stepNumber: '03',
-    title: '3D Photorealism & Design Development',
-    tagline: 'Walk through your future home before construction starts.',
-    description: 'We create photorealistic 3D renders of every room and compile technical engineering drawings for electrical MEP, plumbing, false ceiling, and bespoke millwork.',
-    deliverables: ['Photorealistic 3D walkthrough views', 'Complete working drawings & electrical layouts', 'Locked itemized Bill of Quantities (BOQ)'],
-    whatHappensNext: 'With approved drawings and signed BOQ, procurement starts and site work commences.'
+    title: 'Plan',
+    tagline: 'Space planning, furniture layouts and functional development.',
+    description: 'Translating concepts into practical, ergonomic 2D floor plans that optimize circulation, storage utility, and spatial proportions.',
+    deliverables: ['2D Furniture layout plans', 'Spatial flow analysis', 'Zoning & clearance roadmap'],
+    whatHappensNext: 'Our 3D studio begins photorealistic visual rendering.'
   },
   {
     stepNumber: '04',
-    title: 'Turnkey Execution & Site Supervision',
-    tagline: 'Rigorous on-site craftsmanship with weekly photo updates.',
-    description: 'Our dedicated site engineers oversee carpentry, civil alterations, ceiling framing, and electrical installations with strict quality-assurance checklists.',
-    deliverables: ['Weekly WhatsApp photo & video site logs', 'Milestone quality sign-offs', 'Factory-pressed modular cabinetry assembly'],
-    whatHappensNext: 'After major carpentry and painting are completed, we initiate the final deep-cleaning and styling.'
+    title: 'Visualize',
+    tagline: '3D views, materials, colours, lighting and design refinement.',
+    description: 'Experience your spaces in photorealistic 3D views before a single brick is laid, refining materials, lighting coves, textures, and custom millwork.',
+    deliverables: ['Photorealistic 3D views of all spaces', 'Lighting & shadow simulations', 'Client feedback & refinement'],
+    whatHappensNext: 'We prepare technical working drawings and locked BOQ.'
   },
   {
     stepNumber: '05',
-    title: 'Styling, Snag Clearance & Key Handover',
-    tagline: 'Step into your finished dream home, fully styled and pristine.',
-    description: 'We conduct full snag-list clearance, install bespoke loose furniture, rugs, art, and lighting fixtures, finishing with deep industrial cleaning and official key handover.',
-    deliverables: ['Deep cleaned, ready-to-live home', '10-Year ply and hardware warranty certificates', 'Care & maintenance handbook'],
-    whatHappensNext: 'Enjoy your bespoke home backed by our 1-year complimentary after-handover maintenance checkups.'
-  }
-];
-
-export const testimonialsData: Testimonial[] = [
-  {
-    id: 't1',
-    clientName: 'Dr. Nikhil & Radhika Verma',
-    location: 'Nagpur · Ramdaspeth Residence',
-    projectType: '3 BHK Turnkey Luxury Residence',
-    review: 'They understood our requirements from the beginning and handled the entire project beautifully. Being doctors with hectic schedules, their turnkey service gave us total peace of mind. The finished apartment looks exactly like the 3D renders!',
-    rating: 5,
-    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
-    projectTitle: 'The Alabaster Haven (2,450 sq.ft.)'
+    title: 'Detail',
+    tagline: 'Working drawings, furniture details, material specifications and execution planning.',
+    description: 'Comprehensive technical working drawings for carpentry, false ceilings, electrical layouts, plumbing, and locked itemized material schedules.',
+    deliverables: ['Complete working drawings set', 'Electrical & plumbing schematics', 'Locked Bill of Quantities (BOQ)'],
+    whatHappensNext: 'Site mobilization begins under direct architect supervision.'
   },
   {
-    id: 't2',
-    clientName: 'Rajesh & Meenal Agrawal',
-    location: 'Chhindwara · VIP Road Villa',
-    projectType: '4 BHK Duplex Bungalow',
-    review: 'From the initial space planning to the double-height walnut panelling and modular kitchen, the execution was flawless. They kept us updated on WhatsApp every Friday with site photos, and delivered strictly on the promised date.',
-    rating: 5,
-    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
-    projectTitle: 'Villa Tranquille (4,200 sq.ft.)'
+    stepNumber: '06',
+    title: 'Execute',
+    tagline: 'Site coordination, vendor management and quality supervision.',
+    description: 'Disciplined on-site coordination, BWP 710 joinery construction, vendor oversight, and strict quality supervision at every stage.',
+    deliverables: ['On-site quality supervision', 'Weekly photo & milestone logs', 'Precision joinery execution'],
+    whatHappensNext: 'We proceed to final detailing, deep cleaning, and client handover.'
   },
   {
-    id: 't3',
-    clientName: 'Prateek & Sunaina Sharma',
-    location: 'Nagpur · Civil Lines Penthouse',
-    projectType: 'Penthouse Apartment',
-    review: 'Sowakaah transformed our raw flat into a warm, modern sanctuary. Their attention to lighting, concealed storage, and clean marble joints is exceptional. Transparent billing and zero hidden surprises throughout the 90 days.',
-    rating: 5,
-    avatarUrl: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80',
-    projectTitle: 'The Earth & Oak Flat (1,850 sq.ft.)'
+    stepNumber: '07',
+    title: 'Deliver',
+    tagline: 'Final detailing, inspection and project handover.',
+    description: 'Thorough inspection, snag-list clearance, final styling, deep cleaning, and turnkey handover ready for immediate move-in.',
+    deliverables: ['Pristine deep-cleaned space', 'Defect-free handover signoff', 'Care & maintenance guidance'],
+    whatHappensNext: 'Step into a space that is thoughtful, functional, and truly yours.'
   }
 ];
 
@@ -210,18 +218,18 @@ export const articlesData: Article[] = [
     category: 'Cost & Planning',
     readTime: '6 min read',
     date: 'Feb 2026',
-    excerpt: 'Detailed budget breakdown for essential, premium, and luxury interior design in Chhindwara and Nagpur, with material selections and hidden cost traps.',
-    coverImage: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80',
+    excerpt: 'Detailed budget breakdown for essential, premium, and luxury interior design in Nagpur and Chhindwara, with material selections and hidden cost traps.',
+    coverImage: '/images/projects/luxury-residence/residence-02.jpg',
     content: {
-      intro: 'Planning the interior design for a 3 BHK apartment (1,400 to 2,200 sq.ft.) in Central India requires balancing durability, climate considerations, and bespoke aesthetics.',
+      intro: 'Planning the interior design for a 3 BHK apartment in Central India requires balancing durability, climate considerations, and bespoke aesthetics.',
       sections: [
         {
           heading: '1. Budget Tiers & What You Get',
           body: 'A standard budget for a 3 BHK can be categorized into three tiers:',
           bulletPoints: [
-            'Essential Quality (₹8–14 Lakhs): Commercial ply, laminate finishes, standard false ceiling, essential modular kitchen.',
-            'Premium Comfort (₹15–25 Lakhs): BWP 710 Marine ply, acrylic/veneer finishes, quartz countertops, profile lighting, custom wardrobes.',
-            'Luxury Bespoke (₹26–45 Lakhs+): Italian marble, fluted oak panelling, Blum automated hardware, motorized curtains, bespoke art and decor.'
+            'Essential Quality: Commercial ply, laminate finishes, standard false ceiling, essential modular kitchen.',
+            'Premium Comfort: BWP 710 Marine ply, acrylic/veneer finishes, quartz countertops, profile lighting, custom wardrobes.',
+            'Luxury Bespoke: Italian marble, fluted oak panelling, Blum automated hardware, motorized curtains, bespoke art and decor.'
           ]
         },
         {
@@ -240,7 +248,7 @@ export const articlesData: Article[] = [
     readTime: '5 min read',
     date: 'Jan 2026',
     excerpt: 'A comprehensive comparison on durability, edge-banding precision, installation speed, and lifetime maintenance for modern Indian cooking.',
-    coverImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+    coverImage: '/images/projects/luxury-residence/residence-10.jpg',
     content: {
       intro: 'Indian cooking involves high heat, spices, and heavy daily usage. Here is how precision factory-made modular kitchens stack up against on-site carpentry.',
       sections: [
@@ -262,21 +270,21 @@ export const instagramPosts = [
   {
     id: 'ig1',
     image: '/images/projects/luxury-residence/residence-01.jpg',
-    title: 'Living room fluted panel styling · Nagpur'
+    title: 'Pyramid Gold Residence Living Room · Nagpur'
   },
   {
     id: 'ig2',
     image: '/images/projects/duplex-villa/villa-01.jpg',
-    title: 'Double height duplex villa handover · Chhindwara'
+    title: "Director's Office & Mandir (Khush Vajani) · Nagpur"
   },
   {
     id: 'ig3',
-    image: '/images/projects/luxury-residence/residence-10.jpg',
-    title: 'German Blum modular kitchen setup'
+    image: '/images/projects/modern-penthouse/penthouse-01.jpg',
+    title: 'Raisoni College Canteen Dining & Geometric Ceiling'
   },
   {
     id: 'ig4',
-    image: '/images/projects/luxury-residence/residence-05.jpg',
-    title: 'Master bedroom acoustic backing & ambient lighting'
+    image: '/images/projects/turnkey-spaces/space-01.jpg',
+    title: 'Pershionkar Residence Turnkey Living & Pooja Unit'
   }
 ];

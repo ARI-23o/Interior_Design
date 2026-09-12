@@ -56,45 +56,45 @@ export const AboutView: React.FC<AboutViewProps> = ({ onOpenLeadModal }) => {
 
             <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border-luxury">
               <div>
-                <div className="font-serif text-3xl text-bronze font-semibold">50+</div>
-                <div className="text-xs text-charcoal-muted uppercase tracking-wider mt-1">Completed Residencies</div>
+                <div className="font-serif text-3xl text-bronze font-semibold">2022</div>
+                <div className="text-xs text-charcoal-muted uppercase tracking-wider mt-1">Established Studio</div>
               </div>
               <div>
-                <div className="font-serif text-3xl text-bronze font-semibold">8+</div>
-                <div className="text-xs text-charcoal-muted uppercase tracking-wider mt-1">Years in Practice</div>
+                <div className="font-serif text-3xl text-bronze font-semibold">100%</div>
+                <div className="text-xs text-charcoal-muted uppercase tracking-wider mt-1">Turnkey Delivery</div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Core Values */}
+        {/* Vision, Mission, Philosophy from PDF */}
         <div className="space-y-8">
           <h2 className="font-serif text-3xl sm:text-4xl text-charcoal text-center">
-            Our Non-Negotiable Standards
+            Vision, Mission & Philosophy
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             <div className="bg-canvas-soft border border-border-luxury p-6 sm:p-8 space-y-3">
-              <span className="text-xs uppercase tracking-widest text-bronze font-semibold">Standard 01</span>
-              <h3 className="font-serif text-2xl text-charcoal">Structural Integrity First</h3>
+              <span className="text-xs uppercase tracking-widest text-bronze font-semibold">Company Vision</span>
+              <h3 className="font-serif text-xl sm:text-2xl text-charcoal">Timeless Relevance</h3>
               <p className="text-xs sm:text-sm text-charcoal-muted font-light leading-relaxed">
-                We use only certified boiling waterproof (BWP 710) plywood, anti-termite treated timber, and premium grade stones that withstand Central India's climate cycles.
+                To create meaningful spaces that remain beautiful, functional and relevant with time.
               </p>
             </div>
 
             <div className="bg-canvas-soft border border-border-luxury p-6 sm:p-8 space-y-3">
-              <span className="text-xs uppercase tracking-widest text-bronze font-semibold">Standard 02</span>
-              <h3 className="font-serif text-2xl text-charcoal">Transparent Accounting</h3>
+              <span className="text-xs uppercase tracking-widest text-bronze font-semibold">Company Mission</span>
+              <h3 className="font-serif text-xl sm:text-2xl text-charcoal">Approachable Design</h3>
               <p className="text-xs sm:text-sm text-charcoal-muted font-light leading-relaxed">
-                Every square foot of material and hardware brand is spelled out in advance in our itemized Bill of Quantities (BOQ). No vague estimates.
+                To make good design approachable through thoughtful planning, honest communication, careful detailing and well-coordinated execution.
               </p>
             </div>
 
             <div className="bg-canvas-soft border border-border-luxury p-6 sm:p-8 space-y-3">
-              <span className="text-xs uppercase tracking-widest text-bronze font-semibold">Standard 03</span>
-              <h3 className="font-serif text-2xl text-charcoal">Daily Site Stewardship</h3>
+              <span className="text-xs uppercase tracking-widest text-bronze font-semibold">Design Philosophy</span>
+              <h3 className="font-serif text-xl sm:text-2xl text-charcoal">Form Meets Function</h3>
               <p className="text-xs sm:text-sm text-charcoal-muted font-light leading-relaxed">
-                Our site engineers conduct daily checks on level lines, electrical junction clearances, and surface preps, sharing photo logs every weekend.
+                We believe beautiful spaces should also work beautifully. Our designs balance aesthetics, functionality, comfort and individuality, creating interiors that feel natural to the people who live and work within them.
               </p>
             </div>
           </div>

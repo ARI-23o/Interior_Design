@@ -13,8 +13,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreProjects, onO
       {/* Editorial Hero Photography with Soft Warm Tint */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2000&q=85"
-          alt="Bespoke Luxury Living Room Design"
+          src="/images/projects/luxury-residence/residence-01.jpg"
+          alt="Pyramid Gold Residence Living Room Design by Sowakaah"
           className="w-full h-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-canvas via-canvas/95 sm:via-canvas/90 to-canvas/60 sm:to-transparent" />
