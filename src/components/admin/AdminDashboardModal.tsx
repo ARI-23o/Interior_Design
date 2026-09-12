@@ -230,11 +230,17 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
 
   const handleAddManualLead = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!manualName || !manualPhone) return;
+    if (!manualName.trim()) return;
+
+    const cleanPhone = manualPhone.replace(/\D/g, '');
+    if (cleanPhone.length < 10) {
+      alert('Please enter a valid 10-digit mobile number.');
+      return;
+    }
 
     leadStorage.saveLead({
-      name: manualName,
-      phone: manualPhone,
+      name: manualName.trim(),
+      phone: `+91 ${cleanPhone.slice(0, 10)}`,
       location: manualLocation,
       designType: manualType,
       budget: manualBudget,
@@ -818,9 +824,11 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
                 <input
                   type="tel"
                   required
-                  placeholder="Phone Number *"
+                  inputMode="numeric"
+                  maxLength={10}
+                  placeholder="10-digit Phone *"
                   value={manualPhone}
-                  onChange={(e) => setManualPhone(e.target.value)}
+                  onChange={(e) => setManualPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
                   className="bg-canvas border border-border-luxury text-xs py-2 px-2.5 focus:outline-none"
                 />
                 <select

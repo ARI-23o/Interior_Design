@@ -9,17 +9,26 @@ export const ContactView: React.FC = () => {
   const [budgetRange, setBudgetRange] = useState('₹15 – 25 Lakhs');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [phoneError, setPhoneError] = useState(false);
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !phone) return;
+    if (!name.trim()) return;
+
+    const cleanPhone = phone.replace(/\D/g, '');
+    if (cleanPhone.length !== 10) {
+      setPhoneError(true);
+      return;
+    }
+
+    setPhoneError(false);
 
     leadStorage.saveLead({
-      name,
-      phone,
+      name: name.trim(),
+      phone: `+91 ${cleanPhone}`,
       location: city,
       designType: propertyType,
       budget: budgetRange,
@@ -291,16 +300,34 @@ export const ContactView: React.FC = () => {
 
                   <div>
                     <label className="block text-xs uppercase tracking-wider text-charcoal-muted mb-1 font-semibold">
-                      Phone Number *
+                      10-Digit Mobile Number *
                     </label>
-                    <input
-                      type="tel"
-                      required
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      placeholder="+91 98765 43210"
-                      className="w-full bg-canvas border border-border-luxury text-sm py-3 px-3 text-charcoal focus:outline-none focus:border-charcoal"
-                    />
+                    <div className="relative flex items-center">
+                      <span className="bg-canvas border-y border-l border-border-luxury px-3 py-3 text-xs text-charcoal-muted font-mono select-none">
+                        +91
+                      </span>
+                      <input
+                        type="tel"
+                        required
+                        inputMode="numeric"
+                        maxLength={10}
+                        value={phone}
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/\D/g, '').slice(0, 10);
+                          setPhone(val);
+                          if (phoneError && val.length === 10) setPhoneError(false);
+                        }}
+                        placeholder="9876543210"
+                        className={`w-full bg-canvas border text-sm py-3 px-3 text-charcoal focus:outline-none ${
+                          phoneError ? 'border-red-500 bg-red-50/20' : 'border-border-luxury focus:border-charcoal'
+                        }`}
+                      />
+                    </div>
+                    {phoneError && (
+                      <span className="text-[10px] text-red-600 font-medium mt-1 block">
+                        Please enter a valid 10-digit mobile number.
+                      </span>
+                    )}
                   </div>
                 </div>
 

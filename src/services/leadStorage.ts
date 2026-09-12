@@ -43,8 +43,27 @@ function handleLeadData(data) {
   var lock = LockService.getScriptLock();
   try {
     lock.waitLock(15000);
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet = ss.getActiveSheet();
+    
+    // Auto-resolve active sheet or standalone spreadsheet
+    var ss = null;
+    try {
+      ss = SpreadsheetApp.getActiveSpreadsheet();
+    } catch(err) {}
+
+    if (!ss) {
+      // Fallback: If you created this script as a standalone script at script.google.com
+      // Paste your Spreadsheet ID between the quotes below:
+      var SPREADSHEET_ID = "1YhMWBwOZwDwNGvEi3Tvq1gpOuR0K795YYFuJ-PqOYJg";
+      if (SPREADSHEET_ID) {
+        ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+      }
+    }
+
+    if (!ss) {
+      throw new Error("Could not find active spreadsheet. Make sure this script was opened from Google Sheet > Extensions > Apps Script.");
+    }
+
+    var sheet = ss.getActiveSheet() || ss.getSheets()[0];
     
     // Auto-create Header Row if sheet is empty
     if (sheet.getLastRow() === 0) {

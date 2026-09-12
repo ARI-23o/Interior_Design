@@ -11,6 +11,7 @@ interface LeadModalProps {
 export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [phoneError, setPhoneError] = useState(false);
   const [location, setLocation] = useState('Nagpur');
   const [designType, setDesignType] = useState('Apartment');
   const [budget, setBudget] = useState('₹10–20L');
@@ -24,6 +25,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
       setIsSubmitted(false);
       setName('');
       setPhone('');
+      setPhoneError(false);
       setMessage('');
       document.body.style.overflow = 'hidden';
     } else {
@@ -40,6 +42,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
     setIsSubmitted(false);
     setName('');
     setPhone('');
+    setPhoneError(false);
     setMessage('');
   };
 
@@ -50,13 +53,20 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !phone) return;
+    if (!name.trim()) return;
+    
+    const cleanPhone = phone.replace(/\D/g, '');
+    if (cleanPhone.length !== 10) {
+      setPhoneError(true);
+      return;
+    }
 
+    setPhoneError(false);
     setLoading(true);
 
     leadStorage.saveLead({
-      name,
-      phone,
+      name: name.trim(),
+      phone: `+91 ${cleanPhone}`,
       location,
       designType,
       budget,
@@ -202,16 +212,34 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
 
                 <div>
                   <label className="block text-[11px] uppercase tracking-wider text-charcoal-muted mb-1 font-semibold">
-                    Phone Number *
+                    10-Digit Mobile Number *
                   </label>
-                  <input
-                    type="tel"
-                    required
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+91 Phone"
-                    className="w-full bg-canvas-soft border border-border-luxury text-xs py-2.5 px-3 text-charcoal focus:outline-none"
-                  />
+                  <div className="relative flex items-center">
+                    <span className="bg-canvas border-y border-l border-border-luxury px-2.5 py-2.5 text-xs text-charcoal-muted font-mono select-none">
+                      +91
+                    </span>
+                    <input
+                      type="tel"
+                      required
+                      inputMode="numeric"
+                      maxLength={10}
+                      value={phone}
+                      onChange={(e) => {
+                        const val = e.target.value.replace(/\D/g, '').slice(0, 10);
+                        setPhone(val);
+                        if (phoneError && val.length === 10) setPhoneError(false);
+                      }}
+                      placeholder="9876543210"
+                      className={`w-full bg-canvas-soft border text-xs py-2.5 px-3 text-charcoal focus:outline-none ${
+                        phoneError ? 'border-red-500 bg-red-50/20' : 'border-border-luxury focus:border-charcoal'
+                      }`}
+                    />
+                  </div>
+                  {phoneError && (
+                    <span className="text-[10px] text-red-600 font-medium mt-0.5 block">
+                      Please enter a valid 10-digit mobile number.
+                    </span>
+                  )}
                 </div>
               </div>
 
