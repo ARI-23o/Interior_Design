@@ -11,19 +11,31 @@ import {
   ShieldCheck, 
   Users, 
   PlusCircle, 
-  MapPin,
-  LogOut,
-  Eye,
-  EyeOff,
-  Layers,
-  IndianRupee,
-  FileSpreadsheet,
-  Copy,
-  Check,
-  ExternalLink,
-  Send
+  MapPin, 
+  LogOut, 
+  Eye, 
+  EyeOff, 
+  Layers, 
+  IndianRupee, 
+  FileSpreadsheet, 
+  Copy, 
+  Check, 
+  ExternalLink, 
+  Send, 
+  RefreshCw, 
+  Calendar, 
+  AlertTriangle, 
+  Sparkles, 
+  Clock 
 } from 'lucide-react';
-import { leadStorage, StoredLead, GOOGLE_APPS_SCRIPT_CODE } from '../../services/leadStorage';
+import { 
+  leadStorage, 
+  StoredLead, 
+  GOOGLE_APPS_SCRIPT_CODE, 
+  isLeadToday, 
+  isLeadYesterday, 
+  isLeadThisWeek 
+} from '../../services/leadStorage';
 import { studioInfo } from '../../data/contentData';
 import faviconImg from '../../assets/favicon.png';
 
@@ -52,13 +64,17 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
   const [googleSheetUrl, setGoogleSheetUrl] = useState('');
   const [sheetSaveSuccess, setSheetSaveSuccess] = useState(false);
   const [sheetTestStatus, setSheetTestStatus] = useState<'idle' | 'testing' | 'success' | 'error'>('idle');
+  const [sheetTestMessage, setSheetTestMessage] = useState('');
   const [copiedCode, setCopiedCode] = useState(false);
 
-  // Leads state
+  // Leads state & day-wise filter
   const [leads, setLeads] = useState<StoredLead[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('All');
+  const [dateFilter, setDateFilter] = useState<'All' | 'Today' | 'Yesterday' | 'This Week'>('All');
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [showAddManual, setShowAddManual] = useState(false);
+  const [showDailyResetConfirm, setShowDailyResetConfirm] = useState(false);
 
   // Manual lead form fields
   const [manualName, setManualName] = useState('');
@@ -139,28 +155,64 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
     setTimeout(() => setSheetSaveSuccess(false), 2000);
   };
 
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    setLeads(leadStorage.getLeads());
+    setTimeout(() => setIsRefreshing(false), 500);
+  };
+
+  const handleDailyReset = () => {
+    leadStorage.clearOldLeads();
+    setLeads(leadStorage.getLeads());
+    setShowDailyResetConfirm(false);
+  };
+
   const handleTestGoogleSheet = async () => {
-    if (!googleSheetUrl) return;
+    const url = googleSheetUrl.trim();
+    if (!url) {
+      setSheetTestStatus('error');
+      setSheetTestMessage('Please enter a Google Apps Script Web App URL first.');
+      return;
+    }
+
+    if (url.includes('/edit') || url.includes('/projects/')) {
+      setSheetTestStatus('error');
+      setSheetTestMessage('⚠️ You pasted the Script Editor URL. Please click "Deploy > New deployment > Web app" and copy the Web App URL (ends with /exec).');
+      return;
+    }
+
     setSheetTestStatus('testing');
+    setSheetTestMessage('');
+
+    const now = new Date();
     const testLead: StoredLead = {
-      id: `test-${Date.now()}`,
+      id: `test-${now.getTime()}`,
       name: 'Test Client (Google Sheet Sync Test)',
       phone: '+91 98765 43210',
       location: 'Nagpur',
       designType: 'Apartment (3 BHK)',
       budget: '₹20–40L',
-      message: 'Testing instant sync from Sowakaah website to Google Sheets.',
+      message: 'Testing instant real-time sync from Sowakaah website to Google Sheets.',
       source: 'Admin Manual Entry',
       status: 'New',
-      submittedAt: new Date().toISOString()
+      submittedAt: now.toISOString()
     };
+
     const res = await leadStorage.sendToGoogleSheet(testLead);
     if (res) {
       setSheetTestStatus('success');
-      setTimeout(() => setSheetTestStatus('idle'), 3500);
+      setSheetTestMessage('✓ Test lead dispatched to Google Sheet! Check your spreadsheet row.');
+      setTimeout(() => {
+        setSheetTestStatus('idle');
+        setSheetTestMessage('');
+      }, 7000);
     } else {
       setSheetTestStatus('error');
-      setTimeout(() => setSheetTestStatus('idle'), 3500);
+      setSheetTestMessage('✕ Could not reach Google Sheet. Ensure Apps Script Web App is deployed with "Who has access: Anyone".');
+      setTimeout(() => {
+        setSheetTestStatus('idle');
+        setSheetTestMessage('');
+      }, 9000);
     }
   };
 
@@ -197,6 +249,10 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
     setLeads(leadStorage.getLeads());
   };
 
+  const todayLeadsCount = leads.filter(l => isLeadToday(l.submittedAt)).length;
+  const yesterdayLeadsCount = leads.filter(l => isLeadYesterday(l.submittedAt)).length;
+  const thisWeekLeadsCount = leads.filter(l => isLeadThisWeek(l.submittedAt)).length;
+
   const filteredLeads = leads.filter((lead) => {
     const matchesSearch = 
       lead.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -206,7 +262,17 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
       (lead.message && lead.message.toLowerCase().includes(searchQuery.toLowerCase()));
 
     const matchesStatus = statusFilter === 'All' || lead.status === statusFilter;
-    return matchesSearch && matchesStatus;
+
+    let matchesDate = true;
+    if (dateFilter === 'Today') {
+      matchesDate = isLeadToday(lead.submittedAt);
+    } else if (dateFilter === 'Yesterday') {
+      matchesDate = isLeadYesterday(lead.submittedAt);
+    } else if (dateFilter === 'This Week') {
+      matchesDate = isLeadThisWeek(lead.submittedAt);
+    }
+
+    return matchesSearch && matchesStatus && matchesDate;
   });
 
   const totalLeads = leads.length;
@@ -325,14 +391,23 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
               </div>
             </div>
 
-            <div className="flex items-center gap-1 sm:gap-2.5">
+            <div className="flex items-center gap-1 sm:gap-2">
+              <button
+                onClick={handleRefresh}
+                className="inline-flex items-center gap-1 bg-charcoal-light hover:bg-bronze hover:text-charcoal text-canvas text-[11px] sm:text-xs uppercase tracking-wider px-2 sm:px-2.5 py-1.5 sm:py-2 transition-colors border border-border-dark"
+                title="Refresh Lead Data"
+              >
+                <RefreshCw size={12} className={isRefreshing ? 'animate-spin text-bronze' : ''} />
+                <span className="hidden md:inline">Refresh</span>
+              </button>
+
               <button
                 onClick={() => leadStorage.exportToCSV()}
-                className="inline-flex items-center gap-1 bg-charcoal-light hover:bg-bronze hover:text-charcoal text-canvas text-[11px] sm:text-xs uppercase tracking-wider px-2 sm:px-3 py-1.5 sm:py-2 transition-colors border border-border-dark"
+                className="inline-flex items-center gap-1 bg-charcoal-light hover:bg-bronze hover:text-charcoal text-canvas text-[11px] sm:text-xs uppercase tracking-wider px-2 sm:px-2.5 py-1.5 sm:py-2 transition-colors border border-border-dark"
                 title="Export CSV"
               >
-                <Download size={13} />
-                <span className="hidden sm:inline">Export CSV</span>
+                <Download size={12} />
+                <span className="hidden md:inline">CSV</span>
               </button>
 
               <button
@@ -354,10 +429,10 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
                   setShowChangePin(!showChangePin);
                   setShowGoogleSheet(false);
                 }}
-                className="inline-flex items-center gap-1 border border-border-dark text-canvas/80 hover:text-canvas text-[11px] sm:text-xs uppercase tracking-wider px-2 sm:px-3 py-1.5 sm:py-2 transition-colors"
+                className="inline-flex items-center gap-1 border border-border-dark text-canvas/80 hover:text-canvas text-[11px] sm:text-xs uppercase tracking-wider px-2 sm:px-2.5 py-1.5 sm:py-2 transition-colors"
                 title="Change Master Passcode"
               >
-                <KeyRound size={13} className="text-bronze" />
+                <KeyRound size={12} className="text-bronze" />
                 <span className="hidden sm:inline">PIN</span>
               </button>
 
@@ -366,7 +441,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
                 className="inline-flex items-center gap-1 bg-red-950/40 hover:bg-red-900 border border-red-800 text-red-200 text-[11px] sm:text-xs uppercase tracking-wider px-2 sm:px-2.5 py-1.5 sm:py-2 transition-colors"
                 title="Lock & Logout"
               >
-                <LogOut size={13} />
+                <LogOut size={12} />
                 <span className="hidden md:inline">Lock</span>
               </button>
 
@@ -386,7 +461,10 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
               <div className="flex items-center justify-between border-b border-border-luxury/60 pb-3">
                 <div className="flex items-center gap-2">
                   <FileSpreadsheet size={18} className="text-emerald-700" />
-                  <h4 className="font-serif text-base sm:text-lg text-charcoal font-medium">Google Sheets Live Sync</h4>
+                  <div>
+                    <h4 className="font-serif text-base sm:text-lg text-charcoal font-medium leading-none">Google Sheets Live Sync</h4>
+                    <span className="text-[10px] text-charcoal-muted">Every website lead is automatically synced day-wise forever</span>
+                  </div>
                 </div>
                 <span className={`text-[10px] uppercase tracking-wider px-2.5 py-0.5 font-semibold ${googleSheetUrl ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-amber-100 text-amber-800 border border-amber-300'}`}>
                   {googleSheetUrl ? '● Connected' : '○ Webhook Not Set'}
@@ -417,7 +495,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
                       type="button"
                       disabled={!googleSheetUrl || sheetTestStatus === 'testing'}
                       onClick={handleTestGoogleSheet}
-                      className="bg-emerald-700 hover:bg-emerald-800 disabled:opacity-50 text-white text-xs uppercase tracking-wider px-3.5 py-2 font-semibold shrink-0 flex items-center gap-1.5"
+                      className="bg-emerald-700 hover:bg-emerald-800 disabled:opacity-50 text-white text-xs uppercase tracking-wider px-3.5 py-2 font-semibold shrink-0 flex items-center gap-1.5 shadow-sm"
                     >
                       <Send size={12} />
                       <span>{sheetTestStatus === 'testing' ? 'Testing...' : 'Send Test Lead'}</span>
@@ -429,10 +507,20 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
                   <p className="text-xs text-emerald-700 font-semibold">✓ Google Sheet webhook URL saved successfully!</p>
                 )}
                 {sheetTestStatus === 'success' && (
-                  <p className="text-xs text-emerald-700 font-semibold">✓ Test lead dispatched to Google Sheet successfully!</p>
+                  <div className="p-2.5 bg-emerald-100 border border-emerald-300 text-xs text-emerald-900 font-medium rounded-none">
+                    {sheetTestMessage || '✓ Test lead dispatched to Google Sheet successfully! Check your spreadsheet row.'}
+                  </div>
                 )}
                 {sheetTestStatus === 'error' && (
-                  <p className="text-xs text-red-600 font-medium">✕ Failed to connect. Please ensure your Apps Script is deployed as Web App with access set to "Anyone".</p>
+                  <div className="p-2.5 bg-red-50 border border-red-300 text-xs text-red-700 font-medium rounded-none space-y-1">
+                    <div className="flex items-center gap-1 font-semibold">
+                      <AlertTriangle size={14} className="shrink-0" />
+                      <span>{sheetTestMessage || 'Connection failed'}</span>
+                    </div>
+                    <p className="text-[11px] text-red-600 font-normal">
+                      Important: When deploying in Google Apps Script, ensure you click <strong>Deploy &gt; New deployment &gt; Web app</strong>, and set <strong>Who has access: Anyone</strong>.
+                    </p>
+                  </div>
                 )}
               </form>
 
@@ -444,7 +532,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
                 <ol className="list-decimal pl-4 space-y-1.5">
                   <li>Create a new Google Sheet (e.g. named <strong>Sowakaah Studio Enquiries</strong>).</li>
                   <li>Go to <strong>Extensions &gt; Apps Script</strong>, delete existing code, and paste the script below.</li>
-                  <li>Click <strong>Deploy &gt; New deployment</strong>, select <strong>Web app</strong>, set <em>Who has access</em> to <strong>Anyone</strong>, click <strong>Deploy</strong>, copy the Web App URL and paste it into the box above.</li>
+                  <li>Click <strong>Deploy &gt; New deployment</strong> (or <em>Manage deployments &gt; New version</em>), select <strong>Web app</strong>, set <em>Who has access</em> to <strong>Anyone</strong>, click <strong>Deploy</strong>, copy the Web App URL (ends with <code>/exec</code>) and paste it into the box above.</li>
                 </ol>
 
                 <div className="pt-2">
@@ -503,24 +591,52 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
             </form>
           )}
 
-          {/* Compact Metrics Bar (Mobile Optimized) */}
+          {/* Daily Reset Confirmation Dialog */}
+          {showDailyResetConfirm && (
+            <div className="bg-amber-50 border-b border-amber-300 p-3 sm:p-4 flex flex-wrap items-center justify-between gap-2 shrink-0 animate-in slide-in-from-top-2 duration-200 text-xs text-amber-950">
+              <div className="flex items-center gap-2">
+                <AlertTriangle size={16} className="text-amber-700 shrink-0" />
+                <span>
+                  <strong>Daily Refresh:</strong> Clear older leads from this device and keep only today's fresh leads? (All leads remain permanently saved in Google Sheet).
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleDailyReset}
+                  className="bg-amber-800 hover:bg-amber-900 text-white px-3 py-1 uppercase text-[10px] font-semibold tracking-wider"
+                >
+                  Yes, Refresh for Today
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowDailyResetConfirm(false)}
+                  className="text-amber-800 underline hover:text-amber-950 px-1"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Compact Metrics Bar */}
           <div className="bg-canvas-soft border-b border-border-luxury px-3 sm:px-6 py-2 sm:py-3.5 shrink-0">
             {/* Mobile Metric Pill Strip (< sm) */}
             <div className="flex sm:hidden items-center justify-between gap-1.5 overflow-x-auto no-scrollbar">
               <div 
-                onClick={() => setStatusFilter('All')} 
-                className={`flex-1 min-w-[70px] bg-canvas border p-1.5 text-center cursor-pointer transition-colors ${statusFilter === 'All' ? 'border-charcoal shadow-sm' : 'border-border-luxury'}`}
+                onClick={() => setDateFilter('Today')} 
+                className={`flex-1 min-w-[70px] bg-canvas border p-1.5 text-center cursor-pointer transition-colors ${dateFilter === 'Today' ? 'border-emerald-600 shadow-sm' : 'border-border-luxury'}`}
               >
-                <span className="text-[9px] uppercase tracking-wider text-charcoal-muted block leading-none font-semibold">Total</span>
-                <span className="font-serif text-base font-semibold text-charcoal leading-tight">{totalLeads}</span>
+                <span className="text-[9px] uppercase tracking-wider text-emerald-700 block leading-none font-semibold">Today</span>
+                <span className="font-serif text-base font-semibold text-emerald-700 leading-tight">{todayLeadsCount}</span>
               </div>
 
               <div 
-                onClick={() => setStatusFilter('New')} 
-                className={`flex-1 min-w-[70px] bg-canvas border p-1.5 text-center cursor-pointer transition-colors ${statusFilter === 'New' ? 'border-emerald-600 shadow-sm' : 'border-border-luxury'}`}
+                onClick={() => setDateFilter('All')} 
+                className={`flex-1 min-w-[70px] bg-canvas border p-1.5 text-center cursor-pointer transition-colors ${dateFilter === 'All' ? 'border-charcoal shadow-sm' : 'border-border-luxury'}`}
               >
-                <span className="text-[9px] uppercase tracking-wider text-emerald-700 block leading-none font-semibold">New</span>
-                <span className="font-serif text-base font-semibold text-emerald-700 leading-tight">{newLeads}</span>
+                <span className="text-[9px] uppercase tracking-wider text-charcoal-muted block leading-none font-semibold">Total</span>
+                <span className="font-serif text-base font-semibold text-charcoal leading-tight">{totalLeads}</span>
               </div>
 
               <div 
@@ -543,13 +659,16 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
 
             {/* Desktop Metric Cards (sm+) */}
             <div className="hidden sm:grid grid-cols-4 gap-3 md:gap-4">
-              <div className="bg-canvas p-3 border border-border-luxury">
+              <div className="bg-canvas p-3 border border-border-luxury cursor-pointer hover:border-emerald-600 transition-colors" onClick={() => setDateFilter('Today')}>
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] uppercase tracking-wider text-emerald-700 font-semibold">Today's Inquiries</span>
+                  <span className="text-[9px] px-1.5 py-0.5 bg-emerald-100 text-emerald-800 font-medium">Daily</span>
+                </div>
+                <div className="font-serif text-2xl text-emerald-700 font-semibold mt-0.5">{todayLeadsCount}</div>
+              </div>
+              <div className="bg-canvas p-3 border border-border-luxury cursor-pointer hover:border-charcoal transition-colors" onClick={() => setDateFilter('All')}>
                 <span className="text-[10px] uppercase tracking-wider text-charcoal-muted block font-semibold">Total Inquiries</span>
                 <div className="font-serif text-2xl text-charcoal font-semibold mt-0.5">{totalLeads}</div>
-              </div>
-              <div className="bg-canvas p-3 border border-border-luxury">
-                <span className="text-[10px] uppercase tracking-wider text-emerald-700 block font-semibold">New Unread</span>
-                <div className="font-serif text-2xl text-emerald-700 font-semibold mt-0.5">{newLeads}</div>
               </div>
               <div className="bg-canvas p-3 border border-border-luxury">
                 <span className="text-[10px] uppercase tracking-wider text-bronze-dark block font-semibold">High Value Projects</span>
@@ -573,7 +692,52 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
             </div>
           </div>
 
-          {/* Search & Filter Toolbar */}
+          {/* Date Range Day-Wise Tabs & Search Strip */}
+          <div className="px-2.5 sm:px-4 py-2 border-b border-border-luxury bg-canvas-soft flex flex-wrap items-center justify-between gap-2 shrink-0">
+            {/* Day-Wise Filter Tabs */}
+            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar">
+              <span className="text-[10px] uppercase tracking-wider text-charcoal-muted font-bold mr-1 flex items-center gap-1">
+                <Calendar size={11} className="text-bronze" />
+                <span>Period:</span>
+              </span>
+              {[
+                { label: 'Today', count: todayLeadsCount, value: 'Today' as const },
+                { label: 'Yesterday', count: yesterdayLeadsCount, value: 'Yesterday' as const },
+                { label: 'This Week', count: thisWeekLeadsCount, value: 'This Week' as const },
+                { label: 'All Time', count: totalLeads, value: 'All' as const }
+              ].map((dTab) => (
+                <button
+                  key={dTab.value}
+                  onClick={() => setDateFilter(dTab.value)}
+                  className={`text-[10px] uppercase tracking-wider px-2.5 py-1 transition-all border shrink-0 flex items-center gap-1 ${
+                    dateFilter === dTab.value
+                      ? 'bg-bronze text-charcoal border-bronze-dark font-bold shadow-xs'
+                      : 'bg-canvas text-charcoal-muted border-border-luxury hover:text-charcoal'
+                  }`}
+                >
+                  <span>{dTab.label}</span>
+                  <span className={`text-[9px] px-1 font-mono rounded-none ${dateFilter === dTab.value ? 'bg-charcoal text-canvas' : 'bg-canvas-soft text-charcoal-muted'}`}>
+                    {dTab.count}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Quick Action: Daily Refresh / Clean Old */}
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setShowDailyResetConfirm(true)}
+                className="text-[10px] uppercase tracking-wider text-charcoal-muted hover:text-bronze flex items-center gap-1 underline"
+                title="Reset view to today's fresh leads only"
+              >
+                <Sparkles size={11} className="text-bronze" />
+                <span>Daily Refresh</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Search & Status Filter Toolbar */}
           <div className="p-2.5 sm:p-4 border-b border-border-luxury flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2 sm:gap-3 shrink-0 bg-canvas">
             <div className="relative flex-grow">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-charcoal-muted" size={13} />
@@ -596,18 +760,17 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
 
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
               {[
-                { label: 'All', count: totalLeads },
-                { label: 'New', count: newLeads },
-                { label: 'Contacted', count: contactedLeads },
-                { label: 'Scheduled', count: leads.filter(l => l.status === 'Meeting Scheduled').length },
-                { label: 'Converted', count: leads.filter(l => l.status === 'Converted').length }
+                { label: 'All Statuses', value: 'All' },
+                { label: 'New', value: 'New' },
+                { label: 'Contacted', value: 'Contacted' },
+                { label: 'Scheduled', value: 'Meeting Scheduled' },
+                { label: 'Converted', value: 'Converted' }
               ].map((tab) => {
-                const targetStatus = tab.label === 'Scheduled' ? 'Meeting Scheduled' : tab.label;
-                const isActive = statusFilter === targetStatus;
+                const isActive = statusFilter === tab.value;
                 return (
                   <button
-                    key={tab.label}
-                    onClick={() => setStatusFilter(targetStatus)}
+                    key={tab.value}
+                    onClick={() => setStatusFilter(tab.value)}
                     className={`text-[10px] sm:text-[11px] uppercase tracking-wider px-2.5 py-1.5 transition-all border whitespace-nowrap shrink-0 flex items-center gap-1 ${
                       isActive
                         ? 'bg-charcoal text-canvas border-charcoal font-semibold'
@@ -615,11 +778,6 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
                     }`}
                   >
                     <span>{tab.label}</span>
-                    {tab.count > 0 && (
-                      <span className={`text-[9px] px-1 py-0.2 rounded-none font-mono ${isActive ? 'bg-bronze text-charcoal' : 'bg-canvas text-charcoal-muted'}`}>
-                        {tab.count}
-                      </span>
-                    )}
                   </button>
                 );
               })}
@@ -751,10 +909,19 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
                         }`}>
                           {lead.status}
                         </span>
+                        {isLeadToday(lead.submittedAt) && (
+                          <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 font-bold bg-emerald-600 text-white shrink-0">
+                            Today
+                          </span>
+                        )}
                       </div>
-                      <span className="text-[10px] text-charcoal-muted font-light">
-                        {new Date(lead.submittedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })} · via {lead.source}
-                      </span>
+                      <div className="flex flex-wrap items-center gap-1.5 text-[10px] text-charcoal-muted font-light mt-0.5">
+                        <span className="inline-flex items-center gap-1 font-mono text-charcoal font-medium">
+                          <Clock size={10} className="text-bronze" />
+                          {new Date(lead.submittedAt).toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })} at {new Date(lead.submittedAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                        </span>
+                        <span>· via {lead.source}</span>
+                      </div>
                     </div>
 
                     <button
