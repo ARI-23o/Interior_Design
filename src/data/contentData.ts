@@ -82,7 +82,7 @@ export const servicesData: Service[] = [
     features: ['Civil alterations & space planning', 'Custom carpentry & modular systems', 'Electrical, plumbing & HVAC coordination', 'Complete material procurement & quality supervision'],
     timeline: '60 – 120 Days',
     idealFor: 'Busy homeowners wanting premium single-point accountability',
-    image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1000&q=80'
+    image: '/images/projects/luxury-residence/residence-01.jpg'
   },
   {
     id: 'residential',
@@ -92,7 +92,7 @@ export const servicesData: Service[] = [
     features: ['3D photorealistic walkthroughs', 'False ceiling & architectural lighting design', 'Custom master bedroom suites & walk-in wardrobes', 'Curated loose furniture & soft furnishings'],
     timeline: '45 – 90 Days',
     idealFor: 'Homeowners building their long-term dream residence',
-    image: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=80'
+    image: '/images/projects/duplex-villa/villa-01.jpg'
   },
   {
     id: 'kitchens',
@@ -102,7 +102,7 @@ export const servicesData: Service[] = [
     features: ['BWP 710 Boiling Waterproof Birch/Ply base', 'Blum soft-close tandem boxes & lift-ups', 'Custom appliance integration (oven, hob, chimney)', 'Ergonomic triangle workflow optimization'],
     timeline: '30 – 45 Days',
     idealFor: 'Culinary enthusiasts prioritizing ergonomics and easy maintenance',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80'
+    image: '/images/projects/luxury-residence/residence-10.jpg'
   },
   {
     id: 'commercial',
@@ -112,7 +112,7 @@ export const servicesData: Service[] = [
     features: ['Acoustic zoning & sound dampening', 'Executive conference & VIP lounges', 'Ergonomic lighting & airflow planning', 'Brand identity integrated into spatial architecture'],
     timeline: '40 – 75 Days',
     idealFor: 'Corporates, professionals, and boutique business owners',
-    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1000&q=80'
+    image: '/images/projects/modern-penthouse/penthouse-01.jpg'
   },
   {
     id: 'furniture',
@@ -122,7 +122,7 @@ export const servicesData: Service[] = [
     features: ['Custom upholstery in bouclé, velvet & leather', 'Solid teak, oak, and marble dining sets', 'Bespoke statement chandeliers & sconces', 'Fine art styling and plantscape integration'],
     timeline: '20 – 40 Days',
     idealFor: 'Clients looking to elevate their existing spaces with designer pieces',
-    image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1000&q=80'
+    image: '/images/projects/luxury-residence/residence-04.jpg'
   }
 ];
 
@@ -261,22 +261,22 @@ export const articlesData: Article[] = [
 export const instagramPosts = [
   {
     id: 'ig1',
-    image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=600&q=80',
-    title: 'Cove lighting details at Civil Lines site'
+    image: '/images/projects/luxury-residence/residence-01.jpg',
+    title: 'Living room fluted panel styling · Nagpur'
   },
   {
     id: 'ig2',
-    image: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=600&q=80',
-    title: 'Fluted walnut backdrop installation'
+    image: '/images/projects/duplex-villa/villa-01.jpg',
+    title: 'Double height duplex villa handover · Chhindwara'
   },
   {
     id: 'ig3',
-    image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=600&q=80',
-    title: 'Material moodboard selection day'
+    image: '/images/projects/luxury-residence/residence-10.jpg',
+    title: 'German Blum modular kitchen setup'
   },
   {
     id: 'ig4',
-    image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=600&q=80',
-    title: 'Travertine stone dining table handover'
+    image: '/images/projects/luxury-residence/residence-05.jpg',
+    title: 'Master bedroom acoustic backing & ambient lighting'
   }
 ];
