@@ -14,13 +14,9 @@ export const MeetDesignerSection: React.FC<MeetDesignerSectionProps> = ({ onLear
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           
-          {/* Left Column: Authentic Designer Portrait with luxury offset frame */}
+          {/* Left Column: Authentic Designer Portrait */}
           <div className="lg:col-span-5 relative">
             <div className="relative mx-auto max-w-sm sm:max-w-md lg:max-w-none">
-              
-              {/* Decorative luxury frame offset */}
-              <div className="absolute -inset-2.5 sm:-inset-3 border border-bronze/40 translate-x-2 translate-y-2 sm:translate-x-3 sm:translate-y-3 pointer-events-none" />
-              
               <div className="relative overflow-hidden bg-canvas border border-border-luxury shadow-luxury">
                 <img
                   src={studioInfo.founder.photo}
