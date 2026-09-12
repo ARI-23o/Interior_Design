@@ -70,9 +70,22 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
     }, 400);
   };
 
+  const getCompiledWhatsAppMessage = () => {
+    const lines = [
+      `✨ *Interior Design Inquiry — Sowakaah Designs*`,
+      `👤 *Name:* ${name || 'Prospective Client'}`,
+      `📱 *Phone:* ${phone}`,
+      `📍 *Location:* ${location || 'Nagpur'}`,
+      `🏠 *Typology:* ${designType}`,
+      `💰 *Budget Range:* ${budget}`,
+      message ? `📝 *Project Notes:* ${message}` : '',
+      `\nHi Sowakaah Team, I have just submitted my inquiry on your website. Looking forward to your response!`
+    ].filter(Boolean);
+    return lines.join('\n');
+  };
+
   const handleWhatsApp = () => {
-    const text = `Hi Sowakaah Designs, I'm interested in discussing an interior design project for my ${designType} in ${location}. Budget: ${budget}. Name: ${name || 'Prospective Client'}. ${message ? `Notes: ${message}` : ''}`;
-    window.open(`https://wa.me/${studioInfo.contact.phoneRaw}?text=${encodeURIComponent(text)}`, '_blank');
+    window.open(`https://wa.me/${studioInfo.contact.phoneRaw}?text=${encodeURIComponent(getCompiledWhatsAppMessage())}`, '_blank');
   };
 
   return (
@@ -100,40 +113,72 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose }) => {
         {/* Content */}
         <div className="p-5 sm:p-8 overflow-y-auto">
           {isSubmitted ? (
-            <div className="py-6 text-center space-y-4 animate-in fade-in duration-200">
-              <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
+            <div className="py-3 text-center space-y-4 animate-in fade-in duration-200">
+              <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto shadow-sm">
                 <CheckCircle2 size={32} />
               </div>
-              <h3 className="font-serif text-2xl sm:text-3xl text-charcoal">
-                Consultation Request Received
-              </h3>
-              <p className="text-xs sm:text-sm text-charcoal-muted leading-relaxed max-w-md mx-auto">
-                Thank you, <strong>{name}</strong>. Our principal designer will review your brief for your <strong>{designType}</strong> in <strong>{location}</strong> and contact you on WhatsApp/call shortly.
-              </p>
-              
-              <div className="pt-3 flex flex-col sm:flex-row gap-2.5 sm:gap-3 justify-center">
+              <div>
+                <h3 className="font-serif text-2xl sm:text-3xl text-charcoal">
+                  Consultation Request Received!
+                </h3>
+                <p className="text-xs sm:text-sm text-charcoal-muted leading-relaxed max-w-md mx-auto mt-1">
+                  Thank you, <strong className="text-charcoal">{name}</strong>. Your inquiry has been logged into our system.
+                </p>
+              </div>
+
+              {/* WhatsApp Action Callout Card */}
+              <div className="bg-emerald-50/80 border border-emerald-200 p-4 sm:p-5 text-left rounded-none space-y-3">
+                <div className="flex items-start gap-2.5">
+                  <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                    <MessageSquare size={16} />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-emerald-950">
+                      Want an instant reply on WhatsApp?
+                    </h4>
+                    <p className="text-xs text-emerald-800 leading-relaxed mt-0.5">
+                      Send your pre-filled inquiry to our principal designer now to skip the queue and get rapid consultation.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Prefilled Info Preview */}
+                <div className="bg-white/90 border border-emerald-200/80 p-3 text-[11px] sm:text-xs text-charcoal font-mono leading-relaxed space-y-1">
+                  <div className="text-[10px] uppercase font-sans font-bold text-emerald-800 tracking-wider mb-1">
+                    Pre-filled Message Summary:
+                  </div>
+                  <div><span className="text-charcoal-muted">Name:</span> {name}</div>
+                  <div><span className="text-charcoal-muted">Phone:</span> {phone}</div>
+                  <div><span className="text-charcoal-muted">Location:</span> {location}</div>
+                  <div><span className="text-charcoal-muted">Typology:</span> {designType} ({budget})</div>
+                  {message && <div className="truncate"><span className="text-charcoal-muted">Notes:</span> {message}</div>}
+                </div>
+
                 <button
+                  type="button"
                   onClick={handleWhatsApp}
-                  className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs uppercase tracking-wider py-3.5 px-6 flex items-center justify-center gap-2 font-semibold shadow-sm min-h-[44px]"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white text-xs uppercase tracking-wider py-3.5 px-6 flex items-center justify-center gap-2 font-semibold shadow-md transition-all"
                 >
-                  <MessageSquare size={14} />
-                  <span>WhatsApp us directly →</span>
+                  <MessageSquare size={16} />
+                  <span>Send Details via WhatsApp Now →</span>
                 </button>
+              </div>
+              
+              <div className="pt-2 flex flex-col sm:flex-row gap-2.5 sm:gap-3 justify-center">
                 <button
+                  type="button"
                   onClick={handleResetForm}
-                  className="border border-border-luxury text-charcoal hover:bg-canvas-soft text-xs uppercase tracking-wider py-3.5 px-5 flex items-center justify-center gap-1.5 min-h-[44px]"
+                  className="border border-border-luxury text-charcoal hover:bg-canvas-soft text-xs uppercase tracking-wider py-2.5 px-4 flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <RotateCcw size={13} className="text-bronze" />
                   <span>Submit Another Enquiry</span>
                 </button>
-              </div>
-
-              <div className="pt-2">
                 <button
+                  type="button"
                   onClick={handleClose}
-                  className="text-xs text-charcoal-muted hover:text-charcoal underline py-1"
+                  className="text-xs text-charcoal-muted hover:text-charcoal underline py-2.5 px-3"
                 >
-                  Close Window
+                  Done & Close
                 </button>
               </div>
             </div>

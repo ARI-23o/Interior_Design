@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, MessageSquare, Sparkles, CheckCircle2, ChevronDown, ChevronUp, Instagram, ArrowUpRight } from 'lucide-react';
+import { Phone, Mail, MapPin, MessageSquare, Sparkles, CheckCircle2, ChevronDown, ChevronUp, Instagram, ArrowUpRight, RotateCcw } from 'lucide-react';
 import { studioInfo } from '../../data/contentData';
 import { leadStorage } from '../../services/leadStorage';
 
@@ -30,9 +30,22 @@ export const ContactView: React.FC = () => {
     setSubmitted(true);
   };
 
+  const getCompiledWhatsAppMessage = () => {
+    const lines = [
+      `✨ *Interior Design Inquiry — Sowakaah Designs*`,
+      `👤 *Name:* ${name || 'Prospective Client'}`,
+      `📱 *Phone:* ${phone}`,
+      `📍 *Location / City:* ${city}`,
+      `🏠 *Typology:* ${propertyType}`,
+      `💰 *Budget Range:* ${budgetRange}`,
+      message ? `📝 *Project Notes:* ${message}` : '',
+      `\nHi Sowakaah Team, I have just submitted my inquiry on your contact page. Looking forward to discussing the design proposal!`
+    ].filter(Boolean);
+    return lines.join('\n');
+  };
+
   const handleWhatsApp = () => {
-    const text = `Hi Sowakaah Studio, I'm reaching out from the contact page. I'd like to discuss interior design for my ${propertyType} in ${city} (Budget: ${budgetRange}). Name: ${name || 'Prospective Client'}.`;
-    window.open(`https://wa.me/${studioInfo.contact.phoneRaw}?text=${encodeURIComponent(text)}`, '_blank');
+    window.open(`https://wa.me/${studioInfo.contact.phoneRaw}?text=${encodeURIComponent(getCompiledWhatsAppMessage())}`, '_blank');
   };
 
   const faqs = [
@@ -183,33 +196,70 @@ export const ContactView: React.FC = () => {
           {/* Right: Consultation Form */}
           <div className="lg:col-span-7 bg-canvas-soft border border-border-luxury p-5 sm:p-12 shadow-sm">
             {submitted ? (
-              <div className="py-12 text-center space-y-4">
-                <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
+              <div className="py-6 sm:py-8 text-center space-y-5 animate-in fade-in zoom-in-95 duration-200">
+                <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto shadow-sm">
                   <CheckCircle2 size={36} />
                 </div>
-                <h3 className="font-serif text-3xl text-charcoal">
-                  Consultation Request Dispatched!
-                </h3>
-                <p className="text-sm text-charcoal-muted max-w-md mx-auto">
-                  Thank you, <strong>{name}</strong>. Our senior designer will examine your requirements for your <strong>{propertyType}</strong> in <strong>{city}</strong> and get in touch within 24 hours.
-                </p>
-                <div className="pt-4 flex flex-col sm:flex-row justify-center gap-3">
+                <div>
+                  <h3 className="font-serif text-2xl sm:text-3xl text-charcoal">
+                    Consultation Request Dispatched!
+                  </h3>
+                  <p className="text-xs sm:text-sm text-charcoal-muted max-w-md mx-auto mt-1 leading-relaxed">
+                    Thank you, <strong className="text-charcoal">{name}</strong>. Your project brief for your <strong>{propertyType}</strong> in <strong>{city}</strong> has been received.
+                  </p>
+                </div>
+
+                {/* WhatsApp Action Callout Card */}
+                <div className="bg-emerald-50/80 border border-emerald-200 p-4 sm:p-5 text-left rounded-none space-y-3">
+                  <div className="flex items-start gap-2.5">
+                    <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                      <MessageSquare size={16} />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-semibold text-emerald-950">
+                        Speed up your response via WhatsApp
+                      </h4>
+                      <p className="text-xs text-emerald-800 leading-relaxed mt-0.5">
+                        Send this pre-filled message directly to our design desk on WhatsApp to get immediate assistance from our team.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Prefilled Info Preview */}
+                  <div className="bg-white/90 border border-emerald-200/80 p-3 text-[11px] sm:text-xs text-charcoal font-mono leading-relaxed space-y-1">
+                    <div className="text-[10px] uppercase font-sans font-bold text-emerald-800 tracking-wider mb-1">
+                      Pre-filled Message Preview:
+                    </div>
+                    <div><span className="text-charcoal-muted">Name:</span> {name}</div>
+                    <div><span className="text-charcoal-muted">Phone:</span> {phone}</div>
+                    <div><span className="text-charcoal-muted">Location:</span> {city}</div>
+                    <div><span className="text-charcoal-muted">Typology:</span> {propertyType} ({budgetRange})</div>
+                    {message && <div className="truncate"><span className="text-charcoal-muted">Notes:</span> {message}</div>}
+                  </div>
+
                   <button
+                    type="button"
                     onClick={handleWhatsApp}
-                    className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs uppercase tracking-wider px-6 py-3 font-semibold"
+                    className="w-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white text-xs uppercase tracking-wider py-3.5 px-6 flex items-center justify-center gap-2 font-semibold shadow-md transition-all"
                   >
-                    Ping Us on WhatsApp
+                    <MessageSquare size={16} />
+                    <span>Send Prefilled Info via WhatsApp Now →</span>
                   </button>
+                </div>
+
+                <div className="pt-2 flex justify-center">
                   <button
+                    type="button"
                     onClick={() => {
                       setName('');
                       setPhone('');
                       setMessage('');
                       setSubmitted(false);
                     }}
-                    className="border border-border-luxury text-charcoal hover:bg-canvas text-xs uppercase tracking-wider px-5 py-3"
+                    className="border border-border-luxury text-charcoal hover:bg-canvas text-xs uppercase tracking-wider px-5 py-2.5 flex items-center justify-center gap-1.5 transition-colors"
                   >
-                    Submit Another Inquiry
+                    <RotateCcw size={13} className="text-bronze" />
+                    <span>Submit Another Inquiry</span>
                   </button>
                 </div>
               </div>
