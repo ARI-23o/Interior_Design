@@ -1,24 +1,53 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { Sparkles, MoveHorizontal, CheckCircle2, Columns, SlidersHorizontal, ArrowRight } from 'lucide-react';
+import { Sparkles, MoveHorizontal, CheckCircle2, Columns, SlidersHorizontal, ArrowRight, Building2, BedDouble } from 'lucide-react';
 
 interface BeforeAfterSectionProps {
   onOpenLeadModal: () => void;
 }
 
 export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLeadModal }) => {
+  const [activeProjectIndex, setActiveProjectIndex] = useState(0);
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const [viewMode, setViewMode] = useState<'slider' | 'side-by-side'>('slider');
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const beforeImage = '/images/before-bedroom.jpg';
-  const afterImage = '/images/after-bedroom.jpg';
-
-  const transformationDetails = [
-    { title: 'Bespoke Joinery', desc: 'From raw BWP marine ply carcass to high-gloss lacquered finishes with integrated warm LED profiles.' },
-    { title: 'Architectural Lighting', desc: 'Layered cove illumination, focused headboard spotlights, and backlit geometric wall pattern.' },
-    { title: 'Integrated Study & Vanity', desc: 'Custom curved study station seamlessly connected to illuminated wardrobe and dresser mirror.' }
+  const projects = [
+    {
+      id: 'bedroom',
+      title: 'Master Bedroom Suite',
+      location: 'Pyramid Gold Residence · Nagpur',
+      icon: BedDouble,
+      badge: 'Residential Suite',
+      beforeImage: '/images/before-bedroom.jpg',
+      afterImage: '/images/after-bedroom.jpg',
+      beforeLabel: 'BEFORE: On-Site Carpentry & Framing',
+      afterLabel: 'AFTER: Turnkey Finished Suite',
+      details: [
+        { title: 'Bespoke Joinery', desc: 'From raw BWP marine ply carcass to high-gloss lacquered finishes with integrated warm LED profiles.' },
+        { title: 'Architectural Lighting', desc: 'Layered cove illumination, focused headboard spotlights, and backlit geometric wall pattern.' },
+        { title: 'Integrated Study & Vanity', desc: 'Custom curved study station seamlessly connected to illuminated wardrobe and dresser mirror.' }
+      ]
+    },
+    {
+      id: 'office',
+      title: "Director's Executive Office & Mandir",
+      location: 'Khush Vajani Office · Nagpur',
+      icon: Building2,
+      badge: 'Commercial Suite',
+      beforeImage: '/images/before-office.jpg',
+      afterImage: '/images/after-office.jpg',
+      beforeLabel: 'BEFORE: Raw Plywood Carcass & Exposed Brick',
+      afterLabel: 'AFTER: Finished Executive Suite & Lotus Mandir',
+      details: [
+        { title: 'Executive Stone Desk', desc: 'Raw ply desk framework transformed into luxury stone-top executive station with leather desk pad.' },
+        { title: 'Sacred Lotus Mandir', desc: 'Custom prayer sanctuary with backlit CNC lotus motif, warm tier storage, and hanging crystal lighting.' },
+        { title: 'Acoustic & Task Lighting', desc: 'Wall cladding with warm acoustic fabric backing, integrated ceiling spots, and seamless storage cabinetry.' }
+      ]
+    }
   ];
+
+  const currentProject = projects[activeProjectIndex];
 
   const handleMove = useCallback((clientX: number) => {
     if (!containerRef.current) return;
@@ -48,13 +77,13 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
           <div className="max-w-2xl">
             <div className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-bronze font-semibold mb-2">
               <Sparkles size={14} />
-              <span>Real Site Transformation</span>
+              <span>Real Site Transformations</span>
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-charcoal leading-tight">
               Before & After: Real Transformation.
             </h2>
             <p className="text-charcoal-muted text-xs sm:text-base mt-2 leading-relaxed font-light">
-              Witness how raw plywood carcasses, framing, and on-site carpentry evolve into an impeccably detailed, turnkey bedroom suite.
+              Witness how raw plywood framing, site carpentry, and structural shells evolve into bespoke, turnkey luxury spaces.
             </p>
           </div>
 
@@ -81,14 +110,43 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
           </div>
         </div>
 
+        {/* Project Selector Tabs */}
+        <div className="flex items-center gap-3 border-b border-border-luxury pb-3 overflow-x-auto no-scrollbar">
+          {projects.map((proj, idx) => {
+            const Icon = proj.icon;
+            const isActive = activeProjectIndex === idx;
+            return (
+              <button
+                key={proj.id}
+                onClick={() => {
+                  setActiveProjectIndex(idx);
+                  setSliderPosition(50);
+                }}
+                className={`flex items-center gap-2 text-xs uppercase tracking-wider px-4 sm:px-5 py-2.5 transition-all shrink-0 border ${
+                  isActive
+                    ? 'bg-charcoal text-canvas border-charcoal font-semibold shadow-sm'
+                    : 'bg-canvas text-charcoal-muted hover:text-charcoal border-border-luxury/70 hover:border-charcoal'
+                }`}
+              >
+                <Icon size={14} className={isActive ? 'text-bronze' : 'text-charcoal-muted'} />
+                <span>{proj.title}</span>
+                <span className={`text-[10px] px-1.5 py-0.5 ml-1 ${isActive ? 'bg-canvas/20 text-canvas' : 'bg-canvas-soft text-charcoal-subtle'}`}>
+                  {proj.badge}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
         {/* 1. INTERACTIVE DRAG SLIDER VIEW */}
         {viewMode === 'slider' && (
           <div className="space-y-4 animate-in fade-in duration-300">
-            {/* Quick preset positions */}
-            <div className="flex justify-between items-center text-xs">
-              <span className="text-[11px] sm:text-xs uppercase tracking-wider text-charcoal-muted hidden sm:inline">
-                Drag the center slider or click preset buttons:
-              </span>
+            {/* Quick preset positions & Project title */}
+            <div className="flex flex-wrap justify-between items-center gap-2 text-xs">
+              <div>
+                <span className="font-serif text-lg text-charcoal font-medium">{currentProject.title}</span>
+                <span className="text-charcoal-muted text-xs ml-2 font-light">({currentProject.location})</span>
+              </div>
               <div className="flex items-center gap-1.5 sm:gap-2 ml-auto">
                 <button 
                   onClick={() => setSliderPosition(0)} 
@@ -125,13 +183,13 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
             >
               {/* After Image (Background Layer) */}
               <img 
-                src={afterImage} 
-                alt="Finished Turnkey Bedroom Handover" 
+                src={currentProject.afterImage} 
+                alt={currentProject.afterLabel} 
                 className="absolute inset-0 w-full h-full object-cover object-center"
               />
-              <div className="absolute top-3 sm:top-5 right-3 sm:right-5 bg-charcoal/90 backdrop-blur-md text-canvas text-[10.5px] sm:text-xs uppercase tracking-widest px-3 sm:px-4 py-1.5 pointer-events-none z-10 border border-charcoal-light shadow-md flex items-center gap-1.5">
+              <div className="absolute top-3 sm:top-5 right-3 sm:right-5 bg-charcoal/90 backdrop-blur-md text-canvas text-[10px] sm:text-xs uppercase tracking-widest px-3 sm:px-4 py-1.5 pointer-events-none z-10 border border-charcoal-light shadow-md flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                <span>AFTER: Finished Handover</span>
+                <span>{currentProject.afterLabel}</span>
               </div>
 
               {/* Before Image (Cropped Overlay Layer) */}
@@ -140,14 +198,14 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
                 style={{ width: `${sliderPosition}%` }}
               >
                 <img 
-                  src={beforeImage} 
-                  alt="Raw Site Carpentry and Plywood Framing" 
+                  src={currentProject.beforeImage} 
+                  alt={currentProject.beforeLabel} 
                   className="absolute inset-0 w-full h-full object-cover object-center max-w-none"
                   style={{ width: containerRef.current ? `${containerRef.current.clientWidth}px` : '100vw' }}
                 />
-                <div className="absolute top-3 sm:top-5 left-3 sm:left-6 bg-charcoal/90 backdrop-blur-md text-canvas text-[10.5px] sm:text-xs uppercase tracking-widest px-3 sm:px-4 py-1.5 pointer-events-none z-10 border border-charcoal-light shadow-md flex items-center gap-1.5">
+                <div className="absolute top-3 sm:top-5 left-3 sm:left-6 bg-charcoal/90 backdrop-blur-md text-canvas text-[10px] sm:text-xs uppercase tracking-widest px-3 sm:px-4 py-1.5 pointer-events-none z-10 border border-charcoal-light shadow-md flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-                  <span>BEFORE: Raw Site Carpentry</span>
+                  <span>{currentProject.beforeLabel}</span>
                 </div>
               </div>
 
@@ -175,19 +233,19 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
             <div className="bg-canvas border border-border-luxury overflow-hidden shadow-sm">
               <div className="relative aspect-[4/3] bg-charcoal overflow-hidden">
                 <img 
-                  src={beforeImage} 
-                  alt="Raw Site Carpentry" 
+                  src={currentProject.beforeImage} 
+                  alt={currentProject.beforeLabel} 
                   className="w-full h-full object-cover object-center"
                 />
                 <div className="absolute top-3 left-3 bg-charcoal/90 backdrop-blur-md text-canvas text-[10px] sm:text-xs uppercase tracking-widest px-3 py-1 border border-charcoal-light flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-                  <span>BEFORE: On-Site Carpentry</span>
+                  <span>{currentProject.beforeLabel}</span>
                 </div>
               </div>
-              <div className="p-4 sm:p-5 space-y-2">
-                <h3 className="font-serif text-lg text-charcoal">Structural Framing & Joinery</h3>
+              <div className="p-4 sm:p-5 space-y-1.5">
+                <h3 className="font-serif text-lg text-charcoal">{currentProject.title} — Raw Site</h3>
                 <p className="text-xs text-charcoal-muted leading-relaxed font-light">
-                  Raw plywood framework, study table shaping, false ceiling coffer grid, and preliminary electrical wiring conduit routing.
+                  Raw on-site framework, custom joinery shaping, carcass construction, and infrastructure routing.
                 </p>
               </div>
             </div>
@@ -196,28 +254,28 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
             <div className="bg-canvas border border-border-luxury overflow-hidden shadow-sm">
               <div className="relative aspect-[4/3] bg-charcoal overflow-hidden">
                 <img 
-                  src={afterImage} 
-                  alt="Finished Turnkey Bedroom Handover" 
+                  src={currentProject.afterImage} 
+                  alt={currentProject.afterLabel} 
                   className="w-full h-full object-cover object-center"
                 />
                 <div className="absolute top-3 left-3 bg-charcoal/90 backdrop-blur-md text-canvas text-[10px] sm:text-xs uppercase tracking-widest px-3 py-1 border border-charcoal-light flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                  <span>AFTER: Finished Turnkey Suite</span>
+                  <span>{currentProject.afterLabel}</span>
                 </div>
               </div>
-              <div className="p-4 sm:p-5 space-y-2">
-                <h3 className="font-serif text-lg text-charcoal">Completed Luxury Handover</h3>
+              <div className="p-4 sm:p-5 space-y-1.5">
+                <h3 className="font-serif text-lg text-charcoal">{currentProject.title} — Handover</h3>
                 <p className="text-xs text-charcoal-muted leading-relaxed font-light">
-                  Lacquered gloss cabinetry, plush velvet fluted headboard, illuminated cove niches, dressing mirror, and bespoke styled finishes.
+                  Flawless finishes, integrated architectural lighting, bespoke styled decor, and 100% defect-free delivery.
                 </p>
               </div>
             </div>
           </div>
         )}
 
-        {/* 3 Key Transformation Pillars */}
+        {/* 3 Key Transformation Pillars for active project */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-          {transformationDetails.map((item, idx) => (
+          {currentProject.details.map((item, idx) => (
             <div key={idx} className="bg-canvas p-4 sm:p-5 border border-border-luxury space-y-1.5 shadow-sm">
               <div className="flex items-center gap-2 text-xs font-semibold text-charcoal">
                 <CheckCircle2 size={14} className="text-bronze shrink-0" />
@@ -250,4 +308,5 @@ export const BeforeAfterSection: React.FC<BeforeAfterSectionProps> = ({ onOpenLe
     </section>
   );
 };
+
 
