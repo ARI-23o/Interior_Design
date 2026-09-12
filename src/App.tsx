@@ -7,7 +7,6 @@ import { FeaturedProjects } from './components/home/FeaturedProjects';
 import { WhyChooseUs } from './components/home/WhyChooseUs';
 import { BeforeAfterSection } from './components/home/BeforeAfterSection';
 import { ProcessSection } from './components/home/ProcessSection';
-import { TestimonialsSection } from './components/home/TestimonialsSection';
 import { MeetDesignerSection } from './components/home/MeetDesignerSection';
 import { ServicesSection } from './components/home/ServicesSection';
 import { InstagramSection } from './components/home/InstagramSection';
@@ -110,10 +109,7 @@ export function App() {
               onViewAllProjects={() => setActiveView('projects')}
             />
 
-            {/* 03. Real Client Proof & Testimonials (Directly After Projects) */}
-            <TestimonialsSection />
-
-            {/* 04. Meet the Designer & Studio Story */}
+            {/* 03. Meet the Designer & Studio Story */}
             <MeetDesignerSection
               onLearnMore={() => setActiveView('about')}
               onOpenLeadModal={() => setLeadModalOpen(true)}
