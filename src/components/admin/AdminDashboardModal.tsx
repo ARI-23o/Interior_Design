@@ -212,7 +212,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
                       setPinInput(e.target.value);
                       setPinError(false);
                     }}
-                    placeholder="Enter passcode (e.g. sowakaah2026)"
+                    placeholder="Enter admin passcode"
                     className={`w-full bg-canvas-soft border text-base sm:text-sm py-3 pl-3.5 pr-10 text-charcoal focus:outline-none rounded-none ${
                       pinError ? 'border-red-500 bg-red-50/20' : 'border-border-luxury focus:border-charcoal'
                     }`}
@@ -228,7 +228,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
                 </div>
                 {pinError && (
                   <p className="text-[11px] text-red-600 mt-1.5 font-medium">
-                    Incorrect Passcode. Default is <code className="bg-canvas-soft px-1.5 py-0.5 border border-red-200">sowakaah2026</code>
+                    Incorrect Passcode. Please try again.
                   </p>
                 )}
               </div>
