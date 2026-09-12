@@ -8,6 +8,39 @@ export interface StoredLead extends LeadInquiry {
 }
 
 const STORAGE_KEY = 'sowakaah_studio_leads_v1';
+const GOOGLE_SHEET_KEY = 'sowakaah_google_sheet_webhook_url';
+
+// Default Apps Script template for documentation
+export const GOOGLE_APPS_SCRIPT_CODE = `function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    
+    // Auto-create header row if sheet is empty
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(['Timestamp', 'Name', 'Phone', 'Location', 'Typology / Space', 'Budget', 'Message / Notes', 'Source', 'Lead ID']);
+      sheet.getRange(1, 1, 1, 9).setFontWeight('bold').setBackground('#EADBCC');
+    }
+    
+    var data = JSON.parse(e.postData.contents);
+    sheet.appendRow([
+      data.timestamp || new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+      data.name || '',
+      data.phone || '',
+      data.location || '',
+      data.designType || '',
+      data.budget || '',
+      data.message || '',
+      data.source || 'Website',
+      data.id || ''
+    ]);
+    
+    return ContentService.createTextOutput(JSON.stringify({ status: 'success' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({ status: 'error', message: error.message }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}`;
 
 const INITIAL_SAMPLE_LEADS: StoredLead[] = [
   {
@@ -49,6 +82,47 @@ const INITIAL_SAMPLE_LEADS: StoredLead[] = [
 ];
 
 export const leadStorage = {
+  getGoogleSheetWebhookUrl: (): string => {
+    return localStorage.getItem(GOOGLE_SHEET_KEY) || '';
+  },
+
+  setGoogleSheetWebhookUrl: (url: string): void => {
+    localStorage.setItem(GOOGLE_SHEET_KEY, url.trim());
+  },
+
+  sendToGoogleSheet: async (lead: StoredLead): Promise<boolean> => {
+    const webhookUrl = leadStorage.getGoogleSheetWebhookUrl();
+    if (!webhookUrl) return false;
+
+    try {
+      const payload = {
+        id: lead.id,
+        timestamp: new Date(lead.submittedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+        name: lead.name,
+        phone: lead.phone,
+        location: lead.location,
+        designType: lead.designType,
+        budget: lead.budget,
+        message: lead.message || '',
+        source: lead.source,
+        status: lead.status
+      };
+
+      await fetch(webhookUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      return true;
+    } catch (err) {
+      console.warn('Could not sync lead to Google Sheet webhook:', err);
+      return false;
+    }
+  },
+
   getLeads: (): StoredLead[] => {
     try {
       const data = localStorage.getItem(STORAGE_KEY);
@@ -74,6 +148,9 @@ export const leadStorage = {
 
     const updated = [newLead, ...existing];
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+
+    // Automatically send to Google Sheet in background
+    leadStorage.sendToGoogleSheet(newLead);
 
     // Dispatch event so live UI updates immediately
     window.dispatchEvent(new Event('sowakaah_lead_added'));
@@ -121,3 +198,4 @@ export const leadStorage = {
     document.body.removeChild(link);
   }
 };
+

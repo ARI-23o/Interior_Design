@@ -16,9 +16,14 @@ import {
   Eye,
   EyeOff,
   Layers,
-  IndianRupee
+  IndianRupee,
+  FileSpreadsheet,
+  Copy,
+  Check,
+  ExternalLink,
+  Send
 } from 'lucide-react';
-import { leadStorage, StoredLead } from '../../services/leadStorage';
+import { leadStorage, StoredLead, GOOGLE_APPS_SCRIPT_CODE } from '../../services/leadStorage';
 import { studioInfo } from '../../data/contentData';
 import faviconImg from '../../assets/favicon.png';
 
@@ -42,6 +47,13 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
   const [newPin, setNewPin] = useState('');
   const [pinChangeSuccess, setPinChangeSuccess] = useState(false);
 
+  // Settings for Google Sheet Webhook
+  const [showGoogleSheet, setShowGoogleSheet] = useState(false);
+  const [googleSheetUrl, setGoogleSheetUrl] = useState('');
+  const [sheetSaveSuccess, setSheetSaveSuccess] = useState(false);
+  const [sheetTestStatus, setSheetTestStatus] = useState<'idle' | 'testing' | 'success' | 'error'>('idle');
+  const [copiedCode, setCopiedCode] = useState(false);
+
   // Leads state
   const [leads, setLeads] = useState<StoredLead[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -64,6 +76,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
       setIsAuthenticated(isAuth);
       if (isAuth) {
         setLeads(leadStorage.getLeads());
+        setGoogleSheetUrl(leadStorage.getGoogleSheetWebhookUrl());
       }
     } else {
       document.body.style.overflow = '';
@@ -94,6 +107,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
       setPinError(false);
       setPinInput('');
       setLeads(leadStorage.getLeads());
+      setGoogleSheetUrl(leadStorage.getGoogleSheetWebhookUrl());
     } else {
       setPinError(true);
     }
@@ -116,6 +130,44 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
         setNewPin('');
       }, 1500);
     }
+  };
+
+  const handleSaveGoogleSheetUrl = (e: React.FormEvent) => {
+    e.preventDefault();
+    leadStorage.setGoogleSheetWebhookUrl(googleSheetUrl);
+    setSheetSaveSuccess(true);
+    setTimeout(() => setSheetSaveSuccess(false), 2000);
+  };
+
+  const handleTestGoogleSheet = async () => {
+    if (!googleSheetUrl) return;
+    setSheetTestStatus('testing');
+    const testLead: StoredLead = {
+      id: `test-${Date.now()}`,
+      name: 'Test Client (Google Sheet Sync Test)',
+      phone: '+91 98765 43210',
+      location: 'Nagpur',
+      designType: 'Apartment (3 BHK)',
+      budget: '₹20–40L',
+      message: 'Testing instant sync from Sowakaah website to Google Sheets.',
+      source: 'Admin Manual Entry',
+      status: 'New',
+      submittedAt: new Date().toISOString()
+    };
+    const res = await leadStorage.sendToGoogleSheet(testLead);
+    if (res) {
+      setSheetTestStatus('success');
+      setTimeout(() => setSheetTestStatus('idle'), 3500);
+    } else {
+      setSheetTestStatus('error');
+      setTimeout(() => setSheetTestStatus('idle'), 3500);
+    }
+  };
+
+  const handleCopyScriptCode = () => {
+    navigator.clipboard.writeText(GOOGLE_APPS_SCRIPT_CODE);
+    setCopiedCode(true);
+    setTimeout(() => setCopiedCode(false), 2000);
   };
 
   const handleWhatsAppReply = (lead: StoredLead) => {
@@ -284,7 +336,24 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
               </button>
 
               <button
-                onClick={() => setShowChangePin(!showChangePin)}
+                onClick={() => {
+                  setShowGoogleSheet(!showGoogleSheet);
+                  setShowChangePin(false);
+                }}
+                className={`inline-flex items-center gap-1 border text-[11px] sm:text-xs uppercase tracking-wider px-2 sm:px-3 py-1.5 sm:py-2 transition-colors ${
+                  showGoogleSheet ? 'bg-emerald-950 border-emerald-500 text-emerald-300 font-semibold' : 'border-border-dark text-canvas/80 hover:text-canvas'
+                }`}
+                title="Google Sheet Sync Integration"
+              >
+                <FileSpreadsheet size={13} className="text-emerald-400" />
+                <span className="hidden sm:inline">Google Sheet</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowChangePin(!showChangePin);
+                  setShowGoogleSheet(false);
+                }}
                 className="inline-flex items-center gap-1 border border-border-dark text-canvas/80 hover:text-canvas text-[11px] sm:text-xs uppercase tracking-wider px-2 sm:px-3 py-1.5 sm:py-2 transition-colors"
                 title="Change Master Passcode"
               >
@@ -310,6 +379,93 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
               </button>
             </div>
           </div>
+
+          {/* Google Sheet Sync Configuration Box */}
+          {showGoogleSheet && (
+            <div className="bg-canvas-soft border-b border-border-luxury p-4 sm:p-6 space-y-4 shrink-0 animate-in slide-in-from-top-2 duration-200 max-h-[60vh] overflow-y-auto">
+              <div className="flex items-center justify-between border-b border-border-luxury/60 pb-3">
+                <div className="flex items-center gap-2">
+                  <FileSpreadsheet size={18} className="text-emerald-700" />
+                  <h4 className="font-serif text-base sm:text-lg text-charcoal font-medium">Google Sheets Live Sync</h4>
+                </div>
+                <span className={`text-[10px] uppercase tracking-wider px-2.5 py-0.5 font-semibold ${googleSheetUrl ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-amber-100 text-amber-800 border border-amber-300'}`}>
+                  {googleSheetUrl ? '● Connected' : '○ Webhook Not Set'}
+                </span>
+              </div>
+
+              {/* Webhook Input Form */}
+              <form onSubmit={handleSaveGoogleSheetUrl} className="space-y-3">
+                <label className="block text-xs font-semibold text-charcoal">
+                  Google Apps Script Web App URL:
+                </label>
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <input
+                    type="url"
+                    value={googleSheetUrl}
+                    onChange={(e) => setGoogleSheetUrl(e.target.value)}
+                    placeholder="https://script.google.com/macros/s/.../exec"
+                    className="flex-grow bg-canvas border border-border-luxury text-xs py-2 px-3 focus:outline-none font-mono text-charcoal"
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      type="submit"
+                      className="bg-charcoal text-canvas text-xs uppercase tracking-wider px-4 py-2 hover:bg-bronze hover:text-charcoal font-semibold shrink-0"
+                    >
+                      Save Webhook
+                    </button>
+                    <button
+                      type="button"
+                      disabled={!googleSheetUrl || sheetTestStatus === 'testing'}
+                      onClick={handleTestGoogleSheet}
+                      className="bg-emerald-700 hover:bg-emerald-800 disabled:opacity-50 text-white text-xs uppercase tracking-wider px-3.5 py-2 font-semibold shrink-0 flex items-center gap-1.5"
+                    >
+                      <Send size={12} />
+                      <span>{sheetTestStatus === 'testing' ? 'Testing...' : 'Send Test Lead'}</span>
+                    </button>
+                  </div>
+                </div>
+
+                {sheetSaveSuccess && (
+                  <p className="text-xs text-emerald-700 font-semibold">✓ Google Sheet webhook URL saved successfully!</p>
+                )}
+                {sheetTestStatus === 'success' && (
+                  <p className="text-xs text-emerald-700 font-semibold">✓ Test lead dispatched to Google Sheet successfully!</p>
+                )}
+                {sheetTestStatus === 'error' && (
+                  <p className="text-xs text-red-600 font-medium">✕ Failed to connect. Please ensure your Apps Script is deployed as Web App with access set to "Anyone".</p>
+                )}
+              </form>
+
+              {/* 3-Step Setup Instructions */}
+              <div className="bg-canvas border border-border-luxury p-3.5 sm:p-4 space-y-2.5 text-xs text-charcoal-muted leading-relaxed">
+                <p className="font-semibold text-charcoal uppercase tracking-wider text-[11px]">
+                  How to setup your Google Sheet (1-Minute Setup):
+                </p>
+                <ol className="list-decimal pl-4 space-y-1.5">
+                  <li>Create a new Google Sheet (e.g. named <strong>Sowakaah Studio Enquiries</strong>).</li>
+                  <li>Go to <strong>Extensions &gt; Apps Script</strong>, delete existing code, and paste the script below.</li>
+                  <li>Click <strong>Deploy &gt; New deployment</strong>, select <strong>Web app</strong>, set <em>Who has access</em> to <strong>Anyone</strong>, click <strong>Deploy</strong>, copy the Web App URL and paste it into the box above.</li>
+                </ol>
+
+                <div className="pt-2">
+                  <div className="flex items-center justify-between pb-1">
+                    <span className="text-[10px] uppercase tracking-wider font-semibold text-charcoal">Apps Script Code:</span>
+                    <button
+                      type="button"
+                      onClick={handleCopyScriptCode}
+                      className="text-[11px] text-bronze hover:underline flex items-center gap-1 font-semibold"
+                    >
+                      {copiedCode ? <Check size={12} className="text-emerald-600" /> : <Copy size={12} />}
+                      <span>{copiedCode ? 'Copied to Clipboard!' : 'Copy Script Code'}</span>
+                    </button>
+                  </div>
+                  <pre className="p-2.5 bg-neutral-900 text-neutral-200 text-[10.5px] font-mono overflow-x-auto max-h-36 rounded border border-neutral-700 select-all">
+                    {GOOGLE_APPS_SCRIPT_CODE}
+                  </pre>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Change PIN Box */}
           {showChangePin && (
