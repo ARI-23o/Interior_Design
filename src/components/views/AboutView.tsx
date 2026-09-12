@@ -28,15 +28,20 @@ export const AboutView: React.FC<AboutViewProps> = ({ onOpenLeadModal }) => {
         {/* Founder Story Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-canvas-soft border border-border-luxury p-5 sm:p-14">
           <div className="lg:col-span-5">
-            <div className="relative aspect-[4/5] overflow-hidden border border-border-luxury shadow-luxury">
+            <div className="relative overflow-hidden border border-border-luxury shadow-luxury bg-canvas">
               <img
                 src={studioInfo.founder.photo}
                 alt={studioInfo.founder.name}
-                className="w-full h-full object-cover"
+                className="w-full h-auto object-cover object-center max-h-[640px]"
               />
-              <div className="absolute bottom-4 left-4 right-4 bg-charcoal/80 backdrop-blur-md p-4 text-canvas">
-                <h3 className="font-serif text-xl text-canvas">{studioInfo.founder.name}</h3>
-                <p className="text-xs text-bronze uppercase tracking-widest">{studioInfo.founder.role}</p>
+              <div className="p-4 bg-canvas-soft border-t border-border-luxury flex items-center justify-between">
+                <div>
+                  <h3 className="font-serif text-lg text-charcoal font-medium">{studioInfo.founder.name}</h3>
+                  <p className="text-xs text-bronze uppercase tracking-widest font-semibold">{studioInfo.founder.role}</p>
+                </div>
+                <span className="text-[10px] uppercase tracking-wider text-charcoal-muted bg-canvas px-2.5 py-1 border border-border-luxury">
+                  Founder
+                </span>
               </div>
             </div>
           </div>

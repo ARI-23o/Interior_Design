@@ -21,20 +21,25 @@ export const MeetDesignerSection: React.FC<MeetDesignerSectionProps> = ({ onLear
               {/* Decorative luxury frame offset */}
               <div className="absolute -inset-2.5 sm:-inset-3 border border-bronze/40 translate-x-2 translate-y-2 sm:translate-x-3 sm:translate-y-3 pointer-events-none" />
               
-              <div className="relative aspect-[4/5] overflow-hidden bg-canvas border border-border-luxury shadow-luxury">
+              <div className="relative overflow-hidden bg-canvas border border-border-luxury shadow-luxury">
                 <img
                   src={studioInfo.founder.photo}
                   alt={studioInfo.founder.name}
                   loading="lazy"
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-auto object-cover object-center max-h-[640px]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-transparent to-transparent" />
                 
-                <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 text-canvas">
-                  <p className="font-serif text-xl sm:text-2xl text-canvas">{studioInfo.founder.name}</p>
-                  <p className="text-[11px] sm:text-xs text-bronze uppercase tracking-widest font-light mt-0.5">
-                    Lead Interior Architect · Sowakaah
-                  </p>
+                {/* Clean, high-contrast caption bar below full photo */}
+                <div className="p-3.5 sm:p-4 bg-canvas-soft border-t border-border-luxury flex items-center justify-between">
+                  <div>
+                    <p className="font-serif text-lg text-charcoal font-medium">{studioInfo.founder.name}</p>
+                    <p className="text-[11px] sm:text-xs text-bronze uppercase tracking-widest font-semibold mt-0.5">
+                      {studioInfo.founder.role}
+                    </p>
+                  </div>
+                  <span className="text-[10px] uppercase tracking-wider text-charcoal-muted bg-canvas px-2.5 py-1 border border-border-luxury font-medium">
+                    Principal Designer
+                  </span>
                 </div>
               </div>
             </div>
