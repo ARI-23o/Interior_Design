@@ -37,14 +37,6 @@ export const MeetDesignerSection: React.FC<MeetDesignerSectionProps> = ({ onLear
                   </p>
                 </div>
               </div>
-
-              {/* Experience badge — visible on both mobile and desktop */}
-              <div className="absolute -bottom-3 -right-3 sm:-bottom-6 sm:-right-6 bg-charcoal text-canvas p-3 sm:p-5 border border-charcoal-light shadow-luxury z-10">
-                <div className="font-serif text-2xl sm:text-3xl text-bronze font-semibold">{studioInfo.founder.experienceYears}</div>
-                <div className="text-[9px] sm:text-[10px] uppercase tracking-widest text-canvas/70 font-light mt-0.5 sm:mt-1">
-                  Years Practice
-                </div>
-              </div>
             </div>
           </div>
 
