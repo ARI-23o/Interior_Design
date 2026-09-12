@@ -65,11 +65,29 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenLeadModal, onO
           {/* Column 1: Brand & Philosophy */}
           <div className="space-y-3 sm:space-y-4">
             <div className="flex flex-col">
-              <img 
-                src={logoImg} 
-                alt="SOWAKAAH™ Interior Design Studio" 
-                className="h-16 sm:h-20 md:h-24 max-h-[96px] w-auto object-contain self-start -ml-1 filter drop-shadow-md"
-              />
+              <a 
+                href="https://sowakaahdesigns.com"
+                onClick={(e) => {
+                  if (!e.ctrlKey && !e.metaKey) {
+                    e.preventDefault();
+                    onNavigate('home');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
+                onDragStart={(e) => {
+                  e.dataTransfer.setData('text/plain', 'https://sowakaahdesigns.com');
+                  e.dataTransfer.setData('text/uri-list', 'https://sowakaahdesigns.com');
+                }}
+                className="self-start cursor-pointer select-none"
+                aria-label="SOWAKAAH™ Interior Design Studio Home"
+              >
+                <img 
+                  src={logoImg} 
+                  alt="SOWAKAAH™ Interior Design Studio" 
+                  draggable={false}
+                  className="h-16 sm:h-20 md:h-24 max-h-[96px] w-auto object-contain -ml-1 filter drop-shadow-md pointer-events-none select-none"
+                />
+              </a>
             </div>
             <p className="text-xs sm:text-sm text-[#EADBCC]/80 font-light leading-relaxed pt-1">
               Bespoke residential architecture, luxury turnkey interiors, and custom furniture. Crafted with intention, architectural precision, and timeless material elegance.

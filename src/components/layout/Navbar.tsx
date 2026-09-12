@@ -93,18 +93,29 @@ export const Navbar: React.FC<NavbarProps> = ({ activeView, onNavigate, onOpenLe
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           
-          {/* Brand Logo - Enlarged for clear text visibility */}
-          <button 
-            onClick={() => handleLinkClick('home')}
-            className="flex items-center text-left group py-0.5 focus:outline-none"
-            aria-label="Sowakaah™ Interior Design Studio Home"
+          {/* Brand Logo - Drag & Drop / Click opens website link */}
+          <a 
+            href="https://sowakaahdesigns.com"
+            onClick={(e) => {
+              if (!e.ctrlKey && !e.metaKey) {
+                e.preventDefault();
+                handleLinkClick('home');
+              }
+            }}
+            onDragStart={(e) => {
+              e.dataTransfer.setData('text/plain', 'https://sowakaahdesigns.com');
+              e.dataTransfer.setData('text/uri-list', 'https://sowakaahdesigns.com');
+            }}
+            className="flex items-center text-left group py-0.5 focus:outline-none cursor-pointer select-none"
+            aria-label="SOWAKAAH™ Interior Design Studio Home"
           >
             <img 
               src={logoImg} 
               alt="SOWAKAAH™ Interior Design Studio" 
-              className="h-14 sm:h-16 md:h-20 max-h-[82px] w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03] filter drop-shadow-md"
+              draggable={false}
+              className="h-14 sm:h-16 md:h-20 max-h-[82px] w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03] filter drop-shadow-md pointer-events-none select-none"
             />
-          </button>
+          </a>
 
           {/* Desktop Nav Links */}
           <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
