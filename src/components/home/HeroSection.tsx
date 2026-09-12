@@ -1,6 +1,5 @@
 import React from 'react';
-import { ArrowRight, Sparkles, Award, MapPin, CheckCircle2, Star, MessageSquare } from 'lucide-react';
-import { studioInfo } from '../../data/contentData';
+import { ArrowRight, Sparkles, Award, MapPin, CheckCircle2 } from 'lucide-react';
 
 interface HeroSectionProps {
   onExploreProjects: () => void;
@@ -8,11 +7,6 @@ interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreProjects, onOpenLeadModal }) => {
-  const handleWhatsAppHero = () => {
-    const text = "Hi Sowakaah Designs, I'm interested in an interior design project. I'd like to discuss my requirements.";
-    window.open(`https://wa.me/${studioInfo.contact.phoneRaw}?text=${encodeURIComponent(text)}`, '_blank');
-  };
-
   return (
     <section className="relative min-h-[85vh] sm:min-h-[88vh] flex items-center justify-center bg-canvas overflow-hidden border-b border-border-luxury">
       
@@ -54,7 +48,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreProjects, onO
             Bespoke residential interiors crafted around your lifestyle, taste and the way you live.
           </p>
 
-          {/* Conversion CTAs with WhatsApp Us button */}
+          {/* Conversion CTAs */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-1 sm:pt-2">
             <button
               onClick={onExploreProjects}
@@ -70,14 +64,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreProjects, onO
             >
               <span>START YOUR PROJECT</span>
               <ArrowRight size={14} className="text-bronze" />
-            </button>
-
-            <button
-              onClick={handleWhatsAppHero}
-              className="border border-emerald-700/60 hover:bg-emerald-700 hover:text-white text-emerald-800 bg-emerald-50/70 text-xs uppercase tracking-[0.16em] sm:tracking-[0.18em] font-semibold px-5 sm:px-6 py-3.5 sm:py-4 flex items-center justify-center gap-2 transition-all duration-300 min-h-[46px]"
-            >
-              <MessageSquare size={15} className="text-emerald-700 group-hover:text-white" />
-              <span>WhatsApp Us →</span>
             </button>
           </div>
 
