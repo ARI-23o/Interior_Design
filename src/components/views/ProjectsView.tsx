@@ -10,7 +10,7 @@ interface ProjectsViewProps {
 
 export const ProjectsView: React.FC<ProjectsViewProps> = ({ onSelectProject, onOpenLeadModal }) => {
   const [activeFilter, setActiveFilter] = useState<string>('All');
-  const filters = ['All', 'Residential', 'Turnkey', 'Villas', 'Commercial'];
+  const filters = ['All', 'Residential', 'Turnkey', 'Commercial'];
 
   const filtered = activeFilter === 'All'
     ? projectsData

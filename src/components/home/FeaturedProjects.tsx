@@ -10,7 +10,7 @@ interface FeaturedProjectsProps {
 
 export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ onSelectProject, onViewAllProjects }) => {
   const [activeFilter, setActiveFilter] = useState<string>('All');
-  const filters = ['All', 'Residential', 'Turnkey', 'Villas', 'Commercial'];
+  const filters = ['All', 'Residential', 'Turnkey', 'Commercial'];
 
   const filteredProjects = activeFilter === 'All'
     ? projectsData
