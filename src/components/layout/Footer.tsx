@@ -225,7 +225,16 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenLeadModal, onO
             </div>
             <span className="hidden sm:inline text-[#EADBCC]/30">|</span>
             <p className="text-[#EADBCC]/75">
-              Developed by <span className="text-[#D4AA7D] font-medium">Makdeveloper</span>
+              Developed by{' '}
+              <a
+                href="https://makdeveloper.co.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#D4AA7D] font-medium hover:underline hover:text-[#f3cca0] transition-colors"
+                title="Makdeveloper - Web & Software Development"
+              >
+                Makdeveloper
+              </a>
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-4 sm:gap-6">
