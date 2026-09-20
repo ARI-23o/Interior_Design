@@ -209,18 +209,24 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenLeadModal, onO
 
         {/* Bottom Copyright & Discreet Admin Access */}
         <div className="pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 text-[11px] sm:text-xs text-[#EADBCC]/60">
-          <div className="flex items-center gap-2">
-            <p>© {currentYear} SOWAKAAH™ Interior Design Studio. All rights reserved.</p>
-            {onOpenAdminModal && (
-              <button
-                onClick={onOpenAdminModal}
-                className="text-[#EADBCC]/40 hover:text-[#D4AA7D] transition-colors p-1"
-                title="Studio Access"
-                aria-label="Studio Admin"
-              >
-                <Lock size={12} />
-              </button>
-            )}
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 sm:gap-3">
+            <div className="flex items-center gap-2">
+              <p>© {currentYear} SOWAKAAH™ Interior Design Studio. All rights reserved.</p>
+              {onOpenAdminModal && (
+                <button
+                  onClick={onOpenAdminModal}
+                  className="text-[#EADBCC]/40 hover:text-[#D4AA7D] transition-colors p-1"
+                  title="Studio Access"
+                  aria-label="Studio Admin"
+                >
+                  <Lock size={12} />
+                </button>
+              )}
+            </div>
+            <span className="hidden sm:inline text-[#EADBCC]/30">|</span>
+            <p className="text-[#EADBCC]/75">
+              Developed by <span className="text-[#D4AA7D] font-medium">Makdeveloper</span>
+            </p>
           </div>
           <div className="flex flex-wrap items-center gap-4 sm:gap-6">
             <span>Privacy Policy</span>
